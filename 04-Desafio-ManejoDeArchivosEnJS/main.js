@@ -1,5 +1,16 @@
 const fs = require('fs');
+
+
 pathFile = "./data/products.txt";
+
+info = JSON.parse(info);
+const ids = info.map((element) => element.id);
+const lastId = Math.max(...ids);
+
+let array = await this.getAll(true);
+
+Object.id = array.length > 0 ? parseInt(array.at(-1).id + 1) : 1;
+
 
 class Contenedor {
     constructor (fileName) {
@@ -39,3 +50,4 @@ class Contenedor {
 
     }
 }
+
