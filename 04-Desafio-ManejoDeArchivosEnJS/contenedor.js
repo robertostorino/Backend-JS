@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-pathFile = "productos.txt";
+const pathFile = 'productos.txt';
 
 class Contenedor {
     constructor (pathFile) {
@@ -21,17 +21,17 @@ class Contenedor {
     //recibe un objeto, lo guarda en el archivo y devuelve el id asignado
     async save(producto){
         
-        let data = this.getAll();
+        let data = await this.getAll();
         
         let id = 0; //Inicializo el id en 0
-        let dataObj = null;
+        //let dataObj = null;
+        let dataObj = [];
 
         if (data.length == 0 ){
             id = 1;
-        }else {
-            dataObj = JSON.parse(data); //Es el string convertido a objeto
+        } else {
+            dataObj = data;
             id = dataObj[dataObj.length - 1].id + 1; //Le paso el id del último objeto
-
         }
 
         const newObj = {id: id, ...producto}; //genero el nuevo objeto y le agrego el id correspondiente
@@ -52,8 +52,8 @@ class Contenedor {
 
     
     //Recibe un id y devuelve el objeto con ese id, o null si no está.
-    getById(id){
-        let data = this.getAll();
+    async getById(id){
+        let data = await this.getAll();
         let position = data.findIndex(x => x.id == id); //Me devuelve la posición del producto con el id
         let producto = null;
 
@@ -69,7 +69,7 @@ class Contenedor {
 
     //Elimina del archivo el objeto con el id buscado.
     async deleteById(id){
-        let data = this.getAll();
+        let data = await this.getAll();
         let position = data.findIndex(x => x.id == id); //Me devuelve la posición del producto con el id
 
         if (position < 0) {
@@ -95,33 +95,4 @@ class Contenedor {
     }
 }
 
-
-/////////////
-
-///  Test de Contenedor
-
-
-
-
-async function test () {
-    let producto1 = {title:'micro', price:'150usd', thumbnail:'micro.html'};
-    let producto2 = {title:'mother', price:'100usd', thumbnail:'mother.html'};
-    let producto3 = {title:'memoria', price:'90usd', thumbnail:'memoria.html'};
-
-    const c1 = new Contenedor(pathFile);
-
-    let id1 = await c1.save({producto1});
-    let id2 = await c1.save({producto2});
-    let id3 = await c1.save({producto3});
-
-    let info = await c1.getAll();
-
-    console.log(info);
-
-    let productoEncontrado = await c1.getById(1);
-    console.log(productoEncontrado);
-
-    await c1.deleteAll();
-}
-
-test();
+module.exports = Contenedor;
