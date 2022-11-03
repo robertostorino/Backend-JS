@@ -1,15 +1,15 @@
 const fs = require('fs');
 
 
-pathFile = "./data/productos.txt";
+pathFile = "productos.txt";
 
-info = JSON.parse(info);
+/* info = JSON.parse(info);
 const ids = info.map((element) => element.id);
 const lastId = Math.max(...ids);
 
 let array = await this.getAll(true);
 
-Object.id = array.length > 0 ? parseInt(array.at(-1).id + 1) : 1;
+Object.id = array.length > 0 ? parseInt(array.at(-1).id + 1) : 1; */
 
 
 class Contenedor {
@@ -57,11 +57,11 @@ class Contenedor {
         const newObj = {id: id, ...producto}; //genero el nuevo objeto y le agrego el id correspondiente
 
         //push a dataObj
-        data.push(newObj);
+        dataObj.push(newObj);
 
         //try
         try {
-            await fs.promises.writeFile(this.pathFile, JSON.stringify(newObj, null, 2)); //el 2º parámetro :null para que no reemplace, y el 3º parámetro :2 para el espaciado
+            await fs.promises.writeFile(this.pathFile, JSON.stringify(dataObj, null, 2)); //el 2º parámetro :null para que no reemplace, y el 3º parámetro :2 para el espaciado
         } catch (error) {
             console.log(error);
         } 
@@ -119,10 +119,21 @@ class Contenedor {
 
 ///  Test de la clase
 
-let producto1 = {title:'micro', price:'150usd', thumbnail:'micro.html'};
-let producto2 = {title:'mother', price:'100usd', thumbnail:'mother.html'};
-let producto3 = {title:'memoria', price:'90usd', thumbnail:'memoria.html'};
-
-const productos = new Contenedor("./test.txt")
 
 
+
+async function test () {
+    let producto1 = {title:'micro', price:'150usd', thumbnail:'micro.html'};
+    let producto2 = {title:'mother', price:'100usd', thumbnail:'mother.html'};
+    let producto3 = {title:'memoria', price:'90usd', thumbnail:'memoria.html'};
+
+    const c1 = new Contenedor("./test.txt");
+
+    let id1 = await c1.save(producto1);
+    let id2 = await c1.save(producto1);
+    let id3 = await c1.save(producto1);
+
+    await c1.deleteById(id1);
+}
+
+test();
