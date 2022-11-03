@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 
-pathFile = "./data/products.txt";
+pathFile = "./data/productos.txt";
 
 info = JSON.parse(info);
 const ids = info.map((element) => element.id);
@@ -13,12 +13,12 @@ Object.id = array.length > 0 ? parseInt(array.at(-1).id + 1) : 1;
 
 
 class Contenedor {
-    constructor (ruta) {
-        this.ruta = ruta
+    constructor (pathFile) {
+        this.pathFile = pathFile;
     }
 
     //recibe un objeto, lo guarda en el archivo y devuelve el id asignado
-    async saveAsync(producto){
+    /* async saveAsync(producto){
         try {
             //Si el archivo existe, lo leo
             await fs.promises.readFile(this.pathFile, 'utf-8')
@@ -26,78 +26,103 @@ class Contenedor {
             //Si no existe, creo el array vacio
             await fs.promises.writeFile(this.pathFile, '[]')
         }
+    } */
+
+    //Devuelve un array con los objetos presentes en el archivo.
+    async getAll(){
+        try {
+            const data = await fs.promises.readFile(this.pathFile, "utf-8");
+            return data;
+        } catch (error) {
+            return []; //Si no hay productos, devuelve un array vacío
+        }
     }
 
     //recibe un objeto, lo guarda en el archivo y devuelve el id asignado
-    async saveAsync(producto){
-        let data = 0;
+    async save(producto){
+        
+        let data = this.getAll();
+        
+        let id = 0; //Inicializo el id en 0
         let dataObj = null;
-        try {
-             //Si el archivo existe, lo leo
-            data = await fs.promises.readFile(this.pathFile, 'utf-8')
-        } catch (error) {
-            //Si no existe, creo el array vacio
-            await fs.promises.writeFile(this.pathFile, '[]')
-        }
-        let id = 0;
+
         if (data.length == 0 ){
-            let id = 1
+            id = 1;
         }else {
-            dataObj = JSON.parse(data);
-            let id = dataObj[dataObj.length - 1].id + 1
+            dataObj = JSON.parse(data); //Es el string convertido a objeto
+            id = dataObj[dataObj.length - 1].id + 1; //Le paso el id del último objeto
 
         }
 
-        const newObj = {id: id, ...producto}
+        const newObj = {id: id, ...producto}; //genero el nuevo objeto y le agrego el id correspondiente
 
         //push a dataObj
+        data.push(newObj);
 
         //try
-        await fs.promises.writeFile(this.pathFile, JSON.stringify(neObj, null, 2))
+        try {
+            await fs.promises.writeFile(this.pathFile, JSON.stringify(newObj, null, 2)); //el 2º parámetro :null para que no reemplace, y el 3º parámetro :2 para el espaciado
+        } catch (error) {
+            console.log(error);
+        } 
         //catch
 
     }
 
+    
     //Recibe un id y devuelve el objeto con ese id, o null si no está.
-    getById(idNumber){
+    getById(id){
+        let data = this.getAll();
+        let position = data.findIndex(x => x.id == id); //Me devuelve la posición del producto con el id
+        let producto = null;
 
+        if (position >= 0){
+            //Lo encontró
+            return producto = data[position];
+        } else {
+            //No lo encontró, findIndex devolvió -1
+            return producto;
+        }
     }
 
-    //Devuelve un array con los objetos presentes en el archivo.
-    getAll(){
-
-    }
 
     //Elimina del archivo el objeto con el id buscado.
-    deleteById(){
+    async deleteById(id){
+        let data = this.getAll();
+        let position = data.findIndex(x => x.id == id); //Me devuelve la posición del producto con el id
 
+        if (position < 0) {
+            console.log(`No se encontró el producto con el id: ${id}`)
+        } else {
+                data.splice(position, 1); //Se posiciona y elimina solamente un objeto del array.
+                try{
+                    await fs.promises.writeFile(this.pathFile, JSON.stringify(data)); //Sobre escribo el archivo con el array modificado
+                    console.log(`Se ha borrado el producto con id: ${id}`);
+                } catch (error){
+                    console.log("Error al borrar producto", error);
+                }
+            }
     }
 
     //Elimina todos los objetos presentes en el archivo.
-    deleteAll(){
-
+    async deleteAll(){
+        try{
+            await fs.promises.writeFile(this.pathFile, []);
+        } catch (error){
+            console.log(error);
+        }
     }
 }
 
 
+/////////////
 
+///  Test de la clase
 
+let producto1 = {title:'micro', price:'150usd', thumbnail:'micro.html'};
+let producto2 = {title:'mother', price:'100usd', thumbnail:'mother.html'};
+let producto3 = {title:'memoria', price:'90usd', thumbnail:'memoria.html'};
 
-save( title, price ){
-    try{
-        let data = fs.readFileSync('./Productos.txt', 'utf-8')
-            if( data == 0 ){
-                let id = 1
-                fs.writeFileSync('./Productos.txt', JSON.stringify({ id, title, price }))
-                console.log("agregue un objeto nuevo porque no habia nada")
-            }else{
-                let data = JSON.parse( fs.readFileSync( './Productos.txt', 'utf-8' ) )
-                let id = data.id + 1
-                fs.appendFileSync('./Productos.txt', JSON.stringify({ id, title, price }))
-                console.log("Ya tenia algo, agregue un producto nuevo")
-            }
-    } catch(err){
-        throw new Error(`Error en la escritura del archivo: ` + err)
-    }
-}
+const productos = new Contenedor("./test.txt")
+
 
