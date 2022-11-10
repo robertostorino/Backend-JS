@@ -36,4 +36,4 @@ app.get('/productosRandom', async (req, res) =>{
     const selectedProduct = await container1.getById(id); //Obtengo el producto con el id asignado al azar.
 
     res.send(selectedProduct)
-})
+});
