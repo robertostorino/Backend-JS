@@ -14,7 +14,7 @@ const test = async () => {
     await productos.deleteAll();
 
     // Cargo los productos y los almaceno
-       
+    
     let id = await productos.save(producto1);
     console.log(`Se ha creado el producto con id:  ${id}`);
 

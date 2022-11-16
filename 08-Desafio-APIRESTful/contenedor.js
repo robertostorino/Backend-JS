@@ -59,10 +59,11 @@ class Contenedor {
 
         if (position >= 0){
             //Lo encontró
-            return producto = data[position];
+            producto = data[position];
+            res.json(`Producto seleccionado: ${producto}`);
         } else {
             //No lo encontró, findIndex devolvió -1
-            return producto;
+            res.json(`Producto no encontrado`);
         }
     }
 
