@@ -57,12 +57,10 @@ routerProductos.post('/', (req, res) =>{
     };
 
     let producto = req.body;
-    console.log(req.body);
     //Agrego el producto que se obtiene del body y le agrego el id
     productos.push({
         ...producto, ...{ id : idNew }
     })
-    console.log(producto);
     res.json(`Se agregó el producto con id: ${idNew}`);
 });
 
@@ -70,10 +68,10 @@ routerProductos.post('/', (req, res) =>{
 
 routerProductos.put('/:id', (req, res) =>{
     const productoNew = req.body; //Guardo la referencia en productoNew
-    const { id } = req.params; //Obtengo mediante destructuring el parámetro id de la request.
+    let id = req.params.id;
     
-    if (isNaN(id)) {
-        return res.json( {error: "El parametro ingresado no es un número"})
+    if (isNaN(id)){
+        return res.json( {error: "El parametro ingresado no es un numero"} );
     }
     
     //Busco el producto con el id indicado
@@ -85,7 +83,7 @@ routerProductos.put('/:id', (req, res) =>{
         productos.push({
             ...req.body, id: id 
         });
-        res.json(`Producto modificado: ${productoNew}`);
+        res.json(productoNew);
     } else {
         //No lo encontró, findIndex devolvió -1
         res.json(`No se ha encontrado el producto con id: ${id}`);
@@ -94,7 +92,11 @@ routerProductos.put('/:id', (req, res) =>{
 // DELETE '/api/productos/:id' -> elimina un producto según su id.
 
 routerProductos.delete('/:id', (req, res) =>{
-    const { id } = req.params; //Obtengo mediante destructuring el parámetro id de la request.
+    let id = req.params.id;
+    
+    if (isNaN(id)){
+        return res.json( {error: "El parametro ingresado no es un numero"} );
+    }
     //Busco el producto con el id indicado
     let position = productos.findIndex(x => x.id == id); //Me devuelve la posición del producto con el id
     if (position >= 0){
