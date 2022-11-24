@@ -1,0 +1,21 @@
+extends head
+
+block productos
+    if listExists
+        h3(style='color:blue;') LISTA DE PRODUCTOS
+        .table-responsive.container
+        table.table.table-success
+            thead
+            tr
+                th(scope='col') Producto
+                th(scope='col') Precio
+                th(scope='col') Imagen
+            tbody
+                each n in products
+                    tr
+                        td= n.title
+                        td= n.price
+                        td
+                            img(style="width: 60px", src=n.thumbnail, alt=n.title)
+    else
+        h4.alert.alert-danger.container NO HAY PRODUCTOS
