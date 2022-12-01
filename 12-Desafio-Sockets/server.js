@@ -3,20 +3,12 @@ const { Server: HttpServer } = require('http');
 const { Server: IOServer } = require('socket.io');
 const handlebars = require('express-handlebars');
 // const path = require('path');
-const ProductsContainer = require('../Model/productsContainer');
-const ChatContainer = require('../Model/chatContainer');
-
-const contenedorProductos = new ProductsContainer('products.txt');
-const contenedorChat = new ChatContainer('chat.txt');
+const { toSocketProducts, insertProduct } = require('./src/controllers/products.controllers');
+const { toSocketMessages, insertMessage } = require('./src/controllers/messages.controllers');
 
 const app = express();  //creo la app en express
 const httpServer = HttpServer(app);  //Creo la del server en http importando express
 const io = new IOServer(httpServer);  //Creo un server de socketIO con el httpServer
-
-app.use(express.json());
-app.use(express.urlencoded({
-    extended: true
-}));
 
 const PORT = 8080
 const server = app.listen(PORT, () => {
@@ -24,10 +16,16 @@ const server = app.listen(PORT, () => {
 });
 server.on("error", (error) => console.log("Error en servidor", error));
 
-
 app.use('/static', express.static(__dirname + '/public')); // Mediante el middleware express.static, indico la ruta que tendrán mis ficheros estáticos
+app.use(express.json());
+app.use(express.urlencoded({
+    extended: true
+}));
 
-app.set('view engine', 'ejs');
+
+app.engine('handlebars', handlebars.engine()); // Indico que voy a utilizar el engine de Handlebars
+app.set('views', './views');
+app.set('view engine', 'handlebars')
 
 app.get("/", (req, res) => {
     res.render('index');
@@ -40,28 +38,30 @@ app.get("/", (req, res) => {
 io.on('connection', async(socket) => {
     console.log("Nuevo cliente conectado");
 
-    //Chat
-    const chat = await chatContainer
-    socket.emit("chats", chat);
+    let messages = toSocketMessages();
+    let products = toSocketProducts();
 
-    //Products
-    const products = await contenedorProductos
+    //  PRODUCTOS
+
     socket.emit("products", products);
 
-    //Recibe mensaje
-    socket.on("newMsg", async(data) => {
-        await contenedorChat.save(data) //guarda mensaje en archivo
-        //Envía mensajes actualizados
-        const chat = await contenedorChat.getAll();
-        io.sockets.emit("messages", chat); //envía mensajes del chat a todos los clientes
-    })
+    socket.on("newProduct", async (data) => {
+        await insertProduct(data);              //guarda productos en archivo
+        products = toSocketProducts();
+        io.sockets.emit("products", products);  //Envia productos actualizados
+        return false
+    });
 
-    //Recibe producto
-    socket.on("newProduct", async(data) => {
-        await contenedorProductos.save(data); //guarda producto en archivo
-        //Envia productos actualizados
-        const products = await contenedorProductos.getAll();
-        io.sockets.emit("products", products); //envía productos a todos los clientes
-    })
+    //MENSAJES
+
+    socket.emit("messages", messages);
+
+    socket.on("newMessage", async (data) => {
+        await insertMessage(data);
+        messages = toSocketMessages();
+        io.sockets.emit("messages", messages);
+        return false
+    });
+    
 })
 

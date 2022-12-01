@@ -1,0 +1,8 @@
+[
+    {
+        "title": "Cubo de Madera",
+        "price": 2300,
+        "thumbnail": "https://cdn2.iconfinder.com/data/icons/icontober/64/Inkcontober_Teeming-64.png"
+        "id": 1
+    }
+]
