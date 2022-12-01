@@ -4,6 +4,8 @@
 
 const socket = io();
 
+//data tendrá el array de mensajes que envía el servidor
+
 socket.on('messages', data => {
 
 })
