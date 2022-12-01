@@ -1,9 +1,10 @@
+const { response } = require('express');
 const fs = require('fs');
 const path = require('path');
 
 const pathFile = 'chat.txt';
 
-class chatContainer {
+class ChatContainer {
     constructor (pathFile) {
         this.pathFile = path.join(__dirname,"..", `data/${pathFile}`);
     }
@@ -43,13 +44,15 @@ class chatContainer {
         //try
         try {
             await fs.promises.writeFile(this.pathFile, JSON.stringify(dataObj, null, 2)); //el 2º parámetro :null para que no reemplace, y el 3º parámetro :2 para el espaciado
+            response.error = 0,
+            response.message = `The message has been saved with id: ${id}`;
             return id;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         } 
         //catch
 
     }
 }
 
-module.exports = chatContainer;
+module.exports = ChatContainer;

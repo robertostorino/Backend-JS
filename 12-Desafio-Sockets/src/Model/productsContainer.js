@@ -1,10 +1,11 @@
+const { response } = require('express');
 const fs = require('fs');
 
 const pathFile = 'productos.txt';
 
-class productsContainer {
-    constructor (pathFile) {
-        this.pathFile = path.join(__dirname,"..", `data/${pathFile}`);
+class ProductsContainer {
+    constructor (fileName) {
+        this.pathFile = `src/data/${fileName}.txt`;
     }
 
     //Devuelve un array con los objetos presentes en el archivo.
@@ -42,13 +43,15 @@ class productsContainer {
         //try
         try {
             await fs.promises.writeFile(this.pathFile, JSON.stringify(dataObj, null, 2)); //el 2º parámetro :null para que no reemplace, y el 3º parámetro :2 para el espaciado
+            response.error = 0,
+            response.message = `The product has been saved with id: ${id}`;
             return id;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         } 
         //catch
 
     }
 }
 
-module.exports = productsContainer;
+module.exports = ProductsContainer;
