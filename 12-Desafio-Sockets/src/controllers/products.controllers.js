@@ -1,4 +1,4 @@
-const Product = require('../Model/productsContainer');
+const Product = require('../Model/product.model');
 const bd = new Product('products');
 
 function toSocketProducts(){

@@ -1,4 +1,4 @@
-const Message = require('../Model/messagesContainer');
+const Message = require('../Model/message.model');
 const bd = new Message('messages');
 
 function toSocketMessages(){
