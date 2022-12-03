@@ -2,7 +2,6 @@ const express = require('express');
 const { Server: HttpServer } = require('http');
 const { Server: IOServer } = require('socket.io');
 const handlebars = require('express-handlebars');
-// const path = require('path');
 const { toSocketProducts, insertProduct } = require('./src/controllers/products.controllers');
 const { toSocketMessages, insertMessage } = require('./src/controllers/messages.controllers');
 
@@ -24,8 +23,9 @@ app.use(express.urlencoded({
 
 
 app.engine('handlebars', handlebars.engine()); // Indico que voy a utilizar el engine de Handlebars
+app.use(express.static('./public'));
 app.set('views', './views');
-app.set('view engine', 'handlebars')
+app.set('view engine', 'handlebars');
 
 app.get("/", (req, res) => {
     res.render('index');

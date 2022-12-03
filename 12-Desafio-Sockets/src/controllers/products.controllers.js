@@ -10,7 +10,8 @@ async function insertProduct(product){
     await bd.save(product);
 }
 
+
 module.exports = {
     toSocketProducts,
     insertProduct
-}
+};

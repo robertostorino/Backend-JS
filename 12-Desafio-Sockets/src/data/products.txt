@@ -4,5 +4,23 @@
         "price": 2300,
         "thumbnail": "https://cdn2.iconfinder.com/data/icons/icontober/64/Inkcontober_Teeming-64.png"
         "id": 1
+    },
+    {
+        "title": "Psyduck",
+        "price": 9300,
+        "thumbnail": "https://cdn2.iconfinder.com/data/icons/icontober/64/Inkcontober_Screech_Psyduck-64.png"
+        "id": 2
+    },
+    {
+        "title": "Emerald Sword",
+        "price": 12300,
+        "thumbnail": "https://cdn2.iconfinder.com/data/icons/icontober/64/Inkcontober_Sword-64.png"
+        "id": 3
+    },
+    {
+        "title": "T-Shirt",
+        "price": 12300,
+        "thumbnail": "https://cdn3.iconfinder.com/data/icons/fashion-beauty-vol-1/512/shirt_polo_apparel_clothing-64.png"
+        "id": 4
     }
 ]

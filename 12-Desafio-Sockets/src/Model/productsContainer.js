@@ -1,52 +1,72 @@
 const fs = require('fs');
+const validator = require('./validator');
 
-class Product {
-    constructor (fileName) {
+
+class Product extends validator {
+
+    constructor(fileName) {
+        super();
         this.pathFile = `src/data/${fileName}.txt`;
     }
 
-    //Devuelve un array con los objetos presentes en el archivo.
-    async getAll(){
-        try {
-            const data = await fs.promises.readFile(this.pathFile, "utf-8");
-            let info = JSON.parse(data);
-            return info;
-        } catch (error) {
-            return []; //Si no hay productos, devuelve un array vacío
+    /**
+     * Async Method to get all products
+     * @param {boolean} toSave Parameter to define response according to use
+     * @returns Array of products or object
+     */
+    getAll(toSave = false) {
+        const issetFile = this.issetFile(this.pathFile);
+        if (!issetFile.error) {
+            return issetFile.elements.length > 0 ? issetFile.elements : (toSave ? [] : {
+                error: 1,
+                message: "No products stored"
+            });
+        } else {
+            const response = {
+                error: 1,
+                message: `Directory ${this.pathFile} doesn't exits`
+            }
+            return response;
         }
     }
 
-    //recibe un objeto, lo guarda en el archivo y devuelve el id asignado
-    async save(product){
-        
-        let data = await this.getAll();
-        
-        let id = 0; //Inicializo el id en 0
-        //let dataObj = null;
-        let dataObj = [];
-
-        if (data.length == 0 ){
-            id = 1;
-        } else {
-            dataObj = data;
-            id = dataObj[dataObj.length - 1].id + 1; //Le paso el id del último objeto
+    /**
+     * Async Method to save product
+     * @param {object} object 
+     * @returns object
+     */
+    async save(object) {
+        const response = {
+            error: 1,
+            message: `Error almacenando el producto`
         }
 
-        const newObj = {id: id, ...product}; //genero el nuevo objeto y le agrego el id correspondiente
+        const issetFile = await this.issetFile(this.pathFile);
 
-        //push a dataObj
-        dataObj.push(newObj);
+        if (issetFile.error) {
+            await fs.promises.writeFile(this.pathFile, '[]');
+        }
 
-        //try
+        if (!this.validObject(object)) {
+            response.message = "Object does not have the right structure";
+            return response;
+        }
+
+        let array = await this.getAll(true);
+
+        object.id = array.length > 0 ? parseInt(array.at(-1).id + 1) : 1;
+
+        array.push(object);
+
         try {
-            await fs.promises.writeFile(this.pathFile, JSON.stringify(dataObj, null, 2)); //el 2º parámetro :null para que no reemplace, y el 3º parámetro :2 para el espaciado
-            
-            return id;
+            await fs.promises.writeFile(this.pathFile, JSON.stringify(array, null, "\t"));
+            response.error = 0,
+                response.message = `The product has been saved with id: ${object.id}`;
         } catch (error) {
-            console.log(error);
-        } 
-        
+            throw new Error(error);
+        }
 
+        return response;
     }
 }
 
