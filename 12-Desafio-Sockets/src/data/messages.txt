@@ -1,5 +1,5 @@
 [
-    {
+	{
 		"author": "rober@gmail.com",
 		"text": "Hola, cuántas camisetas tenés en stock",
 		"date": "29/11/2022 0:05:26",
@@ -10,5 +10,41 @@
 		"text": "?",
 		"date": "29/11/2022 0:05:34",
 		"id": 2
+	},
+	{
+		"author": "vendedor@mitienda.com",
+		"text": "Nos queda una sola, las otras se vendieron ayer.",
+		"date": "29/11/2022 0:06:19",
+		"id": 3
+	},
+	{
+		"author": "vendedor@mitienda.com",
+		"text": "Te interesa?",
+		"date": "29/11/2022 0:06:36",
+		"id": 4
+	},
+	{
+		"author": "rober@gmail.com",
+		"text": "Dale, la quiero en azul francia",
+		"date": "29/11/2022 0:06:53",
+		"id": 5
+	},
+	{
+		"author": "vendedor@mitienda.com",
+		"text": "Listo, mañana te llega.",
+		"date": "29/11/2022 0:07:07",
+		"id": 6
+	},
+	{
+		"author": "rober@gmail.com",
+		"text": "Gracias",
+		"date": "29/11/2022 0:07:14",
+		"id": 7
+	},
+	{
+		"author": "ash@ketchup.com",
+		"text": "QUIERO ESE PSYDUCK!!!",
+		"date": "29/11/2022 0:09:06",
+		"id": 8
 	}
 ]

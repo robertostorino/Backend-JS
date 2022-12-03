@@ -1,7 +1,3 @@
-// Cliente de web socket.
-// Conecta el cliente con el servidor de websocket que tenemos en http://localhost:8080
-// y escucha el evento messages
-
 const socket = io();
 
 const formatterPeso = new Intl.NumberFormat('es-CO', {
@@ -35,7 +31,8 @@ formMessages.addEventListener('submit', (event) => {
     document.querySelector('[name="message"]').value = '';
 })
 
-//data tendrá el array de mensajes que envía el servidor
+
+
 
 socket.on('products', data => {
     let html;
