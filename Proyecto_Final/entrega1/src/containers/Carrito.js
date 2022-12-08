@@ -70,11 +70,11 @@ class Carrito {
         let arrayCarritos = this.getCarritos();
         let carrito = arrayCarritos.find(carrito => carrito.id === parseInt(idCarrito));
         if(carrito === undefined) {
-            return {error: 'Carrito no encontrado'};
+            return {error: 'Cart not found'};
         } else {
 
             if(this.validateProductoCarrito(carrito, producto)) {
-                return {error: 'El producto ya existe en el carrito'};
+                return {error: 'Product already exists on Cart'};
             }
 
             carrito.productos.push(producto);
@@ -101,11 +101,11 @@ class Carrito {
         let arrayCarritos = this.getCarritos();
         let carrito = arrayCarritos.find(carrito => carrito.id === parseInt(idCarrito));
         if(carrito === undefined) {
-            return {error: 'Carrito no encontrado'};
+            return {error: 'Cart not found'};
         } else {
             const producto = carrito.productos.find(producto => producto.id === parseInt(idProducto));
             if(producto === undefined) {
-                return {error: 'Producto no encontrado en el carrito'};
+                return {error: 'Product not found on Cart'};
             } else {
                 const index = carrito.productos.indexOf(producto);
                 carrito.productos.splice(index, 1);
@@ -122,7 +122,7 @@ class Carrito {
         let arrayCarritos = this.getCarritos();
         let carrito = arrayCarritos.find(carrito => carrito.id === parseInt(id));
         if(carrito === undefined) {
-            return {error: 'Carrito no encontrado'};
+            return {error: 'Cart not found'};
         } else {
             const index = arrayCarritos.indexOf(carrito);
             arrayCarritos.splice(index, 1);

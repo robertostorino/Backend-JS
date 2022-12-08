@@ -41,7 +41,7 @@ class Producto {
         let objeto = array.find(objeto => objeto.id === parseInt(id));
 
         if (objeto === undefined) {
-            return {error : 'producto no encontrado'};
+            return {error : 'Product not found'};
         } 
 
         return objeto;
@@ -68,7 +68,7 @@ class Producto {
 
             if (objetoActualizado === undefined) {
 
-                return {error: 'Producto no encontrado'};
+                return {error: 'Product not found'};
 
             } else {
 
@@ -82,7 +82,7 @@ class Producto {
             }
         }
         catch (error) {
-            return {error: 'No se pudo actualizar el objeto con ese ID'};
+            return {error: 'Could not update object with that ID'};
         }
     }
 
@@ -91,7 +91,7 @@ class Producto {
         let objeto = array.find(objeto => objeto.id === parseInt(id));
 
         if (objeto === undefined) {
-            return {error: 'No se pudo borrar el objeto con ese ID'};
+            return {error: 'Could not delete object with that ID'};
         } else {
 
             let indice = array.indexOf(objeto);
