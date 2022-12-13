@@ -11,7 +11,7 @@ async function insertProduct(product){
 }
 
 
-module.exports = {
+export {
     toSocketProducts,
     insertProduct
 };
