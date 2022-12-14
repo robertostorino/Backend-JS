@@ -1,9 +1,12 @@
-const Product = require('../models/product.model');
-const bd = new Product('products');
+import { ClienteSQL } from "../models/database.model.js";
+import { options } from "../options/mysql.conn.js";
 
-function toSocketProducts(){
-    let response = bd.getAll();
-    return response;
+const bd = new ClienteSQL(options, 'products');
+
+bd.createTable();
+
+async function toSocketProducts(){
+    return await bd.getAll();
 }
 
 async function insertProduct(product){

@@ -4,6 +4,6 @@ export const options = {
         host: 'localhost',
         user: 'root',
         password: '',
-        database: 'ecommerce'
+        database: 'ecommerce-products'
     }
 }

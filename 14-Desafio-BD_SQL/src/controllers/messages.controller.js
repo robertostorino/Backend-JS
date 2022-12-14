@@ -1,9 +1,12 @@
-const Message = require('../models/message.model');
-const bd = new Message('messages');
+import { ClienteSQL } from "../models/database.model.js";
+import { options } from "../options/sqlite3.conn.js";
 
-function toSocketMessages(){
-    let response =  bd.getAll();
-    return response;
+const bd = new ClienteSQL(options, 'messages'); //Inicializo la base de datos pasandole la conexión y el nombre de la tabla.
+
+bd.createTable(); //Creo la base de datos
+
+async function toSocketMessages(){
+    return await bd.getAll();
 }
 
 async function insertMessage(message){   
@@ -11,7 +14,7 @@ async function insertMessage(message){
 }
 
 
-module.exports = {
+export {
     toSocketMessages,
     insertMessage
 };
