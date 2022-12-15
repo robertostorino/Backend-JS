@@ -37,17 +37,73 @@ export class ClienteSQL {
             })
     }
 
+    async close (){
+        return await this.sql.destroy();
+    }
+
     //  Returns an array of items.
-    getAll() {
-        return this.knex.select('*').from(this.table)
+    async getAll() {
+        try{
+            return this.knex.select('*').from(this.table)
+        } catch (error){
+            console.log(error);
+        } finally{
+            await this.close();
+        }
+    }
+
+    // Returns an item by id
+    async getById(id) {
+        try {
+            return this.knex.select("*").from(this.table).where("id", "=", id);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            await this.close();
+        }
     }
 
     //  Save item
-    save(object) {
+    async save(object) {
         try {
             return this.knex(this.table).insert(object)
         } catch (error) {
-            return false;
+            console.log(error);
+        } finally {
+            await this.close();
+        }
+    }
+
+    // Update an item by id with the given object
+    async update(id, newObject){
+        try {
+            return await this.knex.from(this.table).where("id", "=", id).update(newObject);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            await this.close();
+        }
+    }
+
+    // Remove an item by id
+    async deleteById(id){
+        try {
+            return await this.knex.from(this.table).where("id", "=", id).del();
+        } catch (error) {
+            console.log(error);
+        } finally {
+            await this.close();
+        }
+    }
+
+    // Removes all items from table
+    async deleteAll() {
+        try {
+            return await this.knex.from(this.table).truncate();
+        } catch (error) {
+            console.log(error);
+        } finally {
+            await this.close();
         }
     }
 }

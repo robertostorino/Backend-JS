@@ -1,16 +1,18 @@
-const express = require("express");
-const { Server: HttpServer } = require('http')
-const { Server: IOServer } = require('socket.io')
-const handlebars = require('express-handlebars');
-const {toSocketMessages, insertMessage} = require('./src/controllers/messages.controller');
-const {toSocketProducts, insertProduct} = require('./src/controllers/products.controller')
+import express from 'express';
+// const { Server: HttpServer } = require('http');
+// const { Server: IOServer } = require('socket.io');
+import { createServer } from 'http';
+import { Server } from 'socket.io';
+import handlebars from 'express-handlebars';
+import {toSocketMessages, insertMessage} from './src/controllers/messages.controller.js';
+import {toSocketProducts, insertProduct} from './src/controllers/products.controller.js';
 
 const app = express(); //creo la app en express
-const httpServer = HttpServer(app);  //Creo la del server en http importando express
-const io = new IOServer(httpServer); //Creo un server de socketIO con el httpServer
+const httpServer = createServer(app);  //Creo la del server en http importando express
+const io = new Server(httpServer); //Creo un server de socketIO con el httpServer
 
 const PORT = 8080;
-app.use('/static', express.static(__dirname + '/public')); // Mediante el middleware express.static, indico la ruta que tendrán mis ficheros estáticos
+app.use('/static', express.static('/public')); // Mediante el middleware express.static, indico la ruta que tendrán mis ficheros estáticos
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -43,7 +45,7 @@ io.on("connection", async (socket) => {
 
     socket.on("newProduct", async (data) => {
         await insertProduct(data)               //guarda productos en archivo
-        products = toSocketProducts();
+        products = await toSocketProducts();
         io.sockets.emit("products", products); //Envia productos actualizados
     });
 
@@ -53,7 +55,7 @@ io.on("connection", async (socket) => {
 
     socket.on("newMessage", async (data) => {
         await insertMessage(data);
-        messages = toSocketMessages();
+        messages = await toSocketMessages();
         io.sockets.emit("messages", messages);
     });
 });
