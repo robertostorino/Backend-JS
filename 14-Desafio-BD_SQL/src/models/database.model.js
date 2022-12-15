@@ -6,6 +6,7 @@ export class ClienteSQL {
     // El constructor recibe las options y la tabla
     constructor(options, table) {
         // al instanciar esta clase, el constructor utiliza la conexión con options
+        this.options = options;
         this.knex = knex(options);
         this.table = table;
     }
