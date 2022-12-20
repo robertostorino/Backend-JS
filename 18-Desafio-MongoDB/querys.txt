@@ -1,0 +1,111 @@
+1 //Crea la bd llamada ecommerce
+mkdir ecommerce
+
+//Inicio mongod en un CMD
+mongod --dbpath="ruta/ecommerce"
+
+//Inicio mongosh en otro CMD
+mongosh
+
+//Utilizo la bd ecommerce
+use ecommerce
+
+//Crea las colecciones mensajes y productos
+db.createCollection('mensajes')
+db.createCollection('productos')
+
+2 //Agrego 10 documentos con valores distintos a las colecciones mensajes y productos. 
+//mensajes:
+// author(string), date(string), text(string)
+//productos:
+//  title(string), price(intiger), thumbnail(string)
+db.mensajes.insertMany(
+    [
+        {author:'Messi', date:"16/10/2021 13:43:23" , text: 'Somos campeones del MUNDO!!!'},
+        {author:'Dario', date:"16/10/2021 13:53:23" , text: 'saludos'},
+        {author:'Alexa', date:"16/10/2021 13:43:33" , text: 'Hola, buenas tardes'},
+        {author:'Lucia', date:"18/10/2021 13:43:23" , text: 'Hola, buenas tardes'},
+        {author:'Romina', date:"19/10/2021 13:43:23" , text: 'Hola, buenas tardes'},
+        {author:'Roman', date:"20/10/2021 13:43:23" , text: 'Hola, buenas tardes'},
+        {author:'Tadeo', date:"20/10/2021 13:43:23" , text: 'Hola, buenas tardes'},
+        {author:'Laura', date:"20/10/2021 13:43:23" , text: 'Hola, buenas tardes'},
+        {author:'Olilver', date:"20/10/2021 13:43:23" , text: 'Hola, buenos días'},
+        {author:'Diego', date:"20/10/2021 13:43:23" , text: 'Somos campeones del MUNDO!!!'}
+    ]
+)
+
+db.productos.insertMany(
+    [
+        {title: 'leche', price: 170, thumbnail: 'url.leche.jpg'},
+        {title: 'pan', price: 470, thumbnail: 'url.pan.jpg'},
+        {title: 'hambuguesas', price: 870, thumbnail: 'url.hambuguesas.jpg'},
+        {title: 'pan_dulce', price: 1070, thumbnail: 'url.pan_dulce.jpg'},
+        {title: 'yerba', price: 870, thumbnail: 'url.yerba.jpg'},
+        {title: 'asado', price: 2170, thumbnail: 'url.asado.jpg'},
+        {title: 'camiseta', price: 5000, thumbnail: 'url.camiseta.jpg'},
+        {title: 'jean', price: 4170, thumbnail: 'url.jean.jpg'},
+        {title: 'camisa', price: 4970, thumbnail: 'url.camisa.jpg'},
+        {title: 'teclado', price: 3170, thumbnail: 'url.teclado.jpg'},
+    ]
+)
+
+3 // Lista todos los documentos de cada colección
+
+db.mensajes.find()
+db.productos.find()
+
+4// Muestra la cantidad de documentos almacenados en cada una de las colecciones
+
+db.mensajes.estimatedDocumentCount()
+db.productos.estimatedDocumentCount()
+
+
+5 /**   CRUD sobre colección productos    **/
+
+a // Agregar un producto más en la colección de productos
+db.productos.insertOne({title: 'almohada', price: 3590, thumbnail: 'url.almohada.jpg'})
+
+b // Consultas por nombre de productos
+ i //Lista productos con precio menor a 1000 pesos
+    db.productos.find({'price' : {$lt: 1000}})
+
+ ii //Lista los productos con precio entre 1000 y 3000 pesos
+    db.productos.find({$and: [{'price': {$gte: 1000}}, {'price': {$lte: 3000}}]})
+
+ iii //Lista productos con precio mayor a 3000 mesos
+    db.productos.find({'price' : {$gt: 1000}})
+ 
+ iv //Consulta que trae sólo el nombre del tercer producto más barato
+    db.productos.find({},{'title': 1}).sort({'price': 1}).skip(2).limit(1)
+
+c // Actualiza todos los productos, agregando el campo stock a todos ellos con un valor de 100
+    db.productos.updateMany({}, {$set: {'stock': 100}})
+
+d // Cambia el stock a cero, de los productos con precios mayores a 4000 pesos
+    db.productos.updateMany( {'price': {$gt: 4000}}, {$set: {'stock': 0}})
+
+e // Borra productos con precio menor a 1000 pesos
+    db.productos.deleteMany( {'price': {$lt: 1000}})
+
+6 // Crea un usuario 'pepe' clave 'asd456' que sólo puede leer la base de datos ecommerce.
+  
+  use admin
+
+  db.createUser(
+    { 
+        user: 'pepe', 
+        pwd: 'asd456', 
+        roles: [
+            {role: 'read', db: 'ecommerce'}
+        ]
+    }
+   )
+
+  // Verificar que pepe no pueda cambiar la información
+
+    //Salgo de mongosh y detengo mongod
+    //ingresar a mongod en modo autorización
+    mongod --dbpath="ruta/ecommerce" --auth
+
+    //Ingreso a mongosh con el usuario pepe
+    mongosh -u pepe -p asd456
