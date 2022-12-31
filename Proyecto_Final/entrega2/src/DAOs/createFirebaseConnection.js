@@ -4,10 +4,10 @@ import { FireProduct } from "../models/firebaseContainer/Product/product.databas
 import { FireCart } from "../models/firebaseContainer/Cart/cart.database.js";
 
 const { pathname: root } = new URL('../', import.meta.url)
-const __dirname = root.substring(1);
+//  const __dirname = root.substring(1);
 
-
-const serviceAccount = JSON.parse(fs.readFileSync(__dirname + "DAOs/FireBaseService/serviceAccount.json"))
+//  const serviceAccount = JSON.parse(fs.readFileSync(__dirname + "DAOs/FireBaseService/serviceAccount.json"))
+const serviceAccount = JSON.parse(fs.readFileSync("./src/DAOs/FireBaseService/serviceAccount.json"))
 
 function createFirebaseConnection(productsCollection, cartCollection) {
     if (admin.apps.length === 0) {
