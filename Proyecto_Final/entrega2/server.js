@@ -1,8 +1,8 @@
-const express = require('express');
+import express from 'express';
 const path = require('path');
 
-const productRouter = require('./src/routers/productos');
-const carritoRouter = require('./src/routers/carrito');
+import productRouter from './src/routers/product.routes';
+import cartRouter from './src/routers/cart.routes';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/productos', productRouter);
-app.use('/api/carrito', carritoRouter);
+app.use('/api/carrito', cartRouter);
 
 app.use((req, res) => {
   res.status(404).json({
@@ -24,5 +24,5 @@ app.use((req, res) => {
 
 
 app.listen(PORT, () => {
-  console.log(`RUN http://localhost:${PORT}`);
+  console.log(`Server online, running on http://localhost:${PORT}`);
 });
