@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
+import { config } from "../../../constants/config.js";
 
-const productsCollection = "products";
-const cartCollection = "cart"
+const productosCollection = config.productsCollection;
+const carritoCollection = config.cartCollection;
 
-const productsSchema = new mongoose.Schema({
+const productSchema = new mongoose.Schema({
     timestamp: { type: String, require: true },
     title: { type: String, require: true, minLength: 1, maxLength: 40 },
     description: { type: String, require: true, minLength: 1, maxLength: 400 },
@@ -21,8 +22,8 @@ const cartSchema = mongoose.Schema({
     products: [ productsSchema ]
 })
 
-const mongoProduct = mongoose.model(productsCollection, productsSchema);
-const mongoCart = mongoose.model(cartCollection, cartSchema);
+const mongoProduct = mongoose.model(productosCollection, productSchema);
+const mongoCart = mongoose.model(carritoCollection, cartSchema);
 
 
 export {

@@ -1,28 +1,29 @@
 import express from 'express';
-const path = require('path');
 
-import productRouter from './src/routers/product.routes';
-import cartRouter from './src/routers/cart.routes';
+import { Product_Router} from './src/routers/product.routes.js';
+import { Cart_Router } from './src/routers/cart.routes';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-//app.use( express.static(__dirname+"/public"))
+import { Error } from './src/constants/config.js';
+
+app.get("/", (req, res) => {
+  res.send('<h1 style="color:green"> Bienvenidos al Servidor Express </h1>');
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/productos', productRouter);
-app.use('/api/carrito', cartRouter);
+app.use('/api/productos', Product_Router);
+app.use('/api/carrito', Cart_Router);
 
-app.use((req, res) => {
-  res.status(404).json({
-    error: -2,
-    descripcion: `ruta '${req.originalUrl}' método '${req.method}' no implementada`,
-  });
+app.get('*', function (req, res){
+  return Error.notImplemented(req, res);
 });
 
-
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server online, running on http://localhost:${PORT}`);
 });
+
+server.on("error", (error) => console.log("Error on Server", error));

@@ -1,17 +1,15 @@
-import { getProductos, postProducto, putProducto, deleteProducto } from '../controllers/producto';
-
-import { Router } from express;
-//const validateAdmin = require('../middlewares/validAdmin');
+import { Router } from "express";
+import { productValidator } from "../"
 
 //crear una variable admin y pasarla por parámetro en el router
 const admin = true;
 
-const productosRouter = Router();
+const Product_Router = Router();
 
-productosRouter
+Product_Router
     .get('/:id?', getProductos)
     .post('/', postProducto)
     .put('/:id', putProducto)
     .delete('/:id', deleteProducto)
 
-export { productosRouter }
+export { Product_Router }

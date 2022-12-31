@@ -1,0 +1,27 @@
+import admin from "firebase-admin"
+import fs from 'fs'
+import { FireProduct } from "../models/firebaseContainer/Product/product.database.js";
+import { FireCart } from "../models/firebaseContainer/Cart/cart.database.js";
+
+const { pathname: root } = new URL('../', import.meta.url)
+const __dirname = root.substring(1);
+
+
+const serviceAccount = JSON.parse(fs.readFileSync(__dirname + "DAOs/Firebase_Service/serviceAccount.json"))
+
+function createFirebaseConnection(productsCollection, cartCollection) {
+    if (admin.apps.length === 0) {
+        admin.initializeApp({
+            credential: admin.credential.cert(serviceAccount)
+        });
+    }
+
+    const db = admin.firestore();
+
+    const products = new FireProduct(db.collection(productsCollection));
+
+
+    return { carts: new FireCart(db.collection(cartCollection), products), products };
+}
+
+export { createFirebaseConnection }

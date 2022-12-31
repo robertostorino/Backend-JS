@@ -1,18 +1,20 @@
 import { Router } from express;
 
-import { postCarrito, deleteCarrito, getProductosCarrito, postProductoCarrito, deleteProductoCarrito } from '../controllers/carrito';
+import {
+    getCart,
+    createCart,
+    removeCart,
+    addCartProduct,
+    removeProduct
+} from '../controllers/cart.controller.js';
 
-//const logRequestInfo = require('../middlewares/logRequestInfo');
+const Cart_Router = Router();
 
-const carritoRouter = Router();
+Cart_Router
+    .get('/:id/productos', getCart)
+    .post('/', createCart)
+    .post('/:idCart/productos/:idProd', addCartProduct)
+    .delete('/:idCart/productos/:idProd', removeProduct)
+    .delete('/:id', removeCart);
 
-//carritoRouter.use(logRequestInfo);
-
-carritoRouter
-    .post('/', postCarrito)
-    .delete('/:id', deleteCarrito)
-    .get('/:id/productos', getProductosCarrito)
-    .post('/:id/productos', postProductoCarrito)
-    .delete('/:id/productos/:id_prod', deleteProductoCarrito)
-
-export { carritoRouter };
+export { Cart_Router };

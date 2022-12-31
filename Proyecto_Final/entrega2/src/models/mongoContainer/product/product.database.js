@@ -1,22 +1,11 @@
-import mongoose from "mongoose";
-import * as model from "./schema.products.js"
 import { moment } from "moment";
-import { config } from "../../../constants/settings.js"
-
-const URL = "mongodb+srv://coderhouse:coderhouse@miprimercluster.jrovqqz.mongodb.net/ecommerce?retryWrites=true&w=majority"
+import { config } from "../../../constants/config.js"
 
 
-export class mongooseContainer {
+export class MongoProduct {
     constructor (model){
-        this.model = model.products;
+        this.model = model;
     }
-
-    #connectDb() {
-        return mongoose.connect(URL, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        })
-    
 
     // Return an array of all products
     getAllProducts = async () => {
