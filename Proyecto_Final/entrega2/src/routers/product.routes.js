@@ -1,15 +1,19 @@
 import { Router } from "express";
-import { productValidator } from "../"
+import { productValidator } from "../validators/product.validator.js"
 
-//crear una variable admin y pasarla por parámetro en el router
-const admin = true;
+import {
+    getProducts,
+    appendProduct,
+    updateProduct,
+    removeProduct,
+} from "../controllers/product.controller.js";
 
-const Product_Router = Router();
+const PRODUCTS_ROUTER = Router();
 
-Product_Router
-    .get('/:id?', getProductos)
-    .post('/', postProducto)
-    .put('/:id', putProducto)
-    .delete('/:id', deleteProducto)
+PRODUCTS_ROUTER
+    .get("/:id?", getProducts)
+    .post("/", productValidator, appendProduct)
+    .put("/:id", productValidator, updateProduct)
+    .delete("/:id", removeProduct);
 
-export { Product_Router }
+export { PRODUCTS_ROUTER }

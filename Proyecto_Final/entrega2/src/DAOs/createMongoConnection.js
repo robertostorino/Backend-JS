@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { mongoProduct } from "../models/Mongo/Mongo.models.js";
-import { mongoCart } from "../models/Mongo/Mongo.models.js";
+import { mongoProduct } from "../models/mongoContainer/schema/mongo.models.js";
+import { mongoCart } from "../models/mongoContainer/schema/mongo.models.js";
 import { MongoProduct } from "../models/mongoContainer/Product/product.database.js";
 import { MongoCart } from "../models/mongoContainer/Cart/cart.database.js";
 

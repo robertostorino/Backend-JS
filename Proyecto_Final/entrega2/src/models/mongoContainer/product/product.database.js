@@ -1,6 +1,5 @@
-import { moment } from "moment";
+import moment from "moment";
 import { config } from "../../../constants/config.js"
-
 
 export class MongoProduct {
     constructor (model){

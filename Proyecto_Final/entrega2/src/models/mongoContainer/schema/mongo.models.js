@@ -19,7 +19,7 @@ const productSchema = new mongoose.Schema({
 const cartSchema = mongoose.Schema({
     id: { type: Number, require: true },
     timestamp: { type: String, require: true },
-    products: [ productsSchema ]
+    products: [ productSchema ]
 })
 
 const mongoProduct = mongoose.model(productosCollection, productSchema);

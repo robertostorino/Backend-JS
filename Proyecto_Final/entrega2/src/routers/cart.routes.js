@@ -1,4 +1,4 @@
-import { Router } from express;
+import { Router } from "express";
 
 import {
     getCart,
@@ -8,13 +8,13 @@ import {
     removeProduct
 } from '../controllers/cart.controller.js';
 
-const Cart_Router = Router();
+const CART_ROUTER = Router();
 
-Cart_Router
+CART_ROUTER
     .get('/:id/productos', getCart)
     .post('/', createCart)
     .post('/:idCart/productos/:idProd', addCartProduct)
     .delete('/:idCart/productos/:idProd', removeProduct)
     .delete('/:id', removeCart);
 
-export { Cart_Router };
+export { CART_ROUTER }

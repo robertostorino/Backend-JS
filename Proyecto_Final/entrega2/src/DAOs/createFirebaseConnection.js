@@ -7,7 +7,7 @@ const { pathname: root } = new URL('../', import.meta.url)
 const __dirname = root.substring(1);
 
 
-const serviceAccount = JSON.parse(fs.readFileSync(__dirname + "DAOs/Firebase_Service/serviceAccount.json"))
+const serviceAccount = JSON.parse(fs.readFileSync(__dirname + "DAOs/FireBaseService/serviceAccount.json"))
 
 function createFirebaseConnection(productsCollection, cartCollection) {
     if (admin.apps.length === 0) {

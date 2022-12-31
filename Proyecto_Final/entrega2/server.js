@@ -1,7 +1,7 @@
 import express from 'express';
 
-import { Product_Router} from './src/routers/product.routes.js';
-import { Cart_Router } from './src/routers/cart.routes';
+import { PRODUCTS_ROUTER} from './src/routers/product.routes.js';
+import { CART_ROUTER } from './src/routers/cart.routes.js';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -15,8 +15,8 @@ app.get("/", (req, res) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/productos', Product_Router);
-app.use('/api/carrito', Cart_Router);
+app.use('/api/productos', PRODUCTS_ROUTER);
+app.use('/api/carrito', CART_ROUTER);
 
 app.get('*', function (req, res){
   return Error.notImplemented(req, res);
