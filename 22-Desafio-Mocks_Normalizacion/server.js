@@ -1,30 +1,39 @@
 import express from 'express';
-// const { Server: HttpServer } = require('http');
-// const { Server: IOServer } = require('socket.io');
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import handlebars from 'express-handlebars';
 import {toSocketMessages, insertMessage} from './src/controllers/messages.controller.js';
-import {toSocketProducts, insertProduct} from './src/controllers/products.controller.js';
+import {toSocketProducts, insertProduct, fakerProducts} from './src/controllers/products.controller.js';
 
+
+//  Initializations
 const app = express(); //creo la app en express
 const httpServer = createServer(app);  //Creo la del server en http importando express
 const io = new Server(httpServer); //Creo un server de socketIO con el httpServer
 
+
+//  Settings
 const PORT = 8080;
 app.use('/static', express.static('/public')); // Mediante el middleware express.static, indico la ruta que tendrán mis ficheros estáticos
+
+//  Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.engine('handlebars', handlebars.engine()); // Indico que voy a utilizar el engine de Handlebars
+
 app.use(express.static('./public'))
 
+//  Views setting
 app.set('views', './views')
 app.set('view engine', 'handlebars')
 
 app.get("/", (req, res) => {
     res.render('index');
 });
+
+// Route for fake products
+app.get("/api/productos-test", fakerProducts);
 
 httpServer.listen(PORT, () => {
     console.log("Server online on: ", `http://localhost:${PORT}`)

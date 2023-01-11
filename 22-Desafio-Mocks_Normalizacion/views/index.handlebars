@@ -43,21 +43,57 @@
 <div style="width: 40%; padding-left: 3rem; border-left: 1px solid gray; ">
     <div class="mt-3">
         <h2 style="color: brown; margin: auto; width: 50%; text-align: center">CHAT</h2>
+        <div id="compression"></div>
         <br>
-        <form autocomplete="off" style="padding-right: 3rem;" id="messageForm">
-            <div class="form-group row">
-                <label for="mail" class="col-sm-2 col-form-label"><b>Email</b></label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="mail">
+        <form autocomplete="off" style="padding-right: 3rem; font-size: small" id="messageForm" >
+            <fieldset class="text-bg-light" style="padding: 0.5rem; border-radius: 4%">
+                <legend style="font-weight: bold;">Información requerida</legend>
+                <br>
+                <div class="form-group row">
+                    <label for="mail" class="col-sm-2 col-form-label"><b>Email</b></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="mail" required>
+                    </div>
+
+                    <label for="name" class="col-sm-2 col-form-label"><b>Nombre</b></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="name" required>
+                    </div>
                 </div>
-            </div>
+                <br>
+                <div class="form-group row">
+                    <label for="surname" class="col-sm-2 col-form-label"><b>Apellido</b></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="surname" required>
+                    </div>
+                    <label for="avatar" class="col-sm-2 col-form-label"><b>Avatar URL</b></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="avatar" required>
+                    </div>
+                </div>
+            </fieldset>
+            <br>
+            <fieldset class="text-bg-light" style="padding: 0.5rem; border-radius: 4%">
+                <legend style="font-weight: bold;">Información opcional</legend>
+                <br>
+                <div class="form-group row">
+                    <label for="alias" class="col-sm-2 col-form-label"><b>Alias</b></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="alias">
+                    </div>
+                    <label for="age" class="col-sm-2 col-form-label"><b>Edad</b></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="age">
+                    </div>
+                </div>
+            </fieldset>
             <br>
             <div class="form-group row" style="padding-right: 0.6rem;">
                 <label for="message" class="col-sm-2 col-form-label"><b>Mensaje</b></label>
                 <div class="col-sm-8">
-                    <textarea class="form-control" name="message" rows="2" style="resize: none"></textarea>
+                    <input type="text" class="form-control" name="message" required>
                 </div>
-                <button type="submit" class="btn col-sm-2 btn-primary" style="height: fit-content;" id="sendMessage">
+                <button type="submit" class="btn col-sm-2 btn-primary" style="padding: 0;" id="sendMessage">
                     <span class="material-icons">send</span>
                 </button>
             </div>

@@ -1,15 +1,13 @@
-import { ClienteSQL } from "../models/database.model.js";
-import { options } from "../options/sqlite3.conn.js";
+import { Chat } from "../models/Chat.model.js";
 
-const bd = new ClienteSQL(options, 'messages'); //Inicializo la base de datos pasandole la conexión y el nombre de la tabla.
+const bd = new Chat('messages');
 
-bd.createTable(); //Creo la base de datos
 
 async function toSocketMessages(){
-    return await bd.getAll();
+    return await bd.getNormalized();
 }
 
-async function insertMessage(message){   
+async function insertMessage(message){
     await bd.save(message);
 }
 
