@@ -98,9 +98,9 @@ io.on("connection", async (socket) => {
 
     socket.on("newProduct", async (data) => {
         // await insertProduct(data)
-        await products.add(data);               
+        await productos.add(data);               
         // products = await toSocketProducts();
-        products = await products.get();
+        products = await productos.get();
         io.sockets.emit("products", products); //Envia productos actualizados
     });
 
@@ -117,6 +117,11 @@ io.on("connection", async (socket) => {
             }
             await chat.addChat({...data, fyh: new Date().toLocaleString(), id: listaMensajes.length +1});
         // messages = await toSocketMessages();
+            
+        messages = listaMensajes;
+        console.log(messages)
+
+        
         io.sockets.emit("messages", messages);
     });
 });
