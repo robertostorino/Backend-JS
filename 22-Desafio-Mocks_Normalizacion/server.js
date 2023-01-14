@@ -54,9 +54,9 @@ httpServer.on("error", (error) => console.log("Error en servidor", error));
 io.on("connection", async (socket) => {
     
     // let messages = toSocketMessages();
-        const listaMensajes = await chat.getChat()
-        const strin = JSON.stringify(listaMensajes)
-        const data = JSON.parse(strin)
+        let listaMensajes = await chat.getChat()
+        let strin = JSON.stringify(listaMensajes)
+        let data = JSON.parse(strin)
         
         //  Mensaje original
         let mensajes = {
@@ -74,9 +74,9 @@ io.on("connection", async (socket) => {
         });
 
         //  Mensaje Normalizado
-        const messagesNorm = normalize(mensajes, messagesSchema);
+        let messagesNorm = normalize(mensajes, messagesSchema);
         let messages = messagesNorm;
-
+        let normalized = messagesNorm;
         //  Obtiene la longitud de los mensajes original y normalizado
         const lengthObjetoOriginal = JSON.stringify(mensajes).length;
         const lengthObjNormalizado = JSON.stringify(messagesNorm).length;
@@ -116,10 +116,33 @@ io.on("connection", async (socket) => {
                 return await chat.addChat({...data, fyh: new Date().toLocaleString(), id: 1})
             }
             await chat.addChat({...data, fyh: new Date().toLocaleString(), id: listaMensajes.length +1});
+        
         // messages = await toSocketMessages();
+            listaMensajes = await chat.getChat()
+            strin = JSON.stringify(listaMensajes)
+            data = JSON.parse(strin)
             
-        messages = listaMensajes;
-        console.log(messages)
+            //  Mensaje original
+            mensajes = {
+                id: 'backendCoder09',
+                messages: data
+            };
+
+            // SCHEMA DESING
+            const authorSchema = new schema.Entity("author",{},{idAttribute: "email"});
+            const messageSchema = new schema.Entity("message", {
+                author: authorSchema
+            });
+            const messagesSchema = new schema.Entity("messages", {
+                messages: [messageSchema]
+            });
+
+            //  Mensaje Normalizado
+            const messagesNorm = normalize(mensajes, messagesSchema);
+            let messages = messagesNorm;
+        
+        
+        console.log(messages);
 
         
         io.sockets.emit("messages", messages);
