@@ -5,7 +5,7 @@ const collectionChat = "chat"
 const schemaChat = new mongoose.Schema({
     author:
         {
-            mail: String,
+            email: String,
             name: String,
             surname: String,
             age: Number,

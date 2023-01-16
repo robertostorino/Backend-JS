@@ -26,7 +26,7 @@ formMessages.addEventListener('submit', (event) => {
     event.preventDefault();
     const message = {
         author: {
-            mail: document.querySelector('[name="mail"]').value,
+            email: document.querySelector('[name="email"]').value,
             name: document.querySelector('[name="name"]').value,
             surname: document.querySelector('[name="surname"]').value,
             age: document.querySelector('[name="age"]').value,
@@ -80,10 +80,11 @@ socket.on('messages', messagesNorm => {
     document.getElementById('compression').innerHTML = `<p style="color: brown;" class="text-center"> Compresión de archivo: ${compression} % </p>`
     let html;
     if (data.messages.length > 0) {
+        console.log(data.messages)
         html = data.messages.map(
             (e, i) => `
             <div>
-                <strong style="color: blue;">${e.author.mail}</strong>
+                <strong style="color: blue;">${e.author.email}</strong>
                 <strong style="color: brown;">[${e.date}]:</strong>
                 <em style="color: green">${e.text}</em>
                 <img style= "width: 45px; border-radius: 50%" src="${e.author.avatar}" alt="${e.author.name}">

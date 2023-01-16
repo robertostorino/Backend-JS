@@ -1,13 +1,15 @@
-import { schema } from "normalizr";
+// For futures implementations
 
-const authorSchema = new schema.Entity("author", {}, { idAttribute: 'mail' });
+// import { schema } from "normalizr";
 
-const messageSchema = new schema.Entity("message", {
-    author: authorSchema,
-});
+// const authorSchema = new schema.Entity("author", {}, { idAttribute: 'email' });
 
-const messagesSchema = new schema.Entity("messages", {
-    messages: [messageSchema],
-});
+// const messageSchema = new schema.Entity("message", {
+//     author: authorSchema,
+// });
 
-export { messagesSchema };
+// const messagesSchema = new schema.Entity("messages", {
+//     messages: [messageSchema],
+// });
+
+// export { messagesSchema };
