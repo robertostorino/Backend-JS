@@ -81,13 +81,13 @@ io.on("connection", async (socket) => {
         const lengthObjetoOriginal = JSON.stringify(mensajes).length;
         const lengthObjNormalizado = JSON.stringify(messagesNorm).length;
         
-        //  CALCULO DE PORCENTAJE
-        const porcentajeCompresion = ( original, normalizado ) => {
-            return  Math.trunc(100 - ( (100 * normalizado) / original ));
-        };
+        // //  CALCULO DE PORCENTAJE
+        // const porcentajeCompresion = ( original, normalizado ) => {
+        //     return  Math.trunc(100 - ( (100 * normalizado) / original ));
+        // };
 
-        //  Compresión
-        const compression = porcentajeCompresion(lengthObjetoOriginal, lengthObjNormalizado);
+        // //  Compresión
+        // const compression = porcentajeCompresion(lengthObjetoOriginal, lengthObjNormalizado);
         
     // let products = toSocketProducts();
         let products = await productos.get();

@@ -63,7 +63,10 @@ socket.on('products', data => {
 });
 
 socket.on('compression', compression => {
+    console.log("acá va un valor de compresiòn")
     const html = `<p style="color: brown;" class="text-center"> Compresión de archivo: ${compression} % </p>`
+    // console.log('compresión')
+    // console.log(compression);
     document.getElementById('compression').innerHTML = html;
 })
 
@@ -97,7 +100,7 @@ socket.on('messages', messagesNorm => {
 });
 
 function denormalize(data) {
-    const authorSchema = new normalizr.schema.Entity("author", {}, { idAttribute: 'mail' });
+    const authorSchema = new normalizr.schema.Entity("author", {}, { idAttribute: 'email' });
 
     const messageSchema = new normalizr.schema.Entity("message", {
         author: authorSchema,
