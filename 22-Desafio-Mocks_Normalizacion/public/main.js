@@ -55,16 +55,29 @@ socket.on('products', data => {
     } else {
         html = `
                 <tr>
-                    <td scope="row" colspan="4" style="text-align:center;">HO HAY PRODUCTOS</td>
+                    <td scope="row" colspan="4" style="text-align:center;">NO HAY PRODUCTOS</td>
                 </tr>`;
 
     }
     document.getElementById("tbody").innerHTML = html;
 });
 
-socket.on('messages', dataNorm => {
-    const data = denormalize(dataNorm);
-    document.getElementById('compression').innerHTML = `<p style="color: brown;" class="text-center"> Compresión de archivo: ${dataNorm.compression} % </p>`
+socket.on('compression', compression => {
+    const html = `<p style="color: brown;" class="text-center"> Compresión de archivo: ${compression} % </p>`
+    document.getElementById('compression').innerHTML = html;
+})
+
+socket.on('messages', messagesNorm => {
+    const data = denormalize(messagesNorm);
+    //
+        console.log("mensaje normalizado");
+        console.log(messagesNorm);
+        console.log("-------------------------");
+        console.log("desnormalizado");
+        console.log(data);
+    //
+
+    document.getElementById('compression').innerHTML = `<p style="color: brown;" class="text-center"> Compresión de archivo: ${compression} % </p>`
     let html;
     if (data.messages.length > 0) {
         html = data.messages.map(
@@ -93,7 +106,8 @@ function denormalize(data) {
         messages: [messageSchema],
     });
 
-    return normalizr.denormalize(data.normalized.result, messagesSchema, data.normalized.entities);
+    return normalizr.denormalize(data.result, messagesSchema, data.entities);
+    //return normalizr.denormalize(data.normalized.result, messagesSchema, data.normalized.entities);
 
     //console.log(dataDes)
 }

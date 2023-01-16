@@ -13,7 +13,7 @@ const schemaChat = new mongoose.Schema({
             avatar: String
         },
     text: String,
-    fyh: String,
+    date: String,
     id: Number
 })
 

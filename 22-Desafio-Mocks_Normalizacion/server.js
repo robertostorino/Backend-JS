@@ -140,11 +140,24 @@ io.on("connection", async (socket) => {
             //  Mensaje Normalizado
             const messagesNorm = normalize(mensajes, messagesSchema);
             let messages = messagesNorm;
-        
-        
-        console.log(messages);
+            console.log("Objeto Normalizado");
+            print(messagesNorm);
+            console.log("  ---------   ");
 
+            const lengthObjetoOriginal = JSON.stringify(mensajes).length;
+            const lengthObjNormalizado = JSON.stringify(messagesNorm).length;
+            
+            //  CALCULO DE PORCENTAJE
+            const porcentajeCompresion = ( original, normalizado ) => {
+                return  Math.trunc(100 - ( (100 * normalizado) / original ));
+            };
+
+            let compression = porcentajeCompresion(lengthObjetoOriginal, lengthObjNormalizado);
+            // console.log(compression);
         
+        // console.log(messages);
+
+        io.sockets.emit("compression", compression);
         io.sockets.emit("messages", messages);
     });
 });
