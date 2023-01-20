@@ -8,16 +8,17 @@ import {config} from "../constants/config.js"
 const URL = "mongodb+srv://coderhouse:coderhouse@miprimercluster.jrovqqz.mongodb.net/ecommerce?retryWrites=true&w=majority"
 // const URL = config.mongooseURL;
 
+mongoose.set("strictQuery", false);
 mongoose.connect(URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}, (err) => {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log('MongoDB Connected');
-    }
-});
+                    useNewUrlParser: true,
+                    useUnifiedTopology: true
+                }, (err) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log('MongoDB Connected')
+                    }
+                });
 
 
 class containerMongoose {

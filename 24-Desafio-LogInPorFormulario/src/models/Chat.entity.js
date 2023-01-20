@@ -1,4 +1,4 @@
-// For futures implementations
+// For future implementations
 
 // import { schema } from "normalizr";
 

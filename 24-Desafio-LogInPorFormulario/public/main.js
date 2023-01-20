@@ -62,15 +62,6 @@ socket.on('products', data => {
     document.getElementById("tbody").innerHTML = html;
 });
 
-// socket.on('compression', compression => {
-//     console.log("acá va un valor de compresiòn")
-//     // const html = `<p > Compresión de archivo: ${compression} % </p>`
-//     const html = `<strong>${"Porcentaje de compresion: " +compression}</strong>`
-//     // console.log('compresión')
-//     // console.log(compression);
-//     document.getElementById('compression').innerHTML = html;
-// })
-
 socket.on('messages', messagesNorm => {
     const data = denormalize(messagesNorm);
     //
@@ -80,8 +71,9 @@ socket.on('messages', messagesNorm => {
         console.log("desnormalizado");
         console.log(data);
     //
+    let compression = porcentajeCompresion(data, messagesNorm);
 
-    // document.getElementById('compression').innerHTML = `<p style="color: brown;" class="text-center"> Compresión de archivo: ${compression} % </p>`
+    document.getElementById('compression').innerHTML = `<p style="color: brown;" class="text-center"> Compresión de archivo: ${compression} % </p>`
     let html;
     if (data.messages.length > 0) {
         console.log(data.messages)
@@ -114,4 +106,9 @@ function denormalize(data) {
     return normalizr.denormalize(data.result, messagesSchema, data.entities);
     //return normalizr.denormalize(data.normalized.result, messagesSchema, data.normalized.entities);
 
-}
+};
+
+//  CALCULO DE PORCENTAJE
+const porcentajeCompresion = ( original, normalizado ) => {
+    return  Math.trunc(100 - ( (100 * normalizado) / original ));
+};

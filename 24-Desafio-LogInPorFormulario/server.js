@@ -6,10 +6,21 @@ import handlebars from 'express-handlebars';
 //import {toSocketProducts, insertProduct, fakerProducts} from './src/controllers/products.controller.js';
 import { containerMongoose } from './src/containers/containerMongoose.js';
 import { normalize, denormalize, schema } from 'normalizr';
-
-import util from 'util';
 import { fakerProducts} from './src/controllers/controller.js';
-// import productos from '../22-pruebaDario/routers/routers.js';
+import { config } from './src/constants/config.js'
+//------------------------------------------------//
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
+// import FileStore from 'sessio-file-store';
+//import MongoStore from 'connect-mongo';
+//------------------------------------------------//
+
+// NORMALIZR
+import util from 'util';
+function print(objeto) {
+    console.log(util.inspect(objeto,false,12,true))
+};
+
 
 
 //  Initializations
@@ -20,40 +31,126 @@ const chat = new containerMongoose();
 const productos = new containerMongoose();
 
 
+/* ------------------------------- */
+/*  Persistencia por Mongo  Atlas  */
+/* ------------------------------- */
+import MongoStore from 'connect-mongo'
+const advancedOptions = { 
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+};
+//------------------------------------------------//
+app.use(cookieParser("DevPass"));
+app.use(session({
+    /* ------------------------------- */
+    /*  Express Session                */
+    /* ------------------------------- */
+    store: MongoStore.create({
+        mongoUrl: config.mongooseURL,
+        mongoOptions: advancedOptions,
+        ttl: 700
+    }),
+
+    secret: "Samurai",
+    resave: false,
+    rolling: true,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 5000
+    }
+}));
+//------------------------------------------------//
+
+
+
+
+
 //  Settings
 const PORT = 8080;
 app.use('/static', express.static('/public')); // Mediante el middleware express.static, indico la ruta que tendrán mis ficheros estáticos
 
-//  Middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
+/* ------------------------------- */
+/*      HANDLEBARS                 */
+/* ------------------------------- */
 
 app.engine('handlebars', handlebars.engine()); // Indico que voy a utilizar el engine de Handlebars
-
 app.use(express.static('./public'))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //  Views setting
 app.set('views', './views')
 app.set('view engine', 'handlebars')
 
 
-////    ROUTES      ////
-app.get("/", (req, res) => {
-    res.render('index');
+
+//------------------//
+// Rutas Middleware //
+//------------------//
+const auth = (req, res, next) => {
+    if(req.session?.username){
+        return next()
+    } else {
+        res.redirect('/login')
+    }
+};
+
+//----------------//
+// Rutas de login //
+//----------------//
+app.get('/login', (req, res) => {
+    if (!req.session.username){
+        res.render('login')
+    } else {
+        res.redirect('/')
+    }
+})
+
+app.post('/login', (req, res) => {
+    let user = req.body.username; //leo el username desde el body y lo almaceno en user
+    req.session.username = user; //guardo el username
+    res.redirect('/');
 });
 
-// Route for fake products
-app.get("/api/productos-test", fakerProducts);
+/* ------------------------------- */
+/*      Rutas index                */
+/* ------------------------------- */
+app.get("/", auth, (req, res) => {
+    const username = req.session?.username;
+    res.render('index', { username })
+}
+);
 
-app.use('/api/users', );
+/* ------------------------------- */
+/*      Rutas Logout                */
+/* ------------------------------- */
+app.get('/logout', (req, res) => {
+    const user = req.session.username;
+    req.session.destroy( err => {
+        if (!err) {
+            res.render('logout', { user })
+        } else {
+            res.send({ status: 'logout error', body: err })
+        }
+    })
+}
+);
 
-app.use()
+
+
+app.get("/api/productos-test", fakerProducts);  // Route for fake products
 
 httpServer.listen(PORT, () => {
     console.log("Server online on: ", `http://localhost:${PORT}`)
 })
 
 httpServer.on("error", (error) => console.log("Error en servidor", error));
+
+
+/* ------------------------------- */
+/*      SOCKETS                    */
+/* ------------------------------- */
 
 /** Conexión realizada
 *   Detecta cada socket de un cliente que se conecte
@@ -151,25 +248,22 @@ io.on("connection", async (socket) => {
             print(messagesNorm);
             console.log("  ---------   ");
 
-            const lengthObjetoOriginal = JSON.stringify(mensajes).length;
-            const lengthObjNormalizado = JSON.stringify(messagesNorm).length;
+            // const lengthObjetoOriginal = JSON.stringify(mensajes).length;
+            // const lengthObjNormalizado = JSON.stringify(messagesNorm).length;
             
-            //  CALCULO DE PORCENTAJE
-            const porcentajeCompresion = ( original, normalizado ) => {
-                return  Math.trunc(100 - ( (100 * normalizado) / original ));
-            };
+            // //  CALCULO DE PORCENTAJE
+            // const porcentajeCompresion = ( original, normalizado ) => {
+            //     return  Math.trunc(100 - ( (100 * normalizado) / original ));
+            // };
 
-            let compression = porcentajeCompresion(lengthObjetoOriginal, lengthObjNormalizado);
-            console.log('compresión');
-            console.log(compression);
+            // let compression = porcentajeCompresion(lengthObjetoOriginal, lengthObjNormalizado);
+            // console.log('compresión');
+            // console.log(compression);
         
         // console.log(messages);
 
-        io.sockets.emit("compression", compression);
         io.sockets.emit("messages", messages);
     });
 });
 
-function print(objeto) {
-    console.log(util.inspect(objeto,false,12,true))
-};
+

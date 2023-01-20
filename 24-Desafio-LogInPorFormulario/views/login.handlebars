@@ -1,20 +1,15 @@
 <div class="container my-5">
-    <div class="jumbotron">
-
+    <div class="jumbotron bg-light d-flex justify-content-center flex-column align-items-center rounded">
         <h1>Login de Usuario</h1>
         <br>
-        <form class="form" action="" method="post" roles="form" autocomplete="off">
-
+        <form class="form" action="/login" method="post" roles="form" autocomplete="off">
             <div class="form-group">
-                <label for="nombre">Ingrese su nombre</label>
-                <input id="nombre" name="nombre" placeholder="form-control" type="text" required>
+                <label for="username"><b>Ingrese su nombre</b></label>
+                <input id="username" name="username" placeholder="Daniel" type="text" required>
             </div>
-
+            <div class="text-left">
+                <button type="submit" class="btn btn-success my-3 tertiary" onclick="location.href = '/'">Enviar</button>
+            </div>
         </form>
-
-        <hr>
-        <div class="text-left">
-            <button class="btn btn-success my-3" onclick="location.href = '/'">Enviar</button>
-        </div>
     </div>
 </div>

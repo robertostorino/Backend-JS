@@ -1,6 +1,12 @@
 <div class="d-flex flex-column" style="width: 40%; padding-right: 3rem">
     <div>
         <div class="container mt-3 d-flex justify-content-center flex-column align-items-center">
+            
+            <div class="jumbotron">
+                <h1 style="color:blue">Bienvenido {{username}}</h1>
+                <a href="./logout.handlebars" class="btn btn-success mt-3 mb-5 ">Logout</a>
+            </div>
+            
             <h2 style="color: brown;">PRODUCTOS</h2>
             <div class="text-bg-light" style="padding: 0rem 2rem; border-radius: 4%">
                 <h2 style="color:blue;">Ingrese Producto</h2>
@@ -40,7 +46,7 @@
     </div>
 </div>
 
-<div style="width: 40%; padding-left: 3rem; border-left: 1px solid gray; ">
+<div style="width: 45%; padding-left: 3rem; border-left: 1px solid gray; ">
     <div class="mt-3">
         <h2 style="color: brown; margin: auto; width: 50%; text-align: center">CHAT</h2>
         <div id="compression"></div>
