@@ -56,7 +56,7 @@ app.use(session({
     rolling: true,
     saveUninitialized: false,
     cookie: {
-        maxAge: 5000
+        maxAge: 60000
     }
 }));
 //------------------------------------------------//
@@ -126,10 +126,10 @@ app.get("/", auth, (req, res) => {
 /*      Rutas Logout                */
 /* ------------------------------- */
 app.get('/logout', (req, res) => {
-    const user = req.session.username;
+    const username = req.session.username;
     req.session.destroy( err => {
         if (!err) {
-            res.render('logout', { user })
+            res.render('logout', { username })
         } else {
             res.send({ status: 'logout error', body: err })
         }

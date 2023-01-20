@@ -112,3 +112,9 @@ function denormalize(data) {
 const porcentajeCompresion = ( original, normalizado ) => {
     return  Math.trunc(100 - ( (100 * normalizado) / original ));
 };
+
+const logout = document.querySelector('#logout');
+
+logout.addEventListener('click', () => {
+    window.location.href = '/logout'
+});
