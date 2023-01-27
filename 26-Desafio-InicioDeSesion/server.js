@@ -2,8 +2,6 @@ import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import handlebars from 'express-handlebars';
-//import {toSocketMessages, insertMessage} from './src/controllers/messages.controller.js';
-//import {toSocketProducts, insertProduct, fakerProducts} from './src/controllers/products.controller.js';
 import { containerMongoose } from './src/containers/containerMongoose.js';
 import { normalize, denormalize, schema } from 'normalizr';
 import { fakerProducts} from './src/controllers/controller.js';
@@ -15,12 +13,29 @@ import session from 'express-session';
 //import MongoStore from 'connect-mongo';
 //------------------------------------------------//
 
+//--------------------------------//
 // NORMALIZR
+//--------------------------------//
 import util from 'util';
 function print(objeto) {
     console.log(util.inspect(objeto,false,12,true))
 };
 
+//--------------------------------//
+// PASSPORT
+//--------------------------------//
+import session from 'express-session';
+import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
+
+//--------------------------------//
+// BCRYPT
+//--------------------------------//
+import bcrypt from 'bcrypt';
+// Hash password
+const hashPassword = ( password ) => {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+};
 
 
 //  Initializations
