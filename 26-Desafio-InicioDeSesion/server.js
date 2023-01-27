@@ -54,6 +54,23 @@ const io = new Server(httpServer); //Creo un server de socketIO con el httpServe
 const chat = new containerMongoose();
 const productos = new containerMongoose();
 
+/* ------------------------------- */
+/*      HANDLEBARS                 */
+/* ------------------------------- */
+
+app.engine('handlebars', handlebars.engine()); // Indico que voy a utilizar el engine de Handlebars
+
+//  Views setting
+app.set('views', './views');
+app.set('view engine', 'handlebars');
+
+app.use(express.static('./public'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+//  Settings
+const PORT = 8080;
+app.use('/static', express.static('/public')); // Mediante el middleware express.static, indico la ruta que tendrán mis ficheros estáticos
 
 /* ------------------------------- */
 /*  Persistencia por Mongo  Atlas  */
@@ -72,10 +89,11 @@ app.use(session({
     store: MongoStore.create({
         mongoUrl: config.mongooseURL,
         mongoOptions: advancedOptions,
+        collectionName: 'sessions',
         ttl: 1 * (1000 * 60)
     }),
 
-    secret: "Samurai",
+    secret: "the secret code",
     resave: false,
     rolling: true,
     saveUninitialized: false,
@@ -92,26 +110,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-
-//  Settings
-const PORT = 8080;
-app.use('/static', express.static('/public')); // Mediante el middleware express.static, indico la ruta que tendrán mis ficheros estáticos
-
-
-/* ------------------------------- */
-/*      HANDLEBARS                 */
-/* ------------------------------- */
-
-app.engine('handlebars', handlebars.engine()); // Indico que voy a utilizar el engine de Handlebars
-
-//  Views setting
-app.set('views', './views');
-app.set('view engine', 'handlebars');
-
-app.use(express.static('./public'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
+//--------------------//
+// Passport Register  //
+//--------------------//
+passport.use('register', new LocalStrategy ({
+    passReqToCallback: true
+    }, (req, )
+))
 
 //------------------//
 // Rutas Middleware //
@@ -120,6 +125,14 @@ const auth = (req, res, next) => {
     if(req.session?.username){
         return next()
     } else {
+        res.redirect('/login')
+    }
+};
+
+const requireAuthentication = (req, res, next) => {
+    if(req.isAuthenticated()){
+        next()
+    }else{
         res.redirect('/login')
     }
 };
