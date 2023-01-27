@@ -9,7 +9,7 @@ import { config } from './src/constants/config.js'
 //------------------------------------------------//
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
-// import FileStore from 'sessio-file-store';
+// import FileStore from 'session-file-store';
 //import MongoStore from 'connect-mongo';
 //------------------------------------------------//
 
@@ -20,6 +20,15 @@ import util from 'util';
 function print(objeto) {
     console.log(util.inspect(objeto,false,12,true))
 };
+
+//----------------------//
+// Para usar __dirname  //
+//----------------------//
+// Para poder guardar archivos sin problemas
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 //--------------------------------//
 // PASSPORT
@@ -63,7 +72,7 @@ app.use(session({
     store: MongoStore.create({
         mongoUrl: config.mongooseURL,
         mongoOptions: advancedOptions,
-        ttl: 700
+        ttl: 1 * (1000 * 60)
     }),
 
     secret: "Samurai",
@@ -71,12 +80,16 @@ app.use(session({
     rolling: true,
     saveUninitialized: false,
     cookie: {
-        maxAge: 60000
+        maxAge: 1 * (1000 * 60)
     }
 }));
 //------------------------------------------------//
 
-
+//-------------------------//
+// Middleware de Passport //
+//-----------------------//
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 
@@ -90,14 +103,14 @@ app.use('/static', express.static('/public')); // Mediante el middleware express
 /* ------------------------------- */
 
 app.engine('handlebars', handlebars.engine()); // Indico que voy a utilizar el engine de Handlebars
-app.use(express.static('./public'))
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 //  Views setting
-app.set('views', './views')
-app.set('view engine', 'handlebars')
+app.set('views', './views');
+app.set('view engine', 'handlebars');
 
+app.use(express.static('./public'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 
 //------------------//
@@ -138,7 +151,7 @@ app.get("/", auth, (req, res) => {
 );
 
 /* ------------------------------- */
-/*      Rutas Logout                */
+/*      Rutas Logout
 /* ------------------------------- */
 app.get('/logout', (req, res) => {
     const username = req.session.username;
@@ -152,13 +165,15 @@ app.get('/logout', (req, res) => {
 }
 );
 
-
-
+/* ------------------------------- */
+/*      Rutas Productos Test
+/* ------------------------------- */
 app.get("/api/productos-test", fakerProducts);  // Route for fake products
+
 
 httpServer.listen(PORT, () => {
     console.log("Server online on: ", `http://localhost:${PORT}`)
-})
+});
 
 httpServer.on("error", (error) => console.log("Error en servidor", error));
 
