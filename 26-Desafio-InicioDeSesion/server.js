@@ -4,7 +4,7 @@ import { Server } from 'socket.io';
 import handlebars from 'express-handlebars';
 import { containerMongoose } from './src/containers/containerMongoose.js';
 import { normalize, denormalize, schema } from 'normalizr';
-import { fakerProducts} from './src/controllers/controller.js';
+import { fakerProducts} from './src/controllers/controller.productos.js';
 import { config } from './src/constants/config.js'
 //------------------------------------------------//
 import cookieParser from 'cookie-parser';
@@ -33,7 +33,6 @@ const __dirname = path.dirname(__filename);
 //--------------------------------//
 // PASSPORT
 //--------------------------------//
-import session from 'express-session';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 
@@ -42,8 +41,14 @@ import { Strategy as LocalStrategy } from 'passport-local';
 //--------------------------------//
 import bcrypt from 'bcrypt';
 // Hash password
-const hashPassword = ( password ) => {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+//  Using bcrypt, verify password
+const passwordOk = (password, user) => {
+    return bcrypt.compareSync(password, user.password);
+};
+
+//  Using bcrypt, encrypt password
+const createHash = (password) => {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 };
 
 
@@ -53,6 +58,7 @@ const httpServer = createServer(app);  //Creo la del server en http importando e
 const io = new Server(httpServer); //Creo un server de socketIO con el httpServer
 const chat = new containerMongoose();
 const productos = new containerMongoose();
+const usuarios = new containerMongoose();
 
 /* ------------------------------- */
 /*      HANDLEBARS                 */
@@ -109,13 +115,72 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+passport.serializeUser((username, done) => {
+    try {
+        return done(null, username);
+    } catch (error) {
+        return done(error);
+    }
+});
 
-//--------------------//
-// Passport Register  //
-//--------------------//
+passport.deserializeUser((username, done) => {
+    const user = usuarios.getUser(username);
+    return done(null, user)
+});
+
+//-----------------------------//
+// Passport Middleware Register
+//-----------------------------//
 passport.use('register', new LocalStrategy ({
     passReqToCallback: true
-    }, (req, )
+    }, async (req, username, password, done) => {
+        const { email } = req.body
+        
+        const userAlreadyRegistered = await usuarios.getUser(username);
+        
+        if (userAlreadyRegistered) {
+            console.log('usuario en uso');
+            // return done('el usuario ya está registrado')
+            return done(null, false)
+        }
+
+        const newUser = {
+            username,
+            email,
+            password: createHash(password)
+        }
+
+        usuarios.createUser(newUser);
+
+        // Done es el callback de verificacion. Como next
+        // El 1º arg de Done: si hubo un error o no.
+        // El 2º arg: objeto
+        done(null, newUser);
+
+    }
+));
+
+//--------------------//
+// Passport Login     //
+//--------------------//
+passport.use('login', new LocalStrategy(
+    async (username, password, done) => {
+        
+        const user = await usuarios.getUser(username);
+        
+        if (!user) {
+            return done(null, false, console.log('Usuario o contraseña incorrectos' ));
+        } 
+        
+        if (!passwordOk(password, user)) {
+                return done('password incorrecta', user)
+        } 
+        
+        user.contador = 0; //Dentro de usuario crea la variable contador inicializada en 0
+
+        return done(null, user)
+
+    }
 ))
 
 //------------------//
@@ -129,35 +194,53 @@ const auth = (req, res, next) => {
     }
 };
 
+// const requireAuthentication = (req, res, next) => {
+//     if(req.isAuthenticated()){
+//         next()
+//     }else{
+//         res.redirect('/login')
+//     }
+// };
 const requireAuthentication = (req, res, next) => {
-    if(req.isAuthenticated()){
-        next()
-    }else{
-        res.redirect('/login')
-    }
+    return req.isAuthenticated() ? next() : res.redirect("/login");
 };
+
+//-------------------//
+// Rutas de Register
+//-------------------//
+app.get('/register', (req, res) => {
+    res.render('register')
+});
+
+app.post('/register', passport.authenticate('register', { failureRedirect: '/failregister', successRedirect: '/'}));
+
+app.get('/failregister', (req, res)=> {
+    res.render('failregister')
+});
 
 //----------------//
 // Rutas de login //
 //----------------//
 app.get('/login', (req, res) => {
-    if (!req.session.username){
-        res.render('login')
+    if (req.isAuthenticated()){
+        res.render('/')
     } else {
-        res.redirect('/')
+        res.render('login')
     }
-})
-
-app.post('/login', (req, res) => {
-    let user = req.body.username; //leo el username desde el body y lo almaceno en user
-    req.session.username = user; //guardo el username
-    res.redirect('/');
 });
+
+app.post('/login', passport.authenticate('login', { failureRedirect: '/faillogin', successRedirect: '/' }))
+
+app.get('/faillogin', (req, res) => {
+    res.render('faillogin')
+})
 
 /* ------------------------------- */
 /*      Rutas index                */
 /* ------------------------------- */
-app.get("/", auth, (req, res) => {
+
+
+app.get("/", requireAuthentication, (req, res) => {
     const username = req.session?.username;
     res.render('index', { username })
 }

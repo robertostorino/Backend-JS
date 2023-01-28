@@ -18,6 +18,10 @@ async function fakerProducts (req, res) {
     res.render("fake", { products: productsFaker, listExists: exist, layout: false}); // Render fake products
 }
 
+//-----------------------------------------//
+//     PRODUCTO
+//-----------------------------------------//
+
 const get = (req, res) => {
     const id = req.params.id
     if (id) {

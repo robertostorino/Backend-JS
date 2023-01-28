@@ -3,6 +3,7 @@ import { modelsProducts } from "../models/modelsProducts.js";
 import { modelsChat } from "../models/modelsChat.js";
 import { modelsUsers } from '../models/modelsUsers.js';
 import { config } from "../constants/config.js"
+import bcrypt from 'bcrypt';
 
 const URL = "mongodb+srv://coderhouse:coderhouse@miprimercluster.jrovqqz.mongodb.net/ecommerce?retryWrites=true&w=majority"
 // const URL = config.mongooseURL;
@@ -21,7 +22,6 @@ mongoose.connect(URL, {
 
 
 class containerMongoose {
-
     
       //-----------------------------------------//
      //     PRODUCTS                            //
@@ -73,16 +73,85 @@ class containerMongoose {
      //     USERS                               //
     //-----------------------------------------//
 
-    async getUser(){
-        const data = await modelsUsers.find({}, {_id:0, __v:0});
-        return data;
+    async getUser(username){
+        try {
+            let data = await modelsUsers.findOne({ username: username }, {_id:0, __v:0});
+            return data;
+        } catch (error) {
+            return null;
+        }
     };
 
-    async addUser(){
-        const dataAdd = new modelsUsers(data);
-        const add = await dataAdd.save();
-        return add;
+    // //  Using bcrypt, verify password
+    // passwordOk(password, user) {
+    //     return bcrypt.compareSync(password, user.password);
+    // };
+
+    // //  Using bcrypt, encrypt password
+    // createHash(password) {
+    //     return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+    // };
+
+    async loginUser(username, password, done){
+        try {
+            let user = await this.getUser(username)
+            if (!user) {
+                return done(null, false, console.log('Usuario o contraseña incorrectos'));
+            } else {
+                if (this.passwordOk(password, user)) {
+                    return done(null, user)
+                } else {
+                    return done(null, false, { mensaje: 'Usuario o contraseña incorrectos'})
+                }
+            }
+        } catch (error) {
+            return done(error)
+        }
     };
+
+    async createUser(user){
+        try{
+            await modelsUsers.create(user);
+            console.log('user created');
+        } catch(err) {
+            console.log(err)
+        };
+        // try {
+        //     let user = await this.getUser(username);
+        //     if (user) {
+        //         return done(null, false, console.log(user.username, '-> Usuario no existe'));
+        //     } else {
+        //         let newUser = new modelsUsers({
+        //             username,
+        //             email,
+        //             password: this.createHash(password)
+        //         });
+        //         newUser.save();
+        //         return done(null, newUser);
+        //     }
+        // } catch (error) {
+        //     return done(error)
+        // }
+    };
+
+    // serializeUser(username, done) {
+    //     try {
+    //         return done(null, username);
+    //     } catch (error) {
+    //         return done(error);
+    //     }
+    // }
+    
+    // async deserializeUser(user, done) {
+    //     let username;
+    //     user.length == undefined ? username = user.username : username = user[0].username;
+    //     try {
+    //         const user = await usuario.find({ username: username })
+    //         return user ? done(null, user) : done(null, false);
+    //     } catch (error) {
+    //         return done(error);
+    //     }
+    // }
 }
 
 export {
