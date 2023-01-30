@@ -3,7 +3,7 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import handlebars from 'express-handlebars';
 import { containerMongoose } from './src/containers/containerMongoose.js';
-import { normalize, denormalize, schema } from 'normalizr';
+import { normalize, schema } from 'normalizr';
 import { fakerProducts} from './src/controllers/controller.productos.js';
 import { config } from './src/constants/config.js'
 //------------------------------------------------//
@@ -194,13 +194,6 @@ const auth = (req, res, next) => {
     }
 };
 
-// const requireAuthentication = (req, res, next) => {
-//     if(req.isAuthenticated()){
-//         next()
-//     }else{
-//         res.redirect('/login')
-//     }
-// };
 const requireAuthentication = (req, res, next) => {
     return req.isAuthenticated() ? next() : res.redirect("/login");
 };
