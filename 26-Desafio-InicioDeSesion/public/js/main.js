@@ -115,6 +115,6 @@ const porcentajeCompresion = ( original, normalizado ) => {
 
 const logout = document.querySelector('#logout');
 
-// logout.addEventListener('click', () => {
-//     window.location.href = '/logout'
-// });
+logout.addEventListener('click', () => {
+    window.location.href = '/logout'
+});

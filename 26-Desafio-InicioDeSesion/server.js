@@ -241,8 +241,12 @@ app.get('/faillogin', (req, res) => {
 
 
 app.get("/", requireAuthentication, (req, res) => {
-    const username = req.session?.username;
-    res.render('index', { username })
+    const usuario = req.session?.username;
+    const username = usuarios.getUser(usuario)
+    res.render(
+            'index', 
+            { 
+                dato: username })
 }
 );
 
