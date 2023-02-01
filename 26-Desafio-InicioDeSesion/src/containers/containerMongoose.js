@@ -2,14 +2,13 @@ import mongoose from 'mongoose';
 import { modelsProducts } from "../models/modelsProducts.js"; 
 import { modelsChat } from "../models/modelsChat.js";
 import { modelsUsers } from '../models/modelsUsers.js';
-import { config } from "../constants/config.js"
-import bcrypt from 'bcrypt';
+// import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const URL = "mongodb+srv://coderhouse:coderhouse@miprimercluster.jrovqqz.mongodb.net/ecommerce?retryWrites=true&w=majority"
-// const URL = config.mongooseURL;
 
 mongoose.set("strictQuery", false);
-mongoose.connect(URL, {
+mongoose.connect(process.env.MONGOOSE_URL, {
                     useNewUrlParser: true,
                     useUnifiedTopology: true
                 }, (err) => {

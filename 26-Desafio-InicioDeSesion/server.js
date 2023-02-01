@@ -5,13 +5,19 @@ import handlebars from 'express-handlebars';
 import { containerMongoose } from './src/containers/containerMongoose.js';
 import { normalize, schema } from 'normalizr';
 import { fakerProducts} from './src/controllers/controller.productos.js';
-import { config } from './src/constants/config.js'
+//import { config } from './src/constants/config.js'
 //------------------------------------------------//
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 // import FileStore from 'session-file-store';
 //import MongoStore from 'connect-mongo';
 //------------------------------------------------//
+
+//--------------------------------//
+// DOTENV
+//--------------------------------//
+import dotenv from 'dotenv';
+dotenv.config();
 
 //--------------------------------//
 // NORMALIZR
@@ -87,13 +93,14 @@ const advancedOptions = {
     useUnifiedTopology: true
 };
 //------------------------------------------------//
+
 app.use(cookieParser("DevPass"));
 app.use(session({
     /* ------------------------------- */
     /*  Express Session                */
     /* ------------------------------- */
     store: MongoStore.create({
-        mongoUrl: config.mongooseURL,
+        mongoUrl: process.env.MONGOOSE_URL,
         mongoOptions: advancedOptions,
         collectionName: 'sessions',
         ttl: 1 * (1000 * 60)
