@@ -74,8 +74,8 @@ class containerMongoose {
 
     async getUser(username){
         try {
-            let data = await modelsUsers.findOne({ username: username }, {_id:0, __v:0});
-            return data;
+            let user = await modelsUsers.findOne({ username: username }, {_id:0, __v:0});
+            return user;
         } catch (error) {
             return null;
         }
@@ -115,22 +115,7 @@ class containerMongoose {
         } catch(err) {
             console.log(err)
         };
-        // try {
-        //     let user = await this.getUser(username);
-        //     if (user) {
-        //         return done(null, false, console.log(user.username, '-> Usuario no existe'));
-        //     } else {
-        //         let newUser = new modelsUsers({
-        //             username,
-        //             email,
-        //             password: this.createHash(password)
-        //         });
-        //         newUser.save();
-        //         return done(null, newUser);
-        //     }
-        // } catch (error) {
-        //     return done(error)
-        // }
+        
     };
 
     // serializeUser(username, done) {

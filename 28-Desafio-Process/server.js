@@ -210,13 +210,13 @@ passport.use('login', new LocalStrategy(
 //------------------//
 // Rutas Middleware //
 //------------------//
-const auth = (req, res, next) => {
-    if(req.session?.username){
-        return next()
-    } else {
-        res.redirect('/login')
-    }
-};
+// const auth = (req, res, next) => {
+//     if(req.session?.username){
+//         return next()
+//     } else {
+//         res.redirect('/login')
+//     }
+// };
 
 const requireAuthentication = (req, res, next) => {
     return req.isAuthenticated() ? next() : res.redirect("/login");
@@ -257,15 +257,15 @@ app.get('/faillogin', (req, res) => {
 /* ------------------------------- */
 
 
-app.get("/", requireAuthentication, (req, res) => {
-    const usuario = req.session?.username;
-    const username = usuarios.getUser(usuario)
+app.get("/", requireAuthentication, async  (req, res) => {
+    
+    const usuario = req.session.passport.user.username
+    // const usuario = req.session?.username;
+    const username = await usuarios.getUser(usuario)
     res.render(
             'index', 
-            { 
-                dato: username })
-}
-);
+            { user: username.username })
+});
 
 /* ------------------------------- */
 /*      Rutas Logout
@@ -294,7 +294,20 @@ app.get("/info", (req, res) => {
     res.render('info', {info: sysInfo()})
 });
 
+/* ------------------------------- */
+/*      Ruta: Randoms
+/* ------------------------------- */
+import { fork } from 'child_process';
+// import path from 'path';
 
+app.get("/api/randoms", (req, res) => {
+    //cant recibe el numero por query y lo convierte a tipo Number
+    // Si no recibe valor, entonces por defecto es 100000000
+    const cant = req.query.cant ? Number(req.query.cant) : 100000000;
+    const forked = fork(path.resolve(process.cwd(), "./src/process/getNumbersCount.js"));
+    forked.on("message", (numbers) => res.json(numbers));
+    forked.send({ cant });
+})
 
 /* ------------------------------- */
 /*      SOCKETS                    */

@@ -4,7 +4,7 @@ function sysInfo () {
     os: process.platform,
     nodeV: process.version,
     memoryReserved: process.memoryUsage.rss(),
-    pathDeEjecucion: process.execPath.split('/').pop(),
+    pathDeEjecucion: process.execPath,
     pid: process.pid,
     folder: process.cwd()
     }
