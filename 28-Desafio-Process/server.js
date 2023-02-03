@@ -84,6 +84,24 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/static', express.static('/public')); // Mediante el middleware express.static, indico la ruta que tendrán mis ficheros estáticos
 
 /* ------------------------------- */
+/*      MINIMIST
+/* ------------------------------- */
+import { port } from './minimist.config.js'
+
+/* ------------------------------- */
+
+httpServer.listen(port, () => {
+    console.log("Server online on: ", `${process.env.HOST}:${port}`)
+});
+
+httpServer.on("error", (error) => console.log("Error en servidor", error));
+
+/* ------------------------------- */
+/*      Process: info
+/* ------------------------------- */
+import { sysInfo } from './src/process/info.js';
+
+/* ------------------------------- */
 /*  Persistencia por Mongo  Atlas  */
 /* ------------------------------- */
 import MongoStore from 'connect-mongo'
@@ -265,22 +283,17 @@ app.get('/logout', (req, res) => {
 );
 
 /* ------------------------------- */
-/*      Rutas Productos Test
+/*      Rutas: Productos Test
 /* ------------------------------- */
 app.get("/api/productos-test", fakerProducts);  // Route for fake products
 
-
-
 /* ------------------------------- */
-/*      MINIMIST
+/*      Ruta: Info
 /* ------------------------------- */
-import { port } from './minimist.config.js'
-
-httpServer.listen(port, () => {
-    console.log("Server online on: ", `${process.env.HOST}:${port}`)
+app.get("/info", (req, res) => {
+    res.render('info', {info: sysInfo()})
 });
 
-httpServer.on("error", (error) => console.log("Error en servidor", error));
 
 
 /* ------------------------------- */
