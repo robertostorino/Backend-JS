@@ -99,7 +99,7 @@ httpServer.on("error", (error) => console.log("Error en servidor", error));
 /* ------------------------------- */
 /*      Process: info
 /* ------------------------------- */
-import { sysInfo } from './src/process/info.js';
+import { sysInfo } from './src/process/sysInfo.js';
 
 /* ------------------------------- */
 /*  Persistencia por Mongo  Atlas  */

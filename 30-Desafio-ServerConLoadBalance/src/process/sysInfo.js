@@ -6,7 +6,8 @@ function sysInfo () {
     memoryReserved: process.memoryUsage.rss(),
     pathDeEjecucion: process.execPath,
     pid: process.pid,
-    folder: process.cwd()
+    folder: process.cwd(),
+    processors: os.cpu().length
     }
 };
 
