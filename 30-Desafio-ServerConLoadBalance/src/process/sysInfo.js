@@ -1,3 +1,5 @@
+import os from 'os';
+
 function sysInfo () {
     return{
     args: process.argv.slice(2),
@@ -7,7 +9,7 @@ function sysInfo () {
     pathDeEjecucion: process.execPath,
     pid: process.pid,
     folder: process.cwd(),
-    processors: os.cpu().length
+    processors: os.cpus().length
     }
 };
 

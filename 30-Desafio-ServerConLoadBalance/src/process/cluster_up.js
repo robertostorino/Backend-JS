@@ -2,7 +2,7 @@ import { startServer } from "../../app.js";
 import { sysInfo } from "./sysInfo.js";
 import cluster from 'cluster'
 
-export function executeServerCluster(port) {
+export function clusterUp(port) {
     if (cluster.isPrimary) {
         console.log("Executing app in cluster mode\n");
         const cpus = sysInfo().processors;
