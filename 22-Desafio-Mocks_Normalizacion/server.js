@@ -7,9 +7,12 @@ import handlebars from 'express-handlebars';
 import { containerMongoose } from './src/containers/containerMongoose.js';
 import { normalize, denormalize, schema } from 'normalizr';
 
+// NORMALIZR
 import util from 'util';
+function print(objeto) {
+    console.log(util.inspect(objeto,false,12,true))
+};
 import { fakerProducts} from './src/controllers/controller.js';
-// import productos from '../22-pruebaDario/routers/routers.js';
 
 
 //  Initializations
@@ -153,7 +156,8 @@ io.on("connection", async (socket) => {
             };
 
             let compression = porcentajeCompresion(lengthObjetoOriginal, lengthObjNormalizado);
-            // console.log(compression);
+            console.log('compresión');
+            console.log(compression);
         
         // console.log(messages);
 
@@ -162,6 +166,3 @@ io.on("connection", async (socket) => {
     });
 });
 
-function print(objeto) {
-    console.log(util.inspect(objeto,false,12,true))
-};

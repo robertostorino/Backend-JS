@@ -14,7 +14,7 @@ function createDatabase() {
         case 2:
             return createMongoConnection(config.mongooseURL);
         
-        //MONGO ATLAS
+        //FIREBASE
         case 3:
             return createFirebaseConnection(config.productsCollection, config.cartCollection);
 

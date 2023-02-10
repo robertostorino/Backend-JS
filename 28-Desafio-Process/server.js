@@ -210,13 +210,6 @@ passport.use('login', new LocalStrategy(
 //------------------//
 // Rutas Middleware //
 //------------------//
-// const auth = (req, res, next) => {
-//     if(req.session?.username){
-//         return next()
-//     } else {
-//         res.redirect('/login')
-//     }
-// };
 
 const requireAuthentication = (req, res, next) => {
     return req.isAuthenticated() ? next() : res.redirect("/login");
@@ -255,12 +248,8 @@ app.get('/faillogin', (req, res) => {
 /* ------------------------------- */
 /*      Rutas index                */
 /* ------------------------------- */
-
-
 app.get("/", requireAuthentication, async  (req, res) => {
-    
     const usuario = req.session.passport.user.username
-    // const usuario = req.session?.username;
     const username = await usuarios.getUser(usuario)
     res.render(
             'index', 
@@ -279,8 +268,7 @@ app.get('/logout', (req, res) => {
             res.send({ status: 'logout error', body: err })
         }
     })
-}
-);
+});
 
 /* ------------------------------- */
 /*      Rutas: Productos Test

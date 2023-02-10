@@ -10,7 +10,6 @@ const config = {
 
     mongooseURL:  "mongodb+srv://coderhouse:coderhouse@miprimercluster.jrovqqz.mongodb.net/ecommerce?retryWrites=true&w=majority"
     
-    
 }
 
 const Error = {

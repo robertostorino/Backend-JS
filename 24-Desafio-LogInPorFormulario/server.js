@@ -5,7 +5,7 @@ import handlebars from 'express-handlebars';
 //import {toSocketMessages, insertMessage} from './src/controllers/messages.controller.js';
 //import {toSocketProducts, insertProduct, fakerProducts} from './src/controllers/products.controller.js';
 import { containerMongoose } from './src/containers/containerMongoose.js';
-import { normalize, denormalize, schema } from 'normalizr';
+import { normalize, schema } from 'normalizr';
 import { fakerProducts} from './src/controllers/controller.js';
 import { config } from './src/constants/config.js'
 //------------------------------------------------//

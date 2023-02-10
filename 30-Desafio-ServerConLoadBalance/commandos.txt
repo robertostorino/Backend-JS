@@ -56,7 +56,7 @@
         * Validar archivo ngnix_1.conf en carpeta ngnix_config_files. Ajustar y ejecutar (./nginx.exe -s reload) para
           tomar cambios en archivo config.
         * Como se pide módulo nativo de clustes se debe ejecutar:
-                node server.js -m CLUSTER -P 8081
+                node server.js --m CLUSTER --p 8081
             Si desea usar pm2 o forever:
                 forever start server.js -p 8081 -m CLUSTER
                 pm2 start server.js --watch -i max -- --p 8081
