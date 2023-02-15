@@ -1,0 +1,34 @@
+{
+  "name": "14-desafio-bd_sql",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "fork-mode": "node server.js -m FORK",
+    "cluster-mode": "node server.js -m CLUSTER"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "bcrypt": "^5.1.0",
+    "connect-mongo": "^4.6.0",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-handlebars": "^6.0.7",
+    "express-session": "^1.17.3",
+    "minimist": "^1.2.7",
+    "moment": "^2.29.4",
+    "mongoose": "^6.9.1",
+    "nodemon": "^2.0.20",
+    "normalizr": "^3.6.2",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
+    "socket.io": "^4.6.0"
+  },
+  "description": ""
+}
