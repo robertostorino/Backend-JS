@@ -1,5 +1,6 @@
 import { containerMongoose } from "../containers/containerMongoose.js";
 import {generateFakeProds} from "../../utils/generateFakeProds.js"
+import { logger } from "../config/logger.js";
 const Producto = new containerMongoose();
 
 // Generate fake prods
@@ -11,10 +12,10 @@ async function fakerProducts (req, res) {
         let newProduct = generateFakeProds(); //Generate product with faker
         // console.log(newProduct);
         productsFaker.push(newProduct); //Shows new products
-        console.log(productsFaker)
+        logger.info(productsFaker)
     }
     let exist = productsFaker.length > 0 ? true : false; // Flag if there are products exist is true, else false
-    console.log(exist);
+    logger.info(exist);
     res.render("fake", { products: productsFaker, listExists: exist, layout: false}); // Render fake products
 }
 

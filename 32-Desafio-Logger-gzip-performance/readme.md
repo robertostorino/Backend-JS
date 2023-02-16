@@ -2,8 +2,8 @@
 npm init -y
 
 # Dependencias Locales
-npm i @faker-js/faker bcrypt connect-mongo dotenv express express-handlebars express-session minimist moment mongoose normalizr passport passport-local socket.io
+npm i @faker-js/faker bcrypt connect-mongo dotenv express express-handlebars express-session minimist moment mongoose normalizr passport passport-local socket.io compression winston
 
 # Dependencia Global
-Se instala pm2
--> npm i -g pm2
+Se instala pm2  -> npm i -g pm2
+Se instala forever  -> npm i -g forever

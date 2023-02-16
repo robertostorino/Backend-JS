@@ -1,5 +1,5 @@
 import { generateRandomNumbers } from "./genRandomNums.js";
-
+import { logger } from "../config/logger.js";
 const countNumbers = (numbers) => {
     const uniques = new Set(numbers); //Números sin repetir
     const data = {};
@@ -11,7 +11,7 @@ const countNumbers = (numbers) => {
 };
 
 process.on("message", ({ cant }) => {
-    console.log('Hilo iniciado: ' + process.pid);
+    logger.info('Hilo iniciado: ' + process.pid);
     const randomNumbers = generateRandomNumbers(cant);
     const counter = countNumbers(randomNumbers);
     process.send(counter);

@@ -96,31 +96,32 @@ const messagesSchema = new schema.Entity("messages",
 
 //  utils
 import util from 'util';
+import { logger } from "../config/logger";
 
 function print(objeto) {
-    console.log(util.inspect(objeto, false, 12, true))
+    logger.info(util.inspect(objeto, false, 12, true))
 };
 
-console.log("Objeto Original");
+logger.info("Objeto Original");
 print(mensajes);
-console.log("  ---------   ");
+logger.info("  ---------   ");
 
 //  NORMALIZADO
 //  Primer parámetro: el nombre del objeto => messageWithId
 //  Segundo parámetro: el nombre del esquema => messagesSchema
 const normalizedMessage = normalize(mensajes,messagesSchema);
-console.log("Objeto Normalizado");
+logger.info("Objeto Normalizado");
 print(normalizedMessage);
-console.log("  ---------   ");
+logger.info("  ---------   ");
 
 //  DESNORMALIZAR
 //  Primer parámetro: el resultado del objeto normalizado
 //  Segundo parámetro: el schema
 //  Tercer parámetro: las entidades del objeto normalizado
 const denormalizedMessage = denormalize(normalizedMessage.result, messagesSchema, normalizedMessage.entities);
-console.log("Objeto DesNormalizado");
+logger.info("Objeto DesNormalizado");
 print(denormalizedMessage);
-console.log("  ---------   ");
+logger.info("  ---------   ");
 
 //  LENGTH
 
@@ -137,17 +138,17 @@ const porcentajeCompresion = ( original, normalizado ) => {
 
 //  IMPRESIONES
 
-console.log('-----OBJETO ORIGINAL-----');
-console.log('Longitud del objeto original: ' + lengthObjetoOriginal +'\n');
+logger.info('-----OBJETO ORIGINAL-----');
+logger.info('Longitud del objeto original: ' + lengthObjetoOriginal +'\n');
 
-console.log('-----OBJETO NORMALIZADO-----');
-console.log('Longitud del objeto normalizado: ' + lengthObjNormalizado +'\n');
+logger.info('-----OBJETO NORMALIZADO-----');
+logger.info('Longitud del objeto normalizado: ' + lengthObjNormalizado +'\n');
 
-console.log('-----OBJETO DENORMALIZADO-----');
-console.log('Longitud del objeto denormalizado: ' + lengthObjDenormalizado +'\n');
+logger.info('-----OBJETO DENORMALIZADO-----');
+logger.info('Longitud del objeto denormalizado: ' + lengthObjDenormalizado +'\n');
 
-console.log('-----PORCENTAJE DE COMPRESION-----');
-console.log('Porcentaje de compresión: ' + porcentajeCompresion(lengthObjetoOriginal, lengthObjNormalizado) +'%');
+logger.info('-----PORCENTAJE DE COMPRESION-----');
+logger.info('Porcentaje de compresión: ' + porcentajeCompresion(lengthObjetoOriginal, lengthObjNormalizado) +'%');
 
 
 

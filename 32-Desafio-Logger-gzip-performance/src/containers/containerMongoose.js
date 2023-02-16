@@ -4,6 +4,7 @@ import { modelsChat } from "../models/modelsChat.js";
 import { modelsUsers } from '../models/modelsUsers.js';
 // import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
+import { logger } from '../config/logger.js';
 dotenv.config();
 
 
@@ -13,9 +14,9 @@ mongoose.connect(process.env.MONGOOSE_URL, {
                     useUnifiedTopology: true
                 }, (err) => {
                     if (err) {
-                        console.log(err);
+                        logger.error(err);
                     } else {
-                        console.log('MongoDB Connected')
+                        logger.info('MongoDB Connected')
                     }
                 });
 
@@ -81,16 +82,6 @@ class containerMongoose {
         }
     };
 
-    // //  Using bcrypt, verify password
-    // passwordOk(password, user) {
-    //     return bcrypt.compareSync(password, user.password);
-    // };
-
-    // //  Using bcrypt, encrypt password
-    // createHash(password) {
-    //     return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-    // };
-
     async loginUser(username, password, done){
         try {
             let user = await this.getUser(username)
@@ -111,31 +102,12 @@ class containerMongoose {
     async createUser(user){
         try{
             await modelsUsers.create(user);
-            console.log('user created');
+            logger.info('user created');
         } catch(err) {
-            console.log(err)
+            logger.error(err)
         };
         
     };
-
-    // serializeUser(username, done) {
-    //     try {
-    //         return done(null, username);
-    //     } catch (error) {
-    //         return done(error);
-    //     }
-    // }
-    
-    // async deserializeUser(user, done) {
-    //     let username;
-    //     user.length == undefined ? username = user.username : username = user[0].username;
-    //     try {
-    //         const user = await usuario.find({ username: username })
-    //         return user ? done(null, user) : done(null, false);
-    //     } catch (error) {
-    //         return done(error);
-    //     }
-    // }
 }
 
 export {

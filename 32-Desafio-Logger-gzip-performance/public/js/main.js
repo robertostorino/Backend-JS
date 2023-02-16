@@ -36,7 +36,6 @@ formMessages.addEventListener('submit', (event) => {
         date: new Date().toLocaleString().replace(',', ''),
         text: document.querySelector('[name="message"]').value
     };
-    console.log(message)
     socket.emit('newMessage', message);
     document.querySelector('[name="message"]').value = '';
 });
@@ -64,19 +63,18 @@ socket.on('products', data => {
 
 socket.on('messages', messagesNorm => {
     const data = denormalize(messagesNorm);
-    //
-        console.log("mensaje normalizado");
-        console.log(messagesNorm);
-        console.log("-------------------------");
-        console.log("desnormalizado");
-        console.log(data);
-    //
+    // //
+    //     console.log("mensaje normalizado");
+    //     console.log(messagesNorm);
+    //     console.log("-------------------------");
+    //     console.log("desnormalizado");
+    //     console.log(data);
+    // //
     let compression = porcentajeCompresion(data, messagesNorm);
 
     document.getElementById('compression').innerHTML = `<p style="color: brown;" class="text-center"> Compresión de archivo: ${compression} % </p>`
     let html;
     if (data.messages.length > 0) {
-        console.log(data.messages)
         html = data.messages.map(
             (e, i) => `
             <div>
@@ -104,8 +102,6 @@ function denormalize(data) {
     });
 
     return normalizr.denormalize(data.result, messagesSchema, data.entities);
-    //return normalizr.denormalize(data.normalized.result, messagesSchema, data.normalized.entities);
-
 };
 
 //  CALCULO DE PORCENTAJE
