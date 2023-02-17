@@ -37,7 +37,7 @@ export function startServer(port){
     //--------------------------------//
     // import util from 'util';
     function print(objeto) {
-        console.log(util.inspect(objeto,false,12,true))
+        logger.info(util.inspect(objeto,false,12,true))
     };
 
     //----------------------//
@@ -259,6 +259,11 @@ export function startServer(port){
     // Rutas: Productos Test
     app.get("/api/productos-test", fakerProducts);  // Route for fake products
 
+    // Ruta: Info (bloqueante)
+    // app.get("/info", (req, res) => {
+    //     console.log(req.url)
+    //     res.render('info', {info: sysInfo()})
+    // });
     // Ruta: Info
     app.get("/info", (req, res) => {
         res.render('info', {info: sysInfo()})
@@ -362,4 +367,4 @@ export function startServer(port){
             io.sockets.emit("messages", messages);
         });
     });
-};
+}
