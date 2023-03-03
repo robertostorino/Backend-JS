@@ -23,23 +23,28 @@ const getProductosCarrito = (req, res) => {
 }
 
 const postProductoCarrito = (req, res) => {
-    const idProducto = req.body.id;
-    const idCarrito = req.params.id;
+    // const idProducto = req.body.id;
+    // const idCarrito = req.params.id;
+    const { idCart, idProd } = req.params;
 
-    const producto = contenedorProducto.getProductoById(idProducto);
+    console.log("id producto "+idProd)
+    console.log("id carrito: "+idCart)
+
+    const producto = contenedorProducto.getProductoById(idProd);
 
     if(producto.error != undefined) {
         res.json(producto);
     } else {
-        let id = contenedorCarrito.postProductoCarrito(idCarrito, producto)
+        let id = contenedorCarrito.postProductoCarrito(idCart, producto)
         res.json({id: id});
     }
 }
 
 const deleteProductoCarrito = (req, res) => {
-    const idProducto = req.params.id_prod;
-    const idCarrito = req.params.id;
-    res.json(contenedorCarrito.deleteProductoCarrito(idCarrito, idProducto));
+    // const idProducto = req.params.id_prod;
+    // const idCarrito = req.params.id;
+    const { idCart, idProd } = req.params;
+    res.json(contenedorCarrito.deleteProductoCarrito(idCart, idProd));
 }
 
 

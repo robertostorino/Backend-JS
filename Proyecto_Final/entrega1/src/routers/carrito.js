@@ -10,7 +10,7 @@ carritoRouter.use(logRequestInfo);
 carritoRouter.post('/', logRequestInfo, postCarrito);
 carritoRouter.delete('/:id', logRequestInfo, deleteCarrito);
 carritoRouter.get('/:id/productos', logRequestInfo, getProductosCarrito);
-carritoRouter.post('/:id/productos', logRequestInfo, postProductoCarrito);
-carritoRouter.delete('/:id/productos/:id_prod', logRequestInfo, deleteProductoCarrito);
+carritoRouter.post('/:idCart/productos/:idProd', logRequestInfo, postProductoCarrito);
+carritoRouter.delete('/:idCart/productos/:idProd', logRequestInfo, deleteProductoCarrito);
 
 module.exports = carritoRouter;
