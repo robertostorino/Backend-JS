@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('./public'));
 
 app.use('/api/productos', productosRouter);
 app.use('/api/carrito', carritoRouter);
@@ -21,7 +22,6 @@ app.use((req, res) => {
     descripcion: `ruta '${req.originalUrl}' método '${req.method}' no implementada`,
   });
 });
-
 
 app.listen(PORT, () => {
   console.log(`RUN http://localhost:${PORT}`);
