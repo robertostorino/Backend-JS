@@ -8,7 +8,7 @@ function createDatabase() {
         // FILE SYSTEM
         default:
         case 1:
-            return createFilesConnection(config.productsCollection, config.cartCollection)
+            return createFilesConnection(config.productsCollection, config.cartCollection);
         
         //MONGO ATLAS
         case 2:

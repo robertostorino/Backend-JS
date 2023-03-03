@@ -1,5 +1,5 @@
 
-const selectedDatabase = 1;
+const selectedDatabase = 2;
 
 const config = {
     admin: true,
@@ -8,7 +8,8 @@ const config = {
     productsCollection: "product",
     cartCollection: "cart",
 
-    mongooseURL:  "mongodb+srv://coderhouse:coderhouse@miprimercluster.jrovqqz.mongodb.net/ecommerce?retryWrites=true&w=majority"
+    // mongooseURL:  "mongodb+srv://coderhouse:coderhouse@miprimercluster.jrovqqz.mongodb.net/ecommerce?retryWrites=true&w=majority"
+    mongooseURL:  "mongodb+srv://coderhouse:coderhouse@miprimercluster.jrovqqz.mongodb.net/ecommerceFinal?retryWrites=true&w=majority"
     
 }
 
