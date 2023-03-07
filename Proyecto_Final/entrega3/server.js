@@ -1,13 +1,14 @@
-import express, { urlencoded } from 'express';
+import express, { json, urlencoded } from 'express';
 import session from 'express-session';
 import { productsRouter } from './src/routers/router.products.js';
 import { cartsRouter } from './src/routers/router.carts.js';
+import { usersRouter } from './src/routers/router.users.js'
 import passport from 'passport';
-import { connect } from './src/middlewares/mongoConnection.js';
+import { connectDB } from './src/middlewares/mongoConnection.js';
 import mongoStore from 'connect-mongo';
 import fileUpload from 'express-fileupload';
 import { logNotImplementedRequest, logRequest } from './src/middlewares/middleware.logs.js'
-import { logger } from './src/config.js';
+import { logger } from './src/constants/config.js';
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -16,8 +17,8 @@ const __dirname = direname(__filename);
 
 import dotenv from 'dotenv';
 dotenv.config();
-const URL = process.env.MONGOOSE_URL;
-connect(URL);
+
+connectDB(process.env.MONGOOSE_URL);
 
 const app = express();
 

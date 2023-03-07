@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export const connect = async (URL) => {
+export const connectDB = async (URL) => {
     try {
         await mongoose.connect(`${URL}`, {
             useNewUrlParser: true,

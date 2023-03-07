@@ -1,12 +1,9 @@
-import mongoose from "mongoose";
 import CartModel from '../models/model.carts.js';
 import ProductModel from "../models/model.product.js";
-import { connect } from '../middlewares/mongoConnection.js';
-
 
 class CartsContainer{
-    constructor(url) {
-        this.url = url;
+    constructor(obj) {
+        this.obj = obj;
     }
 
     async createCart (obj) {

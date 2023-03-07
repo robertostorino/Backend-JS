@@ -47,7 +47,7 @@ const getMyUserData = async (req, res, next) => {
 const getMycart = async (req, res) => {
 	try {
 		let user = await usersContainer.getUser(req.user.username);
-		let carrito = await cartsContainer.getByCartId(user.idCart);
+		let carrito = await cartsContainer.getByCartId(user.cartId);
 		let compra = Boolean;
 		res.render('carrito', { carrito: carrito, user: user.username, compra: compra });
 
@@ -79,7 +79,7 @@ const getProducts = async (req, res) => {
 
 const newOrderNotification = async (req, res) => {
     const user = await usersContainer.getUser(req.user.username);
-    const carrito = await cartsContainer.getByCartId(user.idCart)
+    const carrito = await cartsContainer.getByCartId(user.cartId)
     const products = carrito.productos;
     let generateOrder = {};
     products.forEach(product => {
