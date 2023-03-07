@@ -1,4 +1,4 @@
-const validateAdmin = (admin) => (request, response, next) => {
+const isAuthoraized = (admin) => (request, response, next) => {
 
     const { method, originalUrl } = request;
   
@@ -22,4 +22,4 @@ const validateAdmin = (admin) => (request, response, next) => {
     
   };
   
-  export { validateAdmin };
+  export { isAuthoraized };

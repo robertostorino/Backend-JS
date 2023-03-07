@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
-import { config } from "../../../constants/config.js";
+import { config } from "../../constants/config.js";
 
 const productosCollection = config.productsCollection;
 const carritoCollection = config.cartCollection;
+const usuarioCollection = config.userCollection;
 
 const productSchema = new mongoose.Schema({
     timestamp: { type: String, require: true },
@@ -20,13 +21,26 @@ const cartSchema = mongoose.Schema({
     id: { type: Number, require: true },
     timestamp: { type: String, require: true },
     products: [ productSchema ]
+});
+
+const userSchema = mongoose.Schema({
+    username: String,
+    password: String,
+    name: String,
+    address: String,
+    age: Number,
+    phone: String,
+    avatar: String,
+    cartId: Number
 })
 
 const mongoProduct = mongoose.model(productosCollection, productSchema);
 const mongoCart = mongoose.model(carritoCollection, cartSchema);
+const mongoUser = mongoose.model(usuarioCollection, userSchema);
 
 
 export {
     mongoProduct,
-    mongoCart
+    mongoCart,
+    mongoUser
 }
