@@ -11,4 +11,6 @@ const userSchema = new mongoose.Schema({
 	cartId: { type: String, require: true },
 });
 
-export const usermodel = mongoose.model(usersCollection, userSchema);
+const UserModel = mongoose.model(usersCollection, userSchema);
+
+export default UserModel;

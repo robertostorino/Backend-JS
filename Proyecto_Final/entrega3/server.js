@@ -48,13 +48,13 @@ app.use(passport.session());
 app.use('/api/productos', productsRouter);
 app.use('/api/carrito', cartsRouter);
 app.use(usersRouter);
-app.get('*', logNotImplementedRequest, (req, res) => {
+app.all('*', logNotImplementedRequest, (req, res) => {
     const { url, method } = req;
     res.send(`Requested route ${url} with ${method} method is not implemented`);
 });
 
 const HOST = process.env.HOST;
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
     console.log(`Server listening on ${HOST}:${PORT}`);
