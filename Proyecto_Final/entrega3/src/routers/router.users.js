@@ -1,9 +1,9 @@
 import express from 'express';
 import { Router } from 'express';
-import UsersContainer from '../containers/container.users.js';
+import { UsersContainer } from '../containers/container.users.js';
 import passport from 'passport';
 import { passportLogin, passportRegister, serialDeserial } from '../middlewares/passport.js';
-import { failLogin, getMycart, getMyUserData, getProducts, getUser, getUserImage, logout, requireAuthentication, savePicturesLocal } from '../controllers/controller.users.js';
+import { failLogin, getMyCart, getMyUserData, getProducts, getUser, getUserImage, logout, requireAuthentication, savePicturesLocal } from '../controllers/controller.users.js';
 
 const usersContainer = new UsersContainer();
 

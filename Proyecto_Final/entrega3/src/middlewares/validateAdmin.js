@@ -1,25 +1,8 @@
-const isAuthoraized = (admin) => (request, response, next) => {
+const isAuthorized = (req, res, next) => {
+	const admin = true;
+	!admin
+		? res.json({ error: -1, descripcion: 'ruta: /api/productos metodo: POST, no autorizada' })
+		: next();
+};
 
-    const { method, originalUrl } = request;
-  
-    const authorized = admin ? true : false;
-  
-    if (authorized) {
-  
-      next();
-  
-    } else {
-  
-      response.status(401).json({
-  
-        error: -1,
-        descripcion: `ruta '${originalUrl}' método '${method}' no autorizada`,
-        user: request.user
-  
-      });
-  
-    }
-    
-  };
-  
-  export { isAuthoraized };
+export { isAuthorized };

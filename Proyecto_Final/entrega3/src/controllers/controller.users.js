@@ -1,6 +1,6 @@
-import { UsersContainer } from '../containers/container.users';
-import { CartsContainer } from '../containers/container.carts';
-import { ProductsContainer } from '../containers/container.products';
+import { UsersContainer } from '../containers/container.users.js';
+import { CartsContainer } from '../containers/container.carts.js';
+import { ProductsContainer } from '../containers/container.products.js';
 
 const usersContainer = new UsersContainer();
 const cartsContainer = new CartsContainer();
@@ -44,7 +44,7 @@ const getMyUserData = async (req, res, next) => {
     }
 };
 
-const getMycart = async (req, res) => {
+const getMyCart = async (req, res) => {
 	try {
 		let user = await usersContainer.getUser(req.user.username);
 		let carrito = await cartsContainer.getByCartId(user.cartId);
@@ -116,7 +116,7 @@ export {
     getUser, 
     getUserImage, 
     getMyUserData,
-    getMycart,
+    getMyCart,
     getProducts,
     newOrderNotification,
     logout,

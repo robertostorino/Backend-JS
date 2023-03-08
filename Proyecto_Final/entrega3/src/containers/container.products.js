@@ -1,6 +1,4 @@
 import ProductModel from "../models/model.product.js";
-import mongoose from 'mongoose';
-import { connect } from "../middlewares/mongoConnection.js";
 
 class ProductsContainer {
     constructor(url) {
@@ -18,7 +16,7 @@ class ProductsContainer {
     };
 
     async getById(id) {
-        let data = nullM
+        let data = null;
         try {
             data = await ProductModel.findById(id);
             return data ? data : "Product doesn't exist";
@@ -51,7 +49,7 @@ class ProductsContainer {
         let data = null;
         try {
             data = await ProductModel.deleteOne({ _id: id });
-            data.deletedCount ? 'Product deleted' : 'Product does not exist';
+            return data.deletedCount ? ('Product deleted') : ('Product does not exist');
         } catch (error) {
             console.log(`Something goes wrong ${error}`)
         }

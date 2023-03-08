@@ -7,10 +7,6 @@ const config = {
 
     productsCollection: "product",
     cartCollection: "cart",
-
-    // mongooseURL:  "mongodb+srv://coderhouse:coderhouse@miprimercluster.jrovqqz.mongodb.net/ecommerce?retryWrites=true&w=majority"
-    mongooseURL:  "mongodb+srv://coderhouse:coderhouse@miprimercluster.jrovqqz.mongodb.net/ecommerceFinal?retryWrites=true&w=majority"
-    
 }
 
 const Error = {

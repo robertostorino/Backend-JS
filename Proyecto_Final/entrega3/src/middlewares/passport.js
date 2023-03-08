@@ -2,7 +2,7 @@ import { UsersContainer } from '../containers/container.users.js';
 import passport from 'passport';
 import { Strategy as LocalStrategy} from 'passport-local';
 import { CartsContainer } from '../containers/container.carts.js';
-import { sendMailNotification } from './userMailNotification.js';
+import { adminNewUserNotification } from './notificationManager.js';
 import dotenv from 'dotenv';
 dotenv.config();
 

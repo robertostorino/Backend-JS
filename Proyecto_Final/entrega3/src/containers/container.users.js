@@ -1,4 +1,3 @@
-import UserModel from '../models/model.user.js';
 import bcrypt from 'bcrypt';
 import { model } from 'mongoose';
 

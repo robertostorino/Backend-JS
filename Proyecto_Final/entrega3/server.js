@@ -8,14 +8,14 @@ import { connectDB } from './src/middlewares/mongoConnection.js';
 import mongoStore from 'connect-mongo';
 import fileUpload from 'express-fileupload';
 import { logNotImplementedRequest, logRequest } from './src/middlewares/middleware.logs.js'
-import { logger } from './src/constants/config.js';
-
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = direname(__filename);
-
+import { logger } from './src/config/logger.js';
 import dotenv from 'dotenv';
+// import { fileURLToPath } from 'url';
+// import { dirname } from 'path';
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = direname(__filename);
+
+
 dotenv.config();
 
 connectDB(process.env.MONGOOSE_URL);
@@ -42,13 +42,20 @@ app.use(
 );
 
 app.use(json());
-app.user(urlencoded({ extended: true }));
+app.use(urlencoded({ extended: true }));
 app.use(fileUpload());
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use('/public/images/', express.static('./public/images'));
+app.use('/public/icons', express.static('./public/icons'));
+app.use('/public/js', express.static('./public/js'));
+app.set('view engine', 'ejs');
+
 app.use('/api/productos', productsRouter);
 app.use('/api/carrito', cartsRouter);
 app.use(usersRouter);
+
 app.all('*', logNotImplementedRequest, (req, res) => {
     const { url, method } = req;
     res.send(`Requested route ${url} with ${method} method is not implemented`);
@@ -58,5 +65,5 @@ const HOST = process.env.HOST;
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
-    console.log(`Server listening on ${HOST}:${PORT}`);
+    logger.info(`Server listening on ${HOST}:${PORT} - PID: ${process.pid} - ${new Date().toLocaleString()}`);
 });
