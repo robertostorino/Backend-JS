@@ -62,15 +62,15 @@ const getProducts = async (req, res) => {
             let products = await productsContainer.getAll();
             res.render('productos', { products: products });
         }
-        if (req.params.tipo === 'Alcoholicas') {
+        if (req.params.tipo === 'hardware') {
             let products = await productsContainer.getAll();
-            let productsAlcoholicas = products.filter( product => product.tipo === 'Alcoholica');
-            res.render('productos', { products: productsAlcoholicas });
+            let productsHarware = products.filter( product => product.tipo === 'hardware');
+            res.render('productos', { products: productsHarware });
         }
-        if (req.params.tipo === 'NoAlcoholicas') {
+        if (req.params.tipo === 'software') {
             let products = await productsContainer.getAll();
-			let productsNoAlcoholicas = products.filter(product => product.tipo === 'NoAlcoholica');
-			res.render('productos', { products: productsNoAlcoholicas });
+			let productsSoftware = products.filter(product => product.tipo === 'software');
+			res.render('productos', { products: productsSoftware });
         }
     } catch (error) {
         console.log(error)
