@@ -146,6 +146,13 @@ npm i -g pm2 forever artillery 0x
     }
 
 # DELETE /api/carrito/:id
+    DELETE http://localhost:8080/api/carrito/640805e047d932a0f10e7fba
+
+    Ejemplo respuesta
+
+    "Cart id: 640805e047d932a0f10e7fba has been deleted"
+
+
 
 # GET /api/carrito/:id/productos
     GET http://localhost:8080/api/carrito/640805e047d932a0f10e7fba/productos
@@ -172,10 +179,16 @@ npm i -g pm2 forever artillery 0x
         "__v": 0
     }
 
-
 # POST /api/carrito/:idCart/productos/:idProduct
    POST http://localhost:8080/api/carrito/640805e047d932a0f10e7fba/productos/6407f281093c673cf7da448a
 
    Ejemplo de respuesta
 
    "Product 6407f281093c673cf7da448a has been correctly added to Cart 640805e047d932a0f10e7fba"
+
+# DELETE /api/carrito/:idCart/productos/:idProduct
+    DELETE http://localhost:8080/api/carrito/640805e047d932a0f10e7fba/productos/6407f281093c673cf7da448a
+
+    Ejemplo respuesta
+
+    "Product 6407f281093c673cf7da448a has been correctly deleted from Cart 640805e047d932a0f10e7fba"

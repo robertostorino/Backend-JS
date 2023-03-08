@@ -1,0 +1,5 @@
+{"level":"warn","message":"Requested route /api/carrito/640805e047d932a0f10e7fba/productos with DELETE method is not implemented"}
+{"level":"warn","message":"Requested route /api/carrito/640805e047d932a0f10e7fba/producto/6407f281093c673cf7da448a with DELETE method is not implemented"}
+{"level":"warn","message":"Requested route /api/register with GET method is not implemented"}
+{"level":"warn","message":"Requested route /api/register with POST method is not implemented"}
+{"level":"warn","message":"Requested route /api/register with POST method is not implemented"}

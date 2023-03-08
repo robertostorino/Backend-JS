@@ -28,7 +28,7 @@ const deleteCart = async (req, res) => {
 
 const deleteProductFromCart = async (req, res) => {
     const { idCart, idProduct } = req.params;
-    let data = await cartContainer.delteCartProductById( idCart, idProduct );
+    let data = await cartContainer.deleteCartProductById( idCart, idProduct );
     res.json(data);
 };
 
