@@ -100,7 +100,7 @@ npm i -g pm2 forever artillery 0x
 	
 	"Product has been correctly updated."
 	
-# DELETE /api/carrito/:id
+# DELETE /api/productos/:id
 	DELETE http://localhost:8080/api/productos/6408040516b3a67ecaeb5c67
 	
 	Ejemplo respuesta
@@ -132,7 +132,6 @@ npm i -g pm2 forever artillery 0x
         "__v": 0
     }
 
-
 # POST /api/carrito/
     POST http://localhost:8080/api/carrito/
 
@@ -152,33 +151,6 @@ npm i -g pm2 forever artillery 0x
 
     "Cart id: 640805e047d932a0f10e7fba has been deleted"
 
-
-
-# GET /api/carrito/:id/productos
-    GET http://localhost:8080/api/carrito/640805e047d932a0f10e7fba/productos
-
-    Ejemplo respuesta
-
-    {
-        "_id": "640805e047d932a0f10e7fba",
-        "timestamp": "2023-03-08T03:49:52.188Z",
-        "productos": [
-            {
-                "_id": "6407f281093c673cf7da448a",
-                "timestamp": "2023-03-08T02:27:13.547Z",
-                "nombre": "CPU Gamer Intel i7",
-                "descripcion": "CPU Gamer Intel i7",
-                "codigo": 129929,
-                "foto": "https://cdn2.iconfinder.com/data/icons/whcompare-isometric-web-hosting-servers/50/desktop-pc-64.png",
-                "precio": 200000,
-                "stock": 12,
-                "tipo": "hardware",
-                "__v": 0
-            }
-        ],
-        "__v": 0
-    }
-
 # POST /api/carrito/:idCart/productos/:idProduct
    POST http://localhost:8080/api/carrito/640805e047d932a0f10e7fba/productos/6407f281093c673cf7da448a
 
@@ -192,3 +164,25 @@ npm i -g pm2 forever artillery 0x
     Ejemplo respuesta
 
     "Product 6407f281093c673cf7da448a has been correctly deleted from Cart 640805e047d932a0f10e7fba"
+
+# POST /register
+    POST http://localhost:8080/register
+
+    Ejemplo solicitud
+
+    {
+        "username": "andy@bogard.com",
+        "password": "andy-pass",
+        "nombre": "andy",
+        "direccion": "Charleston 131",
+        "telefono": "2216334092",
+        "edad": 42,
+        "imagen": "https://cdn4.iconfinder.com/data/icons/desktop-app-free/32/Desktop_Desktop_App_Earphone_Headphone_Communication-20-64.png"
+    }
+
+    Ejemplo respuesta
+
+    {
+        "ok": "ok",
+        "description": "registro de usuario realizado correctamente"
+    }

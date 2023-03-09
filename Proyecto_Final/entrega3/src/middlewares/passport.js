@@ -2,7 +2,7 @@ import { UsersContainer } from '../containers/container.users.js';
 import passport from 'passport';
 import { Strategy as LocalStrategy} from 'passport-local';
 import { CartsContainer } from '../containers/container.carts.js';
-import { adminNewUserNotification } from './notificationManager.js';
+import { adminNewUserNotification, adminNewOrderNotification, userOrderNotification } from './notificationManager.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -39,7 +39,7 @@ function passportRegister(req, res, next) {
                 const idCart = cart._id.valueOf();
                 let newUser = await usersContainer.insertUser(
                     { username, password, nombre, direccion, edad, imagen, idCart });
-                sendMailNotification(req.body);
+                adminNewUserNotification(req.body);
                 done(null, newUser);
             }
         )

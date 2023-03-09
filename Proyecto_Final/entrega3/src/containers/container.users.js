@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import { model } from 'mongoose';
+import { logger } from '../config/logger.js';
 
 function createHash(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
@@ -16,7 +17,7 @@ class UsersContainer {
             data = await model.UserModel.find({ username: username });
             return data[0];
         } catch (error) {
-            logger.error(error);
+            console.log(error);
             return (data = null);
         }
     };
@@ -27,7 +28,7 @@ class UsersContainer {
 			let auth = await bcrypt.compare(password, data.password);
 			return auth;
 		} catch (error) {
-			logger.error(error);
+			console.log(error);
 		}
 	};
     

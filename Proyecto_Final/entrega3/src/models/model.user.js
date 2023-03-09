@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
 	nombre: {type: String, require: true},
 	direccion: { type: String, require: true },
 	edad: { type: Number, require: true },
+	telefono: { type: String, require: true },
 	imagen: { type: String, require: true },
 	cartId: { type: String, require: true },
 });

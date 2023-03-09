@@ -3,3 +3,4 @@
 {"level":"warn","message":"Requested route /api/register with GET method is not implemented"}
 {"level":"warn","message":"Requested route /api/register with POST method is not implemented"}
 {"level":"warn","message":"Requested route /api/register with POST method is not implemented"}
+{"level":"warn","message":"Requested route /api/register with POST method is not implemented"}

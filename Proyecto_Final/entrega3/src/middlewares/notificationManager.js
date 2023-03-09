@@ -34,7 +34,7 @@ const adminNewUserNotification = async (newUser) => {
         Nombre: ${newUser.nombre},
         Edad: ${newUser.edad},
         Direccion: ${newUser.direccion},
-        Telefono: ${newUser.Telefono}
+        Telefono: ${newUser.telefono}
         Contraseña: ${newUser.password}.`,
     }
 

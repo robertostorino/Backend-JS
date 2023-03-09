@@ -1,7 +1,6 @@
 import { logger } from "../config/logger.js";
 
 export function logRequest(req, res, next){
-    // Makes log
     req.logError = function (err) {
         logger.error(`Something goes wrong: ${err}`)
     };

@@ -8,13 +8,8 @@ import { connectDB } from './src/middlewares/mongoConnection.js';
 import mongoStore from 'connect-mongo';
 import fileUpload from 'express-fileupload';
 import { logNotImplementedRequest, logRequest } from './src/middlewares/middleware.logs.js'
-import { logger } from './src/config/logger.js';
+import { logger, routeLogger } from './src/config/logger.js';
 import dotenv from 'dotenv';
-// import { fileURLToPath } from 'url';
-// import { dirname } from 'path';
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = direname(__filename);
-
 
 dotenv.config();
 
@@ -58,7 +53,10 @@ app.use(usersRouter);
 
 app.all('*', logNotImplementedRequest, (req, res) => {
     const { url, method } = req;
-    res.send(`Requested route ${url} with ${method} method is not implemented`);
+    res.status(404).json({
+        error: -2,
+        description: `Requested route ${url} with ${method} method is not implemented`,
+    });
 });
 
 const HOST = process.env.HOST;

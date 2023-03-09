@@ -1,47 +1,49 @@
 import { UsersContainer } from '../containers/container.users.js';
 import { CartsContainer } from '../containers/container.carts.js';
 import { ProductsContainer } from '../containers/container.products.js';
+import { adminNewOrderNotification, userOrderNotification } from '../middlewares/notificationManager.js'
 
 const usersContainer = new UsersContainer();
 const cartsContainer = new CartsContainer();
 const productsContainer = new ProductsContainer();
 
 const requireAuthentication = (req, res, next) => {
-    if (req.isAuthenticated()){
-        next()
-    } else {
-        res.redirect('/login')
-    }
+	if (req.isAuthenticated()) {
+		next();
+	} else {
+		res.redirect('/login');
+	}
 };
 
 const savePicturesLocal = async (req, res, next) => {
-    try {
-        const image = req.files.imagen;
-        const username = req.body.username;
-        image.mv(`./public/images/${username}.jpg`);
-    } catch (error) {
-        console.log(error)
-    }
-};
+	try {
+		let image = req.files.imagen;
+		image.mv('./public/images/' + `${req.body.username}` + '.jpg');
 
-const getUser = async (req, res) => {
-    let usuario = await usersContainer.getUser(req.user.username);
-    res.render('inicio', {
-        username: usuario.username,
-    })
+	} catch (error) {
+		console.log(error);
+	}
+	next();
 };
 
 const getUserImage = async (req, res) => {
     res.render('imagenUsuario', { imagen: `${req.params.username}`})
 };
 
-const getMyUserData = async (req, res, next) => {
-    try {
-        let user = await usersContainer.getUser(req.user.username);
-        res.render('usuario', { usuario: user, imagen: user.username});
-    } catch (error) {
-        console.log(error)
-    }
+const getUser = async (req, res) => {
+	let usuario = await usersContainer.getUser(req.user.username);
+	res.render('inicio', {
+		userName: usuario.username,
+	});
+};
+
+const getMyUserData = async (req, res) => {
+	try {
+		let user = await usersContainer.getUser(req.user.username);
+		res.render('usuario', { usuario: user, imagen: user.username })
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 const getMyCart = async (req, res) => {
