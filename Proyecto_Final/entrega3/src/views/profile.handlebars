@@ -1,0 +1,33 @@
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card">
+                <div class="card-img">
+                    <img src="../avatars/{{userInfo.avatar}}" class="card-img-top " alt="User Image">
+                </div>
+                <div class="card-body">
+                    <p class="card-text"><strong> Name:</strong> {{userInfo.name}}</p>
+                    <p class="card-text"><strong> Email:</strong> {{userInfo.username}}</p>
+                    <p class="card-text"><strong> Address: </strong>{{userInfo.address}}</p>
+                    <p class="card-text"><strong> Telephone: </strong>{{userInfo.telephone}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .card-img {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        padding-top: 10px;
+    }
+
+    .card-img img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+</style>

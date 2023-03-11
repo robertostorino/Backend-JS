@@ -1,0 +1,61 @@
+
+<div class="container d-flex justify-content-center align-items-center signup">
+    <div class="p-5" style="background-color: #e9ecef;">
+        <h1 class="text-center">REGISTER</h1>
+        <br />
+        <form class="form" action="/signup" method="post" role="form" autocomplete="off" enctype="multipart/form-data" onsubmit="phoneNumber(event)">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <input type="email" class="form-control" placeholder="Email" name="username" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control" placeholder="Password" name="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Name" name="name" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Address" name="address" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="number" class="form-control" placeholder="Age" name="age" required>
+                    </div>
+                    <div class="mb-3" id="div-cel">
+                        <input id="phone" type="tel" class="form-control" name="celphone" placeholder="Telephone" required>
+                        <input id="cel" type="hidden" class="form-control" name="cel" required>
+                    </div>
+                </div>
+                <div class="col-md-6 offset-md-3">
+                    <div class="mb-3">
+                        <label for="avatar" class="form-label">Avatar</label>
+                        <input type="file" class="form-control" name="avatar" accept="image/jpeg, image/png" required>
+                    </div>
+                </div>
+            </div>
+            <div class="d-grid gap-2 col-md-1 mx-auto">
+                <button type="submit" class="btn btn-success">Register</button>
+            </div>
+        </form>
+
+        <hr />
+
+        <div class="text-left">
+            <button class="btn btn-success my-3" onclick="location.href = '/login'">
+                LogIn
+            </button>
+        </div>
+    </div>
+</div>
+<script src="../scripts/{{script}}.js"></script>
+<style>
+    h1 {
+        color: blue;
+    }
+
+    .signup {
+        margin-top: 3rem !important;
+    }
+</style>

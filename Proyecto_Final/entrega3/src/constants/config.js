@@ -1,13 +1,18 @@
-
-const selectedDatabase = 2;
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 const config = {
-    admin: true,
+    admin: process.env.ADMIN,
     timeFormat: "DD-MM-YYYY HH:mm:ss",
+    executionMode: process.env.EXECUTION_MODE,
 
-    productsCollection: "product",
-    cartCollection: "cart",
-}
+    productsCollection: "products",
+    cartCollection: "carts",
+    userCollection: "users",
+
+    mongoUri:process.env.MONGOURL
+};
+
 
 const Error = {
     notFound: (res) =>
@@ -36,8 +41,4 @@ const Error = {
 
 };
 
-export {
-    selectedDatabase,
-    config,
-    Error
-}
+export { config, Error };

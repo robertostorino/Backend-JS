@@ -1,34 +1,48 @@
 {
-  "type": "module",
-  "name": "ecommerce-nodejs",
+  "name": "api-productos",
   "version": "1.0.0",
+  "description": "API proyecto ecommerce curso backend CoderHouse",
   "main": "server.js",
+  "type": "module",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev-start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JuandGomezS/ProyectoFinalBe.git"
+  },
+  "keywords": [
+    "node",
+    "express"
+  ],
+  "author": "Juan David Gómez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JuandGomezS/ProyectoFinalBe/issues"
+  },
+  "homepage": "https://github.com/JuandGomezS/ProyectoFinalBe#readme",
   "dependencies": {
-    "autocannon": "^7.10.0",
     "bcrypt": "^5.1.0",
-    "compression": "^1.7.4",
     "connect-mongo": "^4.6.0",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-fileupload": "^1.4.0",
     "express-handlebars": "^7.0.1",
     "express-session": "^1.17.3",
-    "minimist": "^1.2.8",
-    "mongoose": "^7.0.1",
+    "express-validator": "^6.14.2",
+    "moment": "^2.29.4",
+    "mongoose": "^6.8.2",
     "nodemailer": "^6.9.1",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "twilio": "^4.8.0",
-    "winston": "^3.8.2"
+    "winston": "^3.8.2",
+    "yargs": "^17.7.1"
   },
-  "description": "npm init -y",
   "devDependencies": {
-    "nodemon": "^2.0.21"
+    "nodemon": "^2.0.20"
   }
 }

@@ -1,6 +1,22 @@
-{"level":"warn","message":"Requested route /api/carrito/640805e047d932a0f10e7fba/productos with DELETE method is not implemented"}
-{"level":"warn","message":"Requested route /api/carrito/640805e047d932a0f10e7fba/producto/6407f281093c673cf7da448a with DELETE method is not implemented"}
-{"level":"warn","message":"Requested route /api/register with GET method is not implemented"}
-{"level":"warn","message":"Requested route /api/register with POST method is not implemented"}
-{"level":"warn","message":"Requested route /api/register with POST method is not implemented"}
-{"level":"warn","message":"Requested route /api/register with POST method is not implemented"}
+{"level":"warn","message":"Route GET /api/carrito/ not implemented","timestamp":"2023-03-10 19:49:20"}
+{"level":"warn","message":"Route GET /api/carrito/1 not implemented","timestamp":"2023-03-10 19:49:24"}
+{"level":"warn","message":"Route GET /api/carrito/1 not implemented","timestamp":"2023-03-10 19:50:18"}
+{"level":"warn","message":"Route GET /api/carrito/ not implemented","timestamp":"2023-03-10 19:50:23"}
+{"level":"warn","message":"Route GET /api/carrito/2 not implemented","timestamp":"2023-03-10 19:50:28"}
+{"level":"warn","message":"Route GET /api/carrito/ not implemented","timestamp":"2023-03-10 19:50:43"}
+{"level":"warn","message":"Route GET /api/carrito/1 not implemented","timestamp":"2023-03-10 19:51:18"}
+{"level":"warn","message":"Route GET /api/carrito/1 not implemented","timestamp":"2023-03-10 19:51:46"}
+{"level":"warn","message":"Route GET /api/carrito/1 not implemented","timestamp":"2023-03-10 19:51:54"}
+{"level":"warn","message":"Route GET /api/carrito/2 not implemented","timestamp":"2023-03-10 19:51:58"}
+{"level":"warn","message":"Route GET /api/carrito/2 not implemented","timestamp":"2023-03-10 19:52:52"}
+{"level":"warn","message":"Route GET /api/carrito/1 not implemented","timestamp":"2023-03-10 19:52:56"}
+{"level":"warn","message":"Route GET /api/carrito/1 not implemented","timestamp":"2023-03-10 19:53:46"}
+{"level":"warn","message":"Route GET /api/carrito/1 not implemented","timestamp":"2023-03-10 19:56:48"}
+{"level":"warn","message":"Route POST /api/carrito/1/productos not implemented","timestamp":"2023-03-10 20:02:49"}
+{"level":"warn","message":"Route POST /api/carrito/2/productos not implemented","timestamp":"2023-03-10 20:02:55"}
+{"level":"warn","message":"Worker 19032 died","timestamp":"2023-03-10 22:59:51"}
+{"level":"warn","message":"Worker 19652 died","timestamp":"2023-03-11 10:20:48"}
+{"level":"warn","message":"Worker 15992 died","timestamp":"2023-03-11 10:20:48"}
+{"level":"warn","message":"Worker 8092 died","timestamp":"2023-03-11 10:20:48"}
+{"level":"warn","message":"Worker 4676 died","timestamp":"2023-03-11 10:20:48"}
+{"level":"warn","message":"Route POST /login not implemented","timestamp":"2023-03-11 10:47:35"}
