@@ -20,12 +20,10 @@ import bcrypt from 'bcrypt';
 import { sysInfo } from './src/process/sysInfo.js';
 import MongoStore from 'connect-mongo'
 import { fork } from 'child_process';
-import compression from 'compression';
 // Logger
 import { logRequest, logNotImplementedRequest } from './src/routes/middlewares/middleware.logs.js';
 import { logger } from './src/config/logger.js';
 
-import requireAuthentication from './src/routes/middlewares/requireAuthentication.js';
 //--------------------------------//
 // DOTENV
 //--------------------------------//
@@ -37,7 +35,9 @@ import routerLogin from './src/routes/login.js'
 import routerLogout from './src/routes/logout.js';
 import routerInfo from './src/routes/info.js';
 import routerIndex from './src/routes/index.js';
-import routerProductostest from './src/routes/productostest.js'
+import routerProductostest from './src/routes/productostest.js';
+import routerInfoCompGzip from './src/routes/infoCompGzip.js';
+import routerRandoms from './src/routes/randoms.js'
 
 
 
@@ -210,13 +210,6 @@ export function startServer(port){
         }
     ))
 
-    //------------------//
-    // Rutas Middleware //
-    //------------------//
-    // const requireAuthentication = (req, res, next) => {
-    //     return req.isAuthenticated() ? next() : res.redirect("/login");
-    // };
-
     //-------------------//
     // Rutas 
     //-------------------//
@@ -226,34 +219,19 @@ export function startServer(port){
         .use('/', routerLogout)
         .use('/', routerInfo)
         .use('/', routerProductostest)
-
-    //  Rutas index
-    app.get("/", requireAuthentication, async  (req, res) => {
-        const usuario = req.session.passport.user.username
-        const username = await usuarios.getUser(usuario)
-        res.render(
-                'index', 
-                { user: username.username })
-    });
-    // app.use('/', routerIndex);
-
-    // Rutas: Productos Test
-    // app.get("/api/productos-test", fakerProducts);  // Route for fake products
-
-    //  Ruta: Info (con compresión GZIP)
-    app.get("/infoCompGzip", compression(), (req, res) => {
-        res.render('info', {info: sysInfo()})
-    });
+        .use('/', routerIndex)
+        .use('/', routerInfoCompGzip)
+        .use('/', routerRandoms)
 
     //  Ruta: Randoms
-    app.get("/api/randoms", (req, res) => {
-        //cant recibe el numero por query y lo convierte a tipo Number
-        // Si no recibe valor, entonces por defecto es 100000000
-        const cant = req.query.cant ? Number(req.query.cant) : 100000000;
-        const forked = fork(path.resolve(process.cwd(), "./src/process/getNumbersCount.js"));
-        forked.on("message", (numbers) => res.json(numbers));
-        forked.send({ cant });
-    });
+    // app.get("/api/randoms", (req, res) => {
+    //     //cant recibe el numero por query y lo convierte a tipo Number
+    //     // Si no recibe valor, entonces por defecto es 100000000
+    //     const cant = req.query.cant ? Number(req.query.cant) : 100000000;
+    //     const forked = fork(path.resolve(process.cwd(), "./src/process/getNumbersCount.js"));
+    //     forked.on("message", (numbers) => res.json(numbers));
+    //     forked.send({ cant });
+    // });
 
     // Rutas No Implementadas
     app.get('*', logNotImplementedRequest, (req, res) => {
