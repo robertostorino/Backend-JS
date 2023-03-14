@@ -1,4 +1,4 @@
-import { containerMongoose } from "../containers/containerMongoose.js"
+import { containerMongoose } from "../persistence/containers/containerMongoose.js"
 const usuarios = new containerMongoose();
 
 async function auth (req, res){

@@ -1,4 +1,4 @@
-import { containerMongoose } from "../containers/containerMongoose.js";
+import { containerMongoose } from "../persistence/containers/containerMongoose.js";
 import {generateFakeProds} from "../../utils/generateFakeProds.js"
 import { logger } from "../config/logger.js";
 const Producto = new containerMongoose();

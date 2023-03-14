@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
-import { modelsProducts } from "../models/modelsProducts.js"; 
-import { modelsChat } from "../models/modelsChat.js";
-import { modelsUsers } from '../models/modelsUsers.js';
+import { modelsProducts } from "../../persistence/models/modelsProducts.js"; 
+import { modelsChat } from "../../persistence/models/modelsChat.js";
+import { modelsUsers } from '../../persistence/models/modelsUsers.js';
 // import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
-import { logger } from '../config/logger.js';
+import { logger } from '../../config/logger.js';
 dotenv.config();
 
 

@@ -2,7 +2,7 @@ import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import handlebars from 'express-handlebars';
-import { containerMongoose } from './src/containers/containerMongoose.js';
+import { containerMongoose } from './src/persistence/containers/containerMongoose.js';
 import { normalize, schema } from 'normalizr';
 import { fakerProducts} from './src/controllers/controller.productos.js';
 import cookieParser from 'cookie-parser';
@@ -17,7 +17,6 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 // Bcrypt
 import bcrypt from 'bcrypt';
-import { sysInfo } from './src/process/sysInfo.js';
 import MongoStore from 'connect-mongo'
 import { fork } from 'child_process';
 // Logger
