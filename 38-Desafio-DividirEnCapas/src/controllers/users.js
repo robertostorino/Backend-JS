@@ -1,83 +1,70 @@
-import service from '../services/users.js';
+import { logger } from "../config/logger.js";
 
-import { containerMongoose } from "../containers/containerMongoose.js";
-const Usuario = new containerMongoose();
-
-//-----------------------------------------//
-//     Usuario
-//-----------------------------------------//
-
-const get = async (req, res) => {
-    const id = req.params.id
-    
-    const result = service.get(id);
-    // if (id) {
-    //     Usuario.get(id)
-    //         .then(usuarios => {
-    //             res.json(usuarios);
-    //         })
-    //         .catch(err => {
-    //             res.json(err);
-    //         })
-    // }
-    // else{
-    //     Usuario.get()
-    //         .then(usuarios => {
-    //             res.render('index', {usuarios});
-    //         })
-    //         .catch(err => {
-    //             res.json(err);
-    //         })
-    // }
-
-    res.send(result)
-}
-
-const add = (req, res) => {
-    const newUsuario = {
-        timestamp: Date.now(),
-        username: req.body.username,
-        password: req.body.password,
-        email: req.body.email,
-    }
-    Usuario.add(newUsuario)
-        .then(id => {
-            res.json({ id: id }, res.redirect('/productos'));
-        })
-        .catch(err => {
-            res.json(err);
-        })
-}
-
-const update = (req, res) => {
-    const usuario = {
-        timestamp: Date.now(),
-        username: req.body.username,
-        password: req.body.password,
-        email: req.body.email,
-    }
-    Usuario.update(req.params.id, usuario)
-        .then(id => {
-            res.json({ id: id });
-        })
-        .catch(err => {
-            res.json(err);
-        })
+const renderLogin = async (req, res) => {
+    const { method } = req;
+    logger.info(`Access to route: /loggin/error with ${method} method`)
+    return req.isAuthenticated()
+        ? res.redirect('/')
+        : res.render('login')
 };
 
-const Delete = (req, res) => {
-    Usuario.delete( req.params.id)
-        .then(id => {
-            res.json({ id: id });
-        })
-        .catch(err => {
-            res.json(err);
-        })
+const renderFaillogin = async (req, res) => {
+    const { method } = req;
+    logger.info(`Access to route: /loggin/error with ${method} method`)
+    res.render('faillogin', { process: 'Login'})
 };
 
-export {
-    get,
-    add,
-    update,
-    Delete
+const renderLogout = async (req, res) => {
+    const { method } = req;
+    logger.info(`Access to route: /loggin/error with ${method} method`)
+    const username = req.session.username;
+    req.session.destroy( err => {
+        return (!err)
+            ? res.render('./logout', { user: username })
+            : res.send({ status: 'logout error', body: err })
+    })
+};
+
+const renderRegister = async (req, res) => {
+    const { method } = req;
+    logger.info(`Access to route: /loggin/error with ${method} method`)
+    // res.render('register')
+    return req.isAuthenticated()
+        ? req.redirect('/')
+        : res.render('register', { process: 'Register'})
+};
+
+const renderFailregister = async (req, res) => {
+    const { method } = req;
+    logger.info(`Access to route: /loggin/error with ${method} method`)
+    res.render('failregister')
+
+}
+
+const loginUser = async (username, password, done) => {
+    return await userService.loginUser(username, password, done)
+};
+
+const registerUser = async (username, password, done) => {
+    return await usersService.registerUser(username, password, done)
+};
+
+const serializeUser = async (username, done) => {
+    return usersService.serializeUser(username, done)
+};
+
+const deserializeUser = async (username, done) => {
+    return usersService.deserializeUser(username, done)
+};
+
+export default { 
+    renderLogin, 
+    renderFaillogin, 
+    renderLogout,
+    renderRegister,
+    renderFailregister,
+    loginUser,
+    registerUser,
+    serializeUser,
+    deserializeUser 
 };

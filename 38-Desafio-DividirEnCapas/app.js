@@ -31,11 +31,10 @@ dotenv.config();
 
 import routerRegister from './src/routes/register.js';
 import routerLogin from './src/routes/login.js'
-import routerLogout from './src/routes/logout.js';
+// import routerLogout from './src/routes/logout.js';
 import routerInfo from './src/routes/info.js';
 import routerIndex from './src/routes/index.js';
 import routerProductostest from './src/routes/productostest.js';
-import routerInfoCompGzip from './src/routes/infoCompGzip.js';
 import routerRandoms from './src/routes/randoms.js'
 
 
@@ -215,11 +214,9 @@ export function startServer(port){
     app
         .use('/', routerRegister)
         .use('/', routerLogin)
-        .use('/', routerLogout)
         .use('/', routerInfo)
         .use('/', routerProductostest)
         .use('/', routerIndex)
-        .use('/', routerInfoCompGzip)
         .use('/', routerRandoms)
 
     //  Ruta: Randoms

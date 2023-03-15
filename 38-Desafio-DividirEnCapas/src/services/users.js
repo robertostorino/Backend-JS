@@ -1,32 +1,27 @@
 import { containerMongoose } from "../containers/containerMongoose.js";
-const Usuario = new containerMongoose();
+import { modelsUsers } from "../persistence/models/modelsUsers.js";
 
-async function get(id) {
-    let result
-    if (id) {
-        Usuario.get(id)
-            .then(usuarios => {
-                result = res.json(usuarios);
-            })
-            .catch(err => {
-                result = res.json(err);
-            })
-    }
-    else{
-        Usuario.get()
-            .then(usuarios => {
-                result = res.json('index', {usuarios});
-            })
-            .catch(err => {
-                result = res.json(err);
-            })
-    }
+const persistence = new containerMongoose(modelsUsers);
 
-    return result
-}
+const loginUser = async (username, password, done) => {
+    return await persistence.loginUser(username, password, done)
+};
 
+const registerUser = async (username, password, done) => {
+    return await persistence.registerUser(username, password, done)
+};
 
+const serializeUser = (username, done) => {
+    return persistence.serializeUser(username, done)
+};
+
+const deserializeUser = async (user, done) => {
+    return persistence.deserializeUser(user, done)
+};
 
 export default {
-    get,
+    loginUser,
+    registerUser,
+    serializeUser,
+    deserializeUser
 }

@@ -1,13 +1,13 @@
 import { Router } from 'express';
-import controller from '../controllers/register.js'
+import controller from '../controllers/users.js';
 import passport from "passport";
 
-const routerRegister = new Router();
+const router = Router();
 
-routerRegister.get('/register', controller.register);
+router.get('/register', controller.renderRegister);
 
-routerRegister.post('/register', passport.authenticate('register', { failureRedirect: '/failregister', successRedirect: '/'}));
+router.post('/register', passport.authenticate('register', { failureRedirect: '/failregister', successRedirect: '/'}));
 
-routerRegister.get('/failregister', controller.failregister);
+router.get('/failregister', controller.renderFailregister);
 
-export default routerRegister;
+export default router;

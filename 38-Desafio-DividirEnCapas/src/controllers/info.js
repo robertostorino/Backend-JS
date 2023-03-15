@@ -4,6 +4,7 @@ async function info (req, res) {
     res.render('info', {info: sysInfo()})
 }
 
+
 export default {
     info
 }
