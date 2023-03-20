@@ -1,9 +1,8 @@
-import { containerMongoose } from "../persistence/containers/containerMongoose.js"
-const usuarios = new containerMongoose();
+import services from "../services/users.js";
 
 async function auth (req, res){
     const usuario = req.session.passport.user.username
-    const username = await usuarios.getUser(usuario)
+    const username = await services.getUser(usuario)
     res.render('index', { user: username.username })
 };
 

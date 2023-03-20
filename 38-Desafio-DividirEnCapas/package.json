@@ -33,5 +33,6 @@
     "socket.io": "^4.6.0",
     "winston": "^3.8.2"
   },
-  "description": "npm init -y"
+  "description": "npm init -y",
+  "devDependencies": {}
 }

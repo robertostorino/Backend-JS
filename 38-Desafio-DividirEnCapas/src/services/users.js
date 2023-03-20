@@ -1,7 +1,8 @@
-import { containerMongoose } from "../containers/containerMongoose.js";
+// import { containerMongoose } from "../containers/containerMongoose.js";
+import { containerUsers } from "../persistence/containers/usersContainerMongoose.js";
 import { modelsUsers } from "../persistence/models/modelsUsers.js";
 
-const persistence = new containerMongoose(modelsUsers);
+const persistence = new containerUsers(modelsUsers);
 
 const loginUser = async (username, password, done) => {
     return await persistence.loginUser(username, password, done)
@@ -19,9 +20,14 @@ const deserializeUser = async (user, done) => {
     return persistence.deserializeUser(user, done)
 };
 
+const getUser = (user) => {
+    return persistence.getUser(user)
+};
+
 export default {
     loginUser,
     registerUser,
     serializeUser,
-    deserializeUser
+    deserializeUser,
+    getUser
 }

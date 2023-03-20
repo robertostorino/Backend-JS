@@ -1,3 +1,5 @@
+// No se utiliza en el programa, es solo a modo de ejemplo
+
 import { normalize, denormalize, schema } from "normalizr";
 
 const mensajes = {

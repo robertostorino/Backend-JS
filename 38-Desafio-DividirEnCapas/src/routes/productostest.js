@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { fakerProducts } from '../controllers/controller.productos.js';
+import controller from '../controllers/products.js';
 
 const router = Router();
 
-router.get('/productos-test', fakerProducts);
+router.get('/productos-test', controller.fakerProducts);
 
 export default router;

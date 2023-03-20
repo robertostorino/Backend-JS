@@ -1,25 +1,5 @@
-// import mongoose from 'mongoose';
-// import { modelsProducts } from "../../persistence/models/modelsProducts.js"; 
-// import { modelsChat } from "../../persistence/models/modelsChat.js";
-// import { modelsUsers } from '../../persistence/models/modelsUsers.js';
-// import bcrypt from 'bcrypt';
-import dotenv from 'dotenv';
-import { logger } from '../../config/logger.js';
-dotenv.config();
-
-
-mongoose.set("strictQuery", false);
-mongoose.connect(process.env.MONGOOSE_URL, {
-                    useNewUrlParser: true,
-                    useUnifiedTopology: true
-                }, (err) => {
-                    if (err) {
-                        logger.error(err);
-                    } else {
-                        logger.info('MongoDB Connected')
-                    }
-                });
-
+import { messagesSchema } from "../models/schemaChat.js";
+import { normalize } from "normalizr";
 
 class chatContainerMongoose {
     constructor (model) {
@@ -35,6 +15,26 @@ class chatContainerMongoose {
         const dataAdd = new this.model(data);
         const add = await dataAdd.save();
         return add;
+    };
+
+    getNormalized = async () => {
+        let listaMensajes = await this.getChat()
+        let strin = JSON.stringify(listaMensajes)
+        let data = JSON.parse(strin)            
+        //  Mensaje original
+        let mensajes = {
+            id: 'backendCoder09',
+            messages: data
+        };
+        let messagesNorm = normalize(mensajes, messagesSchema);
+
+        const lengthObjetoOriginal = JSON.stringify(mensajes).length;
+        const lengthObjNormalizado = JSON.stringify(messagesNorm).length;
+        
+        return {
+            normilized: messagesNorm,
+            compression: Math.trunc((1 - (lengthObjetoOriginal/lengthObjNormalizado)) * 100)
+        }
     };
 }
 
