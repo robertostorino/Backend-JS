@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import { transformToDto } from '../dtos/userDto.js';
 
 class DaoUsers {
     constructor(model) {
@@ -8,7 +9,7 @@ class DaoUsers {
     getUser = async (username) => {
         try {
             let user = await this.model.findOne({ username: username }, { _id: 0, __v: 0 });
-            return user
+            return transformToDto(user)
 
         } catch (error) {
             return null
@@ -22,7 +23,7 @@ class DaoUsers {
                 return done(null, false, console.log('Usuario o contraseña incorrectos'));
             } else {
                 if (this.#passwordOk(password, user)) {
-                    return done(null, user)
+                    return done(null, transformToDto(user))
                 } else {
                     return done(null, false, { mensaje: 'Usuario o contraseña incorrectos' });
                 }
@@ -45,7 +46,7 @@ class DaoUsers {
                     password: this.#createHash(password)
                 })
                 nuevoUsuario.save();
-                return done(null, nuevoUsuario)
+                return done(null, transformToDto(nuevoUsuario))
             }
 
         } catch (error) {
@@ -55,7 +56,7 @@ class DaoUsers {
 
     serializeUser = (username, done) => {
         try {
-            return done(null, username);
+            return done(null, transformToDto(username));
         } catch (error) {
             return done(error);
         }
@@ -66,7 +67,7 @@ class DaoUsers {
         user.length == undefined ? username = user.username : username = user[0].username;
         try {
             const user = await this.model.find({ username: username })
-            return user ? done(null, user) : done(null, false);
+            return user ? done(null, transformToDto(user)) : done(null, false);
         } catch (error) {
             return done(error);
         }

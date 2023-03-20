@@ -1,5 +1,6 @@
 import { messagesSchema } from "../models/schemaChat.js";
 import { normalize } from "normalizr";
+import { transformToDto } from "../dtos/chatDto.js";
 
 class DaoChat {
     constructor (model) {
@@ -8,13 +9,13 @@ class DaoChat {
 
     getChat = async () => {
         const data = await this.model.find({}, {_id:0, __v:0});
-        return data;
+        return transformToDto(data);
     };
 
     addChat = async (data) => {
         const dataAdd = new this.model(data);
         const add = await dataAdd.save();
-        return add;
+        return transformToDto(add);
     };
 
     getNormalized = async () => {
