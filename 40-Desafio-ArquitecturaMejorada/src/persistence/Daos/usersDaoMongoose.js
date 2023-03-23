@@ -83,6 +83,6 @@ class DaoUsers {
 
 }
 
-export {
+export default {
     DaoUsers
 };
