@@ -1,9 +1,11 @@
-import DaoUsers from '../Daos/usersDAOMongoose.js';
-import modelsUsers from '../models/modelsUsers.js';
+import { DaoUsers } from "../Daos/usersDaoMongoose.js";
+import { modelsUsers } from "../models/modelsUsers.js"
+import { persistance } from "../../../minimist.config.js"
 
 const option = process.env.PERSISTENCE;
+// const option = persistance
 
-class UsersDAOFactory {
+export class UsersDAOFactory {
 
     getDao() {
         let DAO;
@@ -13,14 +15,14 @@ class UsersDAOFactory {
                 break;
             default:
                 DAO = new DaoUsers(modelsUsers);
+                break;
         }
+        return DAO
     }
-    static getInstance() {
-        if(!this.instance) {
-            this.instance = new UsersDAOFactory()
-        }
-        return this.instance
-    }
+    // static getInstance() {
+    //     if(!this.instance) {
+    //         this.instance = new UsersDAOFactory()
+    //     }
+    //     return this.instance
+    // }
 };
-
-export default { UsersDAOFactory };

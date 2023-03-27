@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { transformToDto } from '../dtos/userDto.js';
 
-class DaoUsers {
+export class DaoUsers {
     constructor(model) {
         this.model = model
     }
@@ -82,7 +82,3 @@ class DaoUsers {
     }
 
 }
-
-export default {
-    DaoUsers
-};

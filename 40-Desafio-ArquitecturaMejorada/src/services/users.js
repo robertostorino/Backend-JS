@@ -1,8 +1,6 @@
-// import { containerMongoose } from "../containers/containerMongoose.js";
-import { DaoUsers } from "../persistence/Daos/usersDaoMongoose.js";
-import { modelsUsers } from "../persistence/models/modelsUsers.js";
+import { userRepo } from "../persistence/repositories/usersRepository.js";
 
-const persistence = new DaoUsers(modelsUsers);
+const persistence = new userRepo();
 
 const loginUser = async (username, password, done) => {
     return await persistence.loginUser(username, password, done)

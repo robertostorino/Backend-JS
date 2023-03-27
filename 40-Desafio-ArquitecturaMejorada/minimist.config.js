@@ -3,18 +3,21 @@ import parseArg from 'minimist';
 const config = {
     alias: {
         p: 'port',
-        m: 'mode'
+        m: 'mode',
+        db: 'persistance'
     },
     default: {
         port: 8080,
-        mode: 'FORK'
+        mode: 'FORK',
+        persistance: 'MONGO'
     }
 };
 
-const { port, mode } = parseArg(process.argv.slice(2), config);
+const { port, mode, persistance } = parseArg(process.argv.slice(2), config);
 
 
 export { 
     port, 
-    mode
+    mode,
+    persistance
 };

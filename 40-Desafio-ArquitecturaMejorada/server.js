@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { connectDB } from './utils/connectDB.js';
+import { MongoConnection } from './utils/connectMongo.js';
 import { port, mode } from './minimist.config.js';
 import { startServer } from './app.js';
 import { clusterUp } from './src/process/cluster_up.js';
@@ -7,7 +7,8 @@ import { logger } from './src/config/logger.js';
 
 dotenv.config();
 
-connectDB();
+const mongoConnection = new MongoConnection();
+mongoConnection.connect();
 
 switch (mode.toLowerCase()) {
     case "cluster":

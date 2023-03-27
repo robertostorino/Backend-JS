@@ -1,7 +1,6 @@
-import { DaoChat } from "../persistence/Daos/chatDaoMongoose.js";
-import { modelsChat } from "../persistence/models/modelsChat.js";
+import { chatRepository } from "../persistence/repositories/chatRepository.js";
 
-const persistence = new DaoChat(modelsChat);
+const persistence = new chatRepository();
 
 const getNormalized = async () => {
     return await persistence.getNormalized()

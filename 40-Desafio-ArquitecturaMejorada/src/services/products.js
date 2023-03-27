@@ -1,10 +1,9 @@
-import { DaoProducts } from "../persistence/Daos/productsDaoMongoose.js";
-import { modelsProducts } from "../persistence/models/modelsProducts.js"
+import { ProductRepository } from "../persistence/repositories/ProductsRepository.js";
 
-const persistence = new DaoProducts(modelsProducts);
+const persistence = new ProductRepository();
 
 const toSocketProducts = async () => {
-    return await persistence.get()
+    return await persistence.getAll()
 };
 
 const insertProduct = async (product) => {

@@ -12,15 +12,20 @@ class DaoProducts {
         return add;
     };
 
-    get = async (id) => {
-        if (id) {
-            const data = await this.model.findById(id);
-            return transformToDto(data);
-        }
-        else{
+    // get = async (id) => {
+    //     if (id) {
+    //         const data = await this.model.findById(id);
+    //         return transformToDto(data);
+    //     }
+    //     else{
+    //         const data = await this.model.find();
+    //         return transformToDto(data);
+    //     }
+    // };
+
+    getAll = async () => {
             const data = await this.model.find();
             return transformToDto(data);
-        }
     };
 
     update = async (id, data) => {

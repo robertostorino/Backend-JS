@@ -15,7 +15,7 @@ class DaoChat {
     addChat = async (data) => {
         const dataAdd = new this.model(data);
         const add = await dataAdd.save();
-        return transformToDto(add);
+        return add;
     };
 
     getNormalized = async () => {
