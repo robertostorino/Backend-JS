@@ -20,3 +20,5 @@ switch (mode.toLowerCase()) {
         startServer(port);
         break;
 };
+
+process.on('beforeExit', () => mongoConnection.disconnect());

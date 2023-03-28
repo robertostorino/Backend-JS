@@ -1,9 +1,11 @@
 {
-  "name": "32-desafio-logger",
+  "name": "42-desafio-test",
   "version": "1.0.0",
   "type": "module",
   "main": "server.js",
   "scripts": {
+    "axios-test": "mocha ./test/axios.test.js",
+    "supertest": "mocha ./test/supertest.test.js",
     "test": "node benchmark.js",
     "start": "0x server.js",
     "fork-mode": "node server.js -m FORK",
@@ -15,7 +17,9 @@
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
     "autocannon": "^7.10.0",
+    "axios": "^1.3.4",
     "bcrypt": "^5.1.0",
+    "chai": "^4.3.7",
     "compression": "^1.7.4",
     "connect-mongo": "^4.6.0",
     "cookie-parser": "^1.4.6",
@@ -24,7 +28,9 @@
     "express-handlebars": "^6.0.7",
     "express-session": "^1.17.3",
     "express-validator": "^6.15.0",
+    "ip": "^2.0.0",
     "minimist": "^1.2.8",
+    "mocha": "^10.2.0",
     "moment": "^2.29.4",
     "mongoose": "^6.9.2",
     "nodemon": "^2.0.21",
@@ -32,6 +38,7 @@
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "socket.io": "^4.6.0",
+    "supertest": "^6.3.3",
     "winston": "^3.8.2"
   },
   "description": "npm init -y"
