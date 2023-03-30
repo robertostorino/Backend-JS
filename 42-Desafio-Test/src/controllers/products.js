@@ -26,13 +26,13 @@ export default class ProductsController {
 
     insertProduct = async (req, res) => {
         let product = await services.insertProduct(req.body)
-        res.json(product[0])
+        res.json(product)
     };
 
     updateProduct = async (req, res) => {
         const { id } = req.params;
         let product = await this.services.updateProduct(id, req.body)
-        res.json(product[0])
+        res.json(product)
     };
 
     deleteProduct = async (req, res) => {
@@ -64,31 +64,31 @@ export default class ProductsController {
 
 }
 
-// Generate fake prods
-const fakerProducts = async (req, res) => {
-    let productsFaker = []; //   Generate an empty product's array
-    let cant = req.query.cant || 5;
-    for (let i = 0; i < cant; i++) {
-        //It'll generate products and then save them
-        let newProduct = generateFakeProds(); //Generate product with faker
-        // console.log(newProduct);
-        productsFaker.push(newProduct); //Shows new products
-        logger.info(productsFaker)
-    }
-    let exist = productsFaker.length > 0 ? true : false; // Flag if there are products exist is true, else false
-    logger.info(exist);
-    res.render("fake", { products: productsFaker, listExists: exist, layout: false}); // Render fake products
-}
+// // Generate fake prods
+// const fakerProducts = async (req, res) => {
+//     let productsFaker = []; //   Generate an empty product's array
+//     let cant = req.query.cant || 5;
+//     for (let i = 0; i < cant; i++) {
+//         //It'll generate products and then save them
+//         let newProduct = generateFakeProds(); //Generate product with faker
+//         // console.log(newProduct);
+//         productsFaker.push(newProduct); //Shows new products
+//         logger.info(productsFaker)
+//     }
+//     let exist = productsFaker.length > 0 ? true : false; // Flag if there are products exist is true, else false
+//     logger.info(exist);
+//     res.render("fake", { products: productsFaker, listExists: exist, layout: false}); // Render fake products
+// }
 
-// Products
+// // Products
 
-const toSocketProducts = async () => {
-    return await services.getAll()
-};
+// const toSocketProducts = async () => {
+//     return await services.getAll()
+// };
 
-const insertProduct = async (product) => {
-    await services.insertProduct(product)
-};
+// const insertProduct = async (product) => {
+//     await services.insertProduct(product)
+// };
 
 
 // export default {

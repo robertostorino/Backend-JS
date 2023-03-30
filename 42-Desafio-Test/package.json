@@ -6,8 +6,7 @@
   "scripts": {
     "axios-test": "mocha ./test/axios.test.js",
     "supertest": "mocha ./test/supertest.test.js",
-    "test": "node benchmark.js",
-    "start": "0x server.js",
+    "start": "nodemon server.js",
     "fork-mode": "node server.js -m FORK",
     "cluster-mode": "node server.js -m CLUSTER"
   },

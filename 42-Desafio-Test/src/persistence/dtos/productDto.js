@@ -2,7 +2,7 @@
 
 class ProductDTO {
     constructor({ _id, title, price, thumbnail }) {
-        this.id = _id,
+        this._id = _id,
         this.title = title,
         this.price = price,
         this.thumbnail = thumbnail
@@ -18,24 +18,3 @@ export function transformToDto(products) {
 };
 
 export default { ProductDTO };
-
-
-
-
-
-// export default class PersonaDTO {
-//     constructor({ id, nombre, apellido, dni }) {
-//         this.id = id
-//         this.nombre = nombre
-//         this.apellido = apellido
-//         this.dni = dni
-//     }
-// }
-
-// export function transformarADTO(personas) {
-//     if (Array.isArray(personas)) {
-//         return personas.map(p => new PersonaDTO(p))
-//     } else {
-//         return new PersonaDTO(personas)
-//     }
-// }

@@ -10,7 +10,8 @@ export class ProductRepository {
     };
 
     add = async (data) => {
-        return await this.DAO.add(data)
+        const addedProduct = await this.DAO.add(data)
+        return addedProduct
     }
 
     getById = async (id) => {
@@ -22,10 +23,12 @@ export class ProductRepository {
     }
 
     update = async (id, data) => {
-        return await this.DAO.update(id, data)
+        const updated = await this.DAO.update(id, data)
+        return updated
     }
 
     delete = async (id) => {
-        return await this.DAO.delete(id)
+        const del = await this.DAO.delete(id)
+        return del
     }
 }

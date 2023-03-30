@@ -17,15 +17,18 @@ export default class ProductsService {
     }
     
     insertProduct = async (product) => {
-        return await this.persistence.add(product)
+        const addedProduct = await this.persistence.add(product)
+        return addedProduct
     };
     
     updateProduct = async (id, data) => {
-        return await this.persistence.update(id, data)
+        const updatedProduct = await this.persistence.update(id, data)
+        return updatedProduct
     }
     
     deleteProduct = async (id) => {
-        return await this.persistence.delete(id)
+        const deleted = await this.persistence.delete(id)
+        return deleted
     }
 
     fakerProducts = (req) => {

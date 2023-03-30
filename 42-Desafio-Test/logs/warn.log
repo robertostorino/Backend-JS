@@ -202,3 +202,8 @@
 {"level":"warn","message":"Requested route /tenis with GET method is not implemented"}
 {"level":"warn","message":"Requested route /qwe with GET method is not implemented"}
 {"level":"warn","message":"Requested route /tenis with GET method is not implemented"}
+{"level":"warn","message":"Requested route /qwe with GET method is not implemented"}
+{"level":"warn","message":"Requested route /tenis with GET method is not implemented"}
+{"level":"warn","message":"Requested route /qwe with GET method is not implemented"}
+{"level":"warn","message":"Requested route /tenis with GET method is not implemented"}
+{"level":"warn","message":"Requested route /favicon.ico with GET method is not implemented"}
