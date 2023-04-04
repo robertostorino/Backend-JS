@@ -2,7 +2,6 @@ import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import handlebars from 'express-handlebars';
-import { normalize, schema } from 'normalizr';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import util from 'util';
@@ -12,7 +11,6 @@ import { fileURLToPath } from 'url';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import MongoStore from 'connect-mongo'
-import { fork } from 'child_process';
 // Logger
 import { logRequest, logNotImplementedRequest } from './src/routes/middlewares/middleware.logs.js';
 import { logger } from './src/config/logger.js';
@@ -33,10 +31,9 @@ import routerProductostest from './src/routes/productostest.js';
 import routerRandoms from './src/routes/randoms.js'
 
 import userController from './src/controllers/users.js';
-// import productsController from './src/controllers/products.js';
 import ProductsController from './src/controllers/products.js';
-
 import chatController from './src/controllers/chat.js';
+import GraphQLController from './src/controllers/productsGraphQL.js';
 
 
 export function startServer(port){
@@ -76,13 +73,10 @@ export function startServer(port){
     app.use(express.static('./public'));
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
-
     app.use(logRequest); // Aplica el middleware de logger logRequest en toda la app.
-    
 
     //  Settings
     app.use('/static', express.static('/public')); // Mediante el middleware express.static, indico la ruta que tendrán mis ficheros estáticos
-
 
     httpServer.listen(port, () => {
         console.log("Server online on: ", `${process.env.HOST}:${port}`)
@@ -146,6 +140,7 @@ export function startServer(port){
         .use('/products', routerProducts)
         .use('/', routerIndex)
         .use('/', routerRandoms)
+        .use('/graphql', new GraphQLController())
 
     app.get('*', logNotImplementedRequest, (req, res) => {
         const { url, method } = req;

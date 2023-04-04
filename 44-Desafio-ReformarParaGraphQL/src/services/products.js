@@ -42,4 +42,8 @@ export default class ProductsService {
         }
         return products
     }
+
+    updateProductGraphQL = async ({id, product}) => {
+        return await this.updateProduct(id, product);
+    }
 };
