@@ -3,7 +3,9 @@ import Router from "koa-router";
 import controller from '../controllers/info.js';
 import compress from 'koa-compress';
 
-const router = Router();
+const router = new Router({
+    prefix: '/'
+});
 
 router.get('/info', controller.info);
 

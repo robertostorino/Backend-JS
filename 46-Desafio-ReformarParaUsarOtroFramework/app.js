@@ -7,8 +7,8 @@ import views from "koa-views";
 import { koaBody } from "koa-body";
 import handlebars from "koa-handlebars";
 import compress from "koa-compress";
+import Router from 'koa-router';
 import { Server } from 'socket.io';
-import { normalize, schema } from 'normalizr';
 import cookieParser from 'cookie-parser';
 import util from 'util';
 import path from 'path';
@@ -16,9 +16,8 @@ import { fileURLToPath } from 'url';
 // Passport
 import passport from "koa-passport";
 import { Strategy as LocalStrategy } from 'passport-local';
-import { fork } from 'child_process';
 // Logger
-import { logRequest, logNotImplementedRequest } from './src/routes/middlewares/middleware.logs.js';
+// import { logRequest, logNotImplementedRequest } from './src/routes/middlewares/middleware.logs.js';
 import { logger } from './src/config/logger.js';
 import { clearCache } from './utils/clearCache.js';
 
@@ -68,10 +67,12 @@ export function startServer(port){
     const io = new Server(httpServer); //Creo un server de socketIO con el httpServer
     const productsController = new ProductsController();
 
+    const router = new Router();
+
     /* ------------------------------- */
     /*      HANDLEBARS                 */
     /* ------------------------------- */
-    app.engine('handlebars', handlebars.engine()); // Indico que voy a utilizar el engine de Handlebars
+    // app.engine('handlebars', handlebars.engine()); // Indico que voy a utilizar el engine de Handlebars
 
     //  Views setting
     // app.set('views', './views');
@@ -92,7 +93,7 @@ export function startServer(port){
     const options = { threshold: 2048 };
     app.use(compress(options));
 
-    app.use(logRequest); // Aplica el middleware de logger logRequest en toda la app.
+    // app.use(logRequest); // Aplica el middleware de logger logRequest en toda la app.
     
 
     //  Settings
@@ -115,25 +116,29 @@ export function startServer(port){
     //------------------------------------------------//
 
     app.use(cookieParser(process.env.COOKIE));
-    app.use(session({
-        /* ------------------------------- */
-        /*  Express Session                */
-        /* ------------------------------- */
-        store: MongoStore.create({
-            mongoUrl: process.env.MONGOOSE_URL,
-            mongoOptions: advancedOptions,
-            collectionName: 'sessions',
-            ttl: 1 * (1000 * 60)
-        }),
+    app.use(
+        session({
+            /* ------------------------------- */
+            /*  Express Session                */
+            /* ------------------------------- */
+            store: MongoStore.create({
+                mongoUrl: process.env.MONGOOSE_URL,
+                mongoOptions: advancedOptions,
+                collectionName: 'sessions',
+                ttl: 1 * (1000 * 60)
+            }),
 
-        secret: process.env.SESSION_SECRET,
-        resave: false,
-        rolling: true,
-        saveUninitialized: false,
-        cookie: {
-            maxAge: 10 * (1000 * 60)
-        }
-    }));
+            secret: process.env.SESSION_SECRET,
+            resave: false,
+            rolling: true,
+            saveUninitialized: false,
+            cookie: {
+                maxAge: 10 * (1000 * 60)
+            },
+    },
+    app
+    )
+    );
 
     //-------------------------//
     // Middleware de Passport //
@@ -153,19 +158,28 @@ export function startServer(port){
     //-------------------//
     // Rutas 
     //-------------------//
-    app
-        .use('/', routerRegister)
-        .use('/', routerLogin)
-        .use('/', routerInfo)
-        .use('/', routerProductostest)
-        .use('/products', routerProducts)
-        .use('/', routerIndex)
-        .use('/', routerRandoms)
+    app.use(router.routes());
+    app.use(routerRegister.routes())
+    app.use(routerLogin.routes())
+    app.use(routerInfo.routes())
+    app.use(routerProductostest.routes())
+    app.use(routerProducts.routes())
+    app.use(routerIndex.routes())
+    app.use(routerRandoms.routes())
+    
+    // app
+    //     .use('/', routerRegister)
+    //     .use('/', routerLogin)
+    //     .use('/', routerInfo)
+    //     .use('/', routerProductostest)
+    //     .use('/', routerProducts)
+    //     .use('/', routerIndex)
+    //     .use('/', routerRandoms)
 
-    app.get('*', logNotImplementedRequest, (req, res) => {
-        const { url, method } = req;
-        res.send(`Requested route ${url} with ${method} method is not implemented`);
-    });
+    // router.get('*', logNotImplementedRequest, (ctx) => {
+    //     const { url, method } = ctx.request;
+    //     res.send(`Requested route ${url} with ${method} method is not implemented`);
+    // });
 
     /* ------------------------------- */
     /*      SOCKETS                    */
