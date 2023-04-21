@@ -19,6 +19,10 @@ import { auth } from './src/utils/authentication.js';
 import { destroyCredentials } from './src/controllers/session.controller.js';
 
 import { renderRoot, renderProfile, renderCart, notifyOrder } from './src/controllers/app.controller.js';
+
+import { postOrder } from './src/controllers/order.controller.js';
+
+
 import {  PRODUCTS_ROUTER }  from './src/routers/product.routes.js';
 import { CART_ROUTER }  from './src/routers/cart.routes.js';
 import { SIGNUP_ROUTER } from './src/routers/signup.routes.js';
@@ -45,17 +49,17 @@ export function startServer(port){
 
     app.use(
         session({
-            secret: process.env.SECRETMONGO,
+            secret: process.env.SESSION_SECRET,
             saveUninitialized: false,
             resave: false,
             rolling: true,
             store: MongoStore.create({
-                mongoUrl: process.env.MONGOURL,
+                mongoUrl: process.env.MONGOOSE_URL,
                 mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
-                ttl: process.env.TTL,
+                ttl: 1 * (1000 * 60),
             }),
             cookie: {
-                maxAge: process.env.TTL * 1000,
+                maxAge: 10 * (1000 * 60),
             },
         })
     );
@@ -80,6 +84,7 @@ export function startServer(port){
         .get('/profile', auth, renderProfile)
         .get('/cart', auth, renderCart)
         .post('/order', auth, notifyOrder)
+        .post('/orderSend', auth, postOrder)
         .get('/logout', destroyCredentials)
         .use('/signup', SIGNUP_ROUTER)
         .use('/login', LOGIN_ROUTER)

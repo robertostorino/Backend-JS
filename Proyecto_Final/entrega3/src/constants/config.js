@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 
 const config = {
-    admin: process.env.ADMIN,
+    admin: true,
     timeFormat: "DD-MM-YYYY HH:mm:ss",
     executionMode: process.env.EXECUTION_MODE,
 
@@ -10,7 +10,8 @@ const config = {
     cartCollection: "carts",
     userCollection: "users",
 
-    mongoUri:process.env.MONGOURL
+    // mongoUri:"mongodb+srv://coderhouse:coderhouse@miprimercluster.jrovqqz.mongodb.net/ecommerceFinal?retryWrites=true&w=majority"
+    mongoUri:process.env.MONGOOSE_URL
 };
 
 

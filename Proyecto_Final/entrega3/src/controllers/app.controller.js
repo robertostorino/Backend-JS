@@ -4,7 +4,6 @@ import { mongoProduct } from "../models/Mongo/Mongo.models.js";
 import { mongoCart } from "../models/Mongo/Mongo.models.js";
 import { MongoProduct } from "../models/Mongo/Product/product.database.js";
 import { MongoCart } from "../models/Mongo/Cart/cart.database.js";
-import { notifyNewOrderToAdmin, notifyOrderToUser } from "../utils/notificaton.js";
 
 const productsModel = new MongoProduct(mongoProduct);
 const cartsModel = new MongoCart(mongoCart, productsModel);
@@ -54,8 +53,6 @@ async function notifyOrder (req, res) {
     cartsModel.clearCart(cartId);
     let cartProducts = cart[0].products;
 	const newOrder = JSON.stringify(cartProducts);
-	await notifyNewOrderToAdmin(req.user[0], newOrder);
-	await userOrderNotification(req.user[0].telephone);
     res.json({error: 0, message: 'Order Created'})
 }
 

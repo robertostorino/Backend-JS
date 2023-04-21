@@ -1,6 +1,10 @@
-const host = document.querySelector('#host').value
+// const host = document.querySelector('#host').value
+
+// Me devuelve el origen, por ejemplo:  'http://localhost:8080'
+const host = window.location.origin
 function sendOrder() {
     const url = `${host}/order`;
+    console.log(`URL: ${url}`)
     fetch(url, { method: 'POST' })
         .then((response) => response.json())
         .then(response => {
@@ -20,9 +24,14 @@ function sendOrder() {
                     showCancelButton: false,
                     showConfirmButton: true,
                     allowOutsideClick: false,
-                    allowEscapeKey: false
+                    allowEscapeKey: false,
+                }).then(result => {
+                    if (result.isConfirmed) {
+                        console.log("la respuesta es:")
+                        console.log(response)
+                        window.location.reload();
+                    }
                 });
-                window.location.reload()
             }
         })
         .catch(error => {

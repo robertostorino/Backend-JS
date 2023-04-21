@@ -1,9 +1,10 @@
 
-const host = document.querySelector('#host').value
+// Me devuelve el origen, por ejemplo:  'http://localhost:8080'
+const host = window.location.origin;
+
 function addToCart(element) {
     const productId = element.dataset.id;
-    const cartId = document.querySelector('#cart').value
-
+    const cartId = document.querySelector('#cart').value;
     const url = `${host}/api/carrito/${cartId}/productos/${productId}`;
     fetch(url, { method: 'POST' })
         .then((response) => response.json())

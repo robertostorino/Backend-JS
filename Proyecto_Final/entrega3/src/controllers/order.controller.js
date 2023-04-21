@@ -12,6 +12,13 @@ export async function postOrder(req, res) {
     const user = await getUser(req.session.passport.user);
     const cart = await cartContainer.getById(user.cartId);
 
+    const twilioRegPhoneWhatsapp = process.env.TWILIO_REG_PHONE_WHATSAPP;
+    const twilioRegPhoneSms = process.env.TWILIO_REG_PHONE_SMS;
+
+    console.log("HOLAAAAAAAAAAAAAAAA")
+    console.log(`twilio whatsapp: ${twilioRegPhoneWhatsapp}`);
+    console.log(`twilio SMS: ${twilioRegPhoneSms}`)
+
     const buyedProducts = cart[0].productos.map(producto => {
         return `${producto.nombre} - ${producto.precio}`
     }).join("<br>")
@@ -24,8 +31,8 @@ export async function postOrder(req, res) {
     //SEND WHATSAPP
     const waMessage = {
         body: 'Su pedido ha sido recibido y se encuentra en proceso',
-        from: "whatsapp:" + process.env.TWILIO_REG_PHONE_WHATSAPP,
-        to: "whatsapp:" + process.env.ADMIN_NUMBER_WHATSAPP
+        from: "whatsapp:" + twilioRegPhoneWhatsapp,
+        to: 'whatsapp:+5492216334092'
     }
 
     await sendOrder(waMessage);
@@ -33,8 +40,8 @@ export async function postOrder(req, res) {
     // SEND SMS
     const smsMessage = {
         body: 'Su pedido ha sido recibido y se encuentra en proceso',
-        from: process.env.TWILIO_REG_PHONE_SMS,
-        to: process.env.ADMIN_NUMBER_SMS
+        from: twilioRegPhoneSms,
+        to: '+5492216334092'
     }
 
     await sendOrder(smsMessage);
