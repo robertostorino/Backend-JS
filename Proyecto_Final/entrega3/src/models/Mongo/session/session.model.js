@@ -5,6 +5,7 @@ import { mongoCart } from "../Mongo.models.js";
 import { MongoProduct } from '../Product/product.database.js';
 import { mongoProduct } from '../Mongo.models.js';
 import { getImageFileName } from '../../../utils/miscelanius.js';
+import { adminNewUserNotification } from '../../../utils/notifications.js';
 
 const products = new MongoProduct(mongoProduct);
 const carts = new MongoCart(mongoCart, products);
@@ -64,6 +65,7 @@ async function signupUser(req, username, password, done) {
                 cartId: cart
             })
             newUser.save();
+            adminNewUserNotification(newUser);
             return done(null, newUser)
         }
 

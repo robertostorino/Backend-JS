@@ -84,7 +84,7 @@ export function startServer(port){
         .get('/profile', auth, renderProfile)
         .get('/cart', auth, renderCart)
         .post('/order', auth, notifyOrder)
-        .post('/orderSend', auth, postOrder)
+        // .post('/orderSend', auth, postOrder)
         .get('/logout', destroyCredentials)
         .use('/signup', SIGNUP_ROUTER)
         .use('/login', LOGIN_ROUTER)

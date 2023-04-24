@@ -1,5 +1,3 @@
-// const host = document.querySelector('#host').value
-
 // Me devuelve el origen, por ejemplo:  'http://localhost:8080'
 const host = window.location.origin
 function sendOrder() {
