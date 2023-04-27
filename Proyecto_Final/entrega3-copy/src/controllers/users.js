@@ -9,7 +9,6 @@ export default class UsersController {
     };
 
     destroyCredentials = (req, res) => {
-        console.log("Estoy en user-controller")
         const { url, method } = req
         logger.info(`Access to route: ${url} method: ${method}`)
         if (!req.isAuthenticated()) {

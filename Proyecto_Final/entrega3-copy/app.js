@@ -102,7 +102,7 @@ export function startServer(port){
         .use("/profile", routerProfile)
         .use("/cart", routerCartView)
         .use("/login", routerLogin)
-        .use("logout", routerLogout)
+        .use("/logout", routerLogout)
         .use("/signup", routerSignup)
         .use("/order", routerOrders)
         .use("/api/productos", routerProducts)

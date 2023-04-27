@@ -6,6 +6,8 @@ function addToCart(element) {
     const productId = element.dataset.id;
     const cartId = document.querySelector('#cart').value;
     const url = `${host}/api/carrito/${cartId}/productos/${productId}`;
+    console.log("URL")
+    console.log(url)
     fetch(url, { method: 'POST' })
         .then((response) => response.json())
         .then(response => {

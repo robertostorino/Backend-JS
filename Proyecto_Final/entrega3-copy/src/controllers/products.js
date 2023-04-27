@@ -21,6 +21,8 @@ export default class ProductsController {
         const { id } = req.params;
         if (id) {
             const product = await services.getProductById(id)
+            console.log("products controller")
+            console.log(product)
             return product ? res.json(product) : Error.notFound(res);
         }
         let productos = await services.getAllProducts();
