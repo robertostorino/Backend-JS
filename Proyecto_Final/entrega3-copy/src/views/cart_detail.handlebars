@@ -1,0 +1,31 @@
+<section class="container" style="margin-top: 2rem;">
+    <div class="row text-center">
+        <h2 style="color: brown;">CART</h2>
+    </div>
+    {{#if listExists}}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
+        {{#each products}}
+        <div class="col mb-4">
+            <div class="card h-100">
+                <img src="{{this.thumbnail}}" style="width: auto" class="card-img-top" alt="{{this.title}}">
+                <div class="card-body">
+                    <h5 class="card-title">{{this.title}}</h5>
+                    <p class="card-text">{{this.description}}</p>
+                    <p class="card-text"><strong>Unit Price:</strong> ${{this.price}}</p>
+                    <p class="card-text"><strong>Quantity:</strong> {{this.qty}}</p>
+                    <p class="card-text"><strong>Total price:</strong> ${{this.total_price}}</p>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <h4>TOTAL ORDER: $ {{totalOrder}}</h4>
+    <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Send order" onclick="sendOrder()">Send Order</i></button>
+    {{else}}
+    <h4 class="alert alert-danger container">EMPTY CART</h4>
+    {{/if}}
+
+</section>
+{{#if script}}
+<script src="../scripts/{{script}}.js"></script>
+{{/if}}

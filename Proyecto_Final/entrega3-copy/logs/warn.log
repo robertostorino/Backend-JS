@@ -1,0 +1,14 @@
+{"level":"warn","message":"Route POST //api/carrito/8/productos/2 not implemented","timestamp":"2023-04-20 12:56:29"}
+{"level":"warn","message":"Route GET /order not implemented","timestamp":"2023-04-20 21:53:40"}
+{"level":"warn","message":"Route GET /orderSend not implemented","timestamp":"2023-04-20 22:41:29"}
+{"level":"warn","message":"Route GET /order not implemented","timestamp":"2023-04-20 22:41:46"}
+{"level":"warn","message":"Route GET /orderSend not implemented","timestamp":"2023-04-20 22:41:50"}
+{"level":"warn","message":"Route GET /order not implemented","timestamp":"2023-04-20 22:42:07"}
+{"level":"warn","message":"Route GET /order not implemented","timestamp":"2023-04-23 23:18:11"}
+{"level":"warn","message":"Route GET /logout? not implemented"}
+{"level":"warn","message":"Route GET /logout? not implemented"}
+{"level":"error","message":"AppenProduct Error: TypeError: Cannot read properties of undefined (reading 'getProduct')"}
+{"level":"error","message":"AppenProduct Error: TypeError: Cannot read properties of undefined (reading 'getProduct')"}
+{"level":"warn","message":"Route GET /logout? not implemented"}
+{"level":"warn","message":"Route GET /logout? not implemented"}
+{"level":"warn","message":"Route GET /logout? not implemented"}
