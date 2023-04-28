@@ -166,4 +166,4 @@ export class DaoCart {
         let product = car[0].products.find((elemento) => elemento.id == idProd);
         return product;
     }
-}
+};

@@ -51,7 +51,6 @@ export class DaoUser {
         }
     }
     
-    
     signupUser = async (req, username, password, done) => {
         try {
             const cart = await carts.saveCart(true);
@@ -97,96 +96,4 @@ export class DaoUser {
             return done(error);
         }
     }
-}
-
-// async function getUser(username) {
-//     try {
-//         let user = await modelUser.findOne({ username: username }, { _id: 0, __v: 0 });
-//         return user
-
-//     } catch (error) {
-//         return null
-//     }
-// }
-
-// function passwordOk(password, user) {
-//     return bcrypt.compareSync(password, user.password);
-// }
-
-// function createHash(password) {
-//     return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-// }
-
-// async function loginUser(username, password, done) {
-//     try {
-//         let user = await getUser(username)
-//         if (!user) {
-//             return done(null, false, console.log('Usuario o contraseña incorrectos' ));
-//         } else {
-//             if (passwordOk(password, user)) {
-//                 return done(null, user)
-//             } else {
-//                 return done(null, false, { mensaje: 'Usuario o contraseña incorrectos' });
-//             }
-//         }
-
-//     } catch (error) {
-//         return done(error);
-//     }
-// }
-
-
-// async function signupUser(req, username, password, done) {
-//     try {
-//         const cart = await carts.saveCart(true);
-//         let user = await getUser(username);
-//         if (user) {
-//             return done(null, false, console.log(user.username, 'Usuario ya existe'));
-//         } else {
-//             let newUser = new modelUser({
-//                 username,
-//                 password: createHash(password),
-//                 name: req.body.name,
-//                 address: req.body.address,
-//                 age: req.body.age,
-//                 telephone: req.body.cel,
-//                 avatar: getImageFileName(req),
-//                 cartId: cart
-//             })
-//             newUser.save();
-//             adminNewUserNotification(newUser);
-//             return done(null, newUser)
-//         }
-
-//     } catch (error) {
-//         return done(error);
-//     }
-// }
-
-// function serializeUser(username, done) {
-//     try {
-//         return done(null, username);
-//     } catch (error) {
-//         return done(error);
-//     }
-// }
-
-// async function deserializeUser(user, done) {
-//     let username;
-//     user.length == undefined ? username = user.username : username = user[0].username;
-//     try {
-//         const user = await modelUser.find({ username: username })
-//         return user ? done(null, user) : done(null, false);
-//     } catch (error) {
-//         return done(error);
-//     }
-// }
-
-
-// export {
-//     loginUser,
-//     signupUser,
-//     serializeUser,
-//     deserializeUser,
-//     getUser
-// }
+};

@@ -9,4 +9,4 @@ document.querySelector(".iti").style.width = "-webkit-fill-available";
 function phoneNumber(event) {
     let phone = phoneInput.getNumber();
     document.getElementById('cel').value = phone;
-}
+};

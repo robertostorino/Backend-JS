@@ -10,7 +10,6 @@ const config = {
     cartCollection: "carts",
     userCollection: "users",
 
-    // mongoUri:"mongodb+srv://coderhouse:coderhouse@miprimercluster.jrovqqz.mongodb.net/ecommerceFinal?retryWrites=true&w=majority"
     mongoUri:process.env.MONGOOSE_URL
 };
 

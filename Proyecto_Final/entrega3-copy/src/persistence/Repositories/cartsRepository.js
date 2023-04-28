@@ -13,8 +13,8 @@ export class CartRepository {
         return this.DAO.getCart(id)
     };
 
-    save = async (fromFront = false) => {
-        const savedCart = await this.DAO.saveCart(fromFront = false)
+    save = async (fromFront) => {
+        const savedCart = await this.DAO.saveCart(fromFront)
         return savedCart
     };
 

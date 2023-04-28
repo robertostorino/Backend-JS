@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import twilio from 'twilio';
-import { logger } from './logger.js';
+import { logger } from '../config/logger.js';
 import dotenv from 'dotenv';
 dotenv.config();
 

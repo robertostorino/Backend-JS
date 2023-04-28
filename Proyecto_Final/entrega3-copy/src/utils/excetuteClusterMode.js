@@ -1,6 +1,6 @@
 import { startServer } from "../../app.js";
 import cluster from 'cluster';
-import { logger } from "./logger.js";
+import { logger } from "../config/logger.js";
 import os from 'os'
 
 export function executeServerCluster(port) {

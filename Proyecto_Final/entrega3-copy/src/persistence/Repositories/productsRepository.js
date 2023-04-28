@@ -14,7 +14,7 @@ export class ProductRepository {
         return addedProduct;
     };
 
-    getById = async (id) => {
+    getProduct = async (id) => {
         return await this.DAO.getProduct(id);
     };
 

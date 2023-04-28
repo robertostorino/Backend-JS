@@ -11,8 +11,8 @@ export default class CartsService {
         return this.persistence.getCart(id)
     };
 
-    createCart = async (fromFront = false) => {
-        const createdCart = await this.persistence.save(fromFront = false)
+    createCart = async (fromFront) => {
+        const createdCart = await this.persistence.save(fromFront)
         return createdCart
     };
 
@@ -34,4 +34,4 @@ export default class CartsService {
     clearCart = async (idCart) => {
         return this.persistence.clearCart(idCart)
     };
-}
+};

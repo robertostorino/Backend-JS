@@ -11,8 +11,8 @@ export default class ProductsService {
         return await this.persistence.getAll()
     };
 
-    getProductById = async (id) => {
-        return await this.persistence.getById(id)
+    getProduct = async (id) => {
+        return await this.persistence.getProduct(id)
     };
 
     insertProduct = async (product) => {

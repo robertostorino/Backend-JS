@@ -1,6 +1,6 @@
-import { check } from 'express-validator';
-import { validationResults } from '../handlers/handle.validator.js';
-
+import { check } from "express-validator";
+// import { validationResults } from "./validation.handler.js";
+import { validationResults } from "./handle.validator.js";
 
 export const productValidator = [
     check("title").exists().notEmpty().isString(),
@@ -10,5 +10,4 @@ export const productValidator = [
     check("description").exists().notEmpty().isString(),
     check("code").exists().notEmpty().isNumeric(),
     (req, res, next) => validationResults(req, res, next)
-];
-
+]
