@@ -20,7 +20,7 @@ export default class ProductsController {
         return res.json(productos);
     };
 
-    appendProduct = async (req, res) => {
+    insertProduct = async (req, res) => {
         if (!config.admin) return Error.unauthorized(req, res);
         const saved = await services.insertProduct(req.body);
         return saved.error ? Error.notComplete(res) : res.json(saved);

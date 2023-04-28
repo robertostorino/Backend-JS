@@ -8,7 +8,7 @@ const productSchema = new mongoose.Schema({
     title: { type: String, require: true, minLength: 1, maxLength: 40 },
     description: { type: String, require: true, minLength: 1, maxLength: 400 },
     code: { type: String, require: true, minLength: 1, maxLength: 10 },
-    thumbnail: { type: String, require: true, minLength: 1, maxLength: 25 },
+    thumbnail: { type: String, require: true, minLength: 1, maxLength: 400 },
     price: { type: Number, require: true },
     stock: { type: Number, require: true },
     qty: { type: Number, require: false },

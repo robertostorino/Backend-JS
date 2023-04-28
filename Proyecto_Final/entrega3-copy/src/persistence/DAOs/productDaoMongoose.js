@@ -43,20 +43,33 @@ export class DaoProduct {
      */
     saveProduct = async (data) => {
         try {
+            console.log("daoproduct")
+            console.log("data")
+            console.log(data)
             let last = await this.model.find({}).sort({ id: -1 }).limit(1);
+            console.log("last")
+            console.log(last)
             let newId = last.length > 0 ? parseInt(last.at(-1).id + 1) : 1;
+            console.log("newId")
+            console.log(newId)
 
             let prod = new this.model({
                 id: newId,
                 timestamp: moment().format(configRoot.timeFormat),
                 ...data
             });
+            console.log("prod")
+            console.log(prod)
 
             const newProduct = await prod.save();
+            console.log("newProduct")
+            console.log(newProduct)
 
             return await this.getProduct(newId);
 
         } catch (error) {
+            console.log("error")
+            console.log(error)
             const response = {
                 error: 1,
                 message: `Error saving product`
