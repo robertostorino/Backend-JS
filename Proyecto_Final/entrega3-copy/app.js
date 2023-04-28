@@ -6,6 +6,8 @@ import { createServer } from 'http';
 import handlebars from "express-handlebars";
 import fileUpload from 'express-fileupload';
 
+import cors from 'cors';
+
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import passport from "passport";
@@ -14,20 +16,6 @@ import { Strategy as LocalStrategy } from "passport-local";
 import { logger } from './src/config/logger.js';
 import { clearCache } from './src/utils/clearCache.js';
 
-// import { loginUser, signupUser, serializeUser, deserializeUser } from './src/persistence/DAOs/userDaoMongoose.js';
-// import { auth } from './src/utils/authentication.js';
-// import { destroyCredentials } from './src/controllers/session.controller.js';
-
-// import { renderRoot, renderProfile, renderCart, notifyOrder } from './src/controllers/app.controller.js';
-
-// import { postOrder } from './src/controllers/order.controller.js';
-
-// import {  PRODUCTS_ROUTER }  from './src/routers/product.js';
-// import { CART_ROUTER }  from './src/routers/cart.js';
-// import { SIGNUP_ROUTER } from './src/routers/signup.js';
-// import { LOGIN_ROUTER } from './src/routers/login.js';
-
-// Imports de las rutas nuevas
 import routerProducts from './src/routers/product.js';
 import routerCarts from './src/routers/cart.js';
 import routerOrders from './src/routers/order.js';
@@ -51,6 +39,7 @@ export function startServer(port){
 
     app.use(express.json());
     app.use(fileUpload());
+    app.use(cors());
     app.use(express.urlencoded({ extended: true }));
     app.use(express.static('public'));
     app.use('/public/avatars/', express.static('./public/avatars'));
